@@ -1,0 +1,256 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0;}
+
+  :root{
+    --forest:#1c3328;
+    --forest-mid:#24422f;
+    --forest-light:#2e5a3c;
+    --forest-faint:#e8f0eb;
+    --cream:#f4f0e6;
+    --cream-dark:#e8e3d5;
+    --cream-mid:#d4cdb8;
+    --terra:#e8692a;
+    --terra-dark:#c4541c;
+    --terra-soft:#f5dece;
+    --ink:#1c2420;
+    --ink-mid:#3a4a42;
+    --ink-muted:#6a7a70;
+    --ink-faint:#9aaa9e;
+  }
+
+  .bh{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);padding-bottom:80px;}
+
+  .hero{background:var(--forest);padding:60px 48px 52px;position:relative;overflow:hidden;}
+  .hero-inner{max-width:860px;margin:0 auto;position:relative;z-index:1;}
+  .hero-stripe{position:absolute;top:0;right:0;width:220px;height:100%;background:var(--forest-mid);opacity:.5;}
+
+  .tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--terra-soft);border:0.5px solid rgba(232,105,42,0.35);padding:4px 12px;border-radius:2px;margin-bottom:32px;}
+  .tag-dot{width:5px;height:5px;background:var(--terra);border-radius:50%;flex-shrink:0;}
+
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(42px,6vw,70px);font-weight:400;line-height:1.06;color:var(--cream);margin-bottom:6px;}
+  .hero-title em{font-style:italic;color:var(--terra);}
+  .hero-sub{font-size:12px;color:rgba(232,234,226,0.45);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:40px;}
+
+  .meta-row{display:flex;gap:40px;border-top:0.5px solid rgba(255,255,255,0.1);padding-top:24px;}
+  .meta-item label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(232,234,226,0.35);display:block;margin-bottom:4px;}
+  .meta-item span{font-size:13px;color:rgba(244,240,230,0.7);}
+  .meta-item span.accent{color:var(--terra);}
+
+  .section{max-width:860px;margin:0 auto;padding:0 48px;}
+
+  .brief-block{background:var(--forest);border-radius:4px;padding:36px 40px;margin:52px 0 0;}
+  .brief-block h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;color:var(--cream);margin-bottom:16px;}
+  .brief-block p{font-size:14px;line-height:1.85;color:rgba(232,234,226,0.6);max-width:620px;}
+  .brief-block p strong{color:var(--terra);font-weight:500;}
+
+  .divider{height:0.5px;background:var(--cream-dark);margin:56px 0;}
+
+  .section-heading{font-family:'Playfair Display',serif;font-size:28px;font-weight:400;color:var(--forest);margin-bottom:4px;}
+  .section-sub{font-size:11px;color:var(--ink-faint);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:32px;}
+
+  .screen-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:10px;}
+
+  .img-placeholder{background:var(--cream-dark);border:0.5px solid var(--cream-mid);border-radius:6px;aspect-ratio:9/16;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;position:relative;overflow:hidden;}
+  .img-placeholder::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 18px,rgba(28,51,40,0.04) 18px,rgba(28,51,40,0.04) 19px);}
+  .ph-icon{position:relative;z-index:1;width:34px;height:34px;border:0.5px solid var(--cream-mid);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink-faint);}
+  .ph-text{position:relative;z-index:1;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-faint);text-align:center;padding:0 16px;}
+
+  .screens-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:28px 0;}
+  .screens-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:28px 0;}
+  .screens-row-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;margin:28px 0;}
+
+  .full-placeholder{background:var(--cream-dark);border:0.5px solid var(--cream-mid);border-radius:6px;height:380px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden;margin:28px 0;}
+  .full-placeholder::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 18px,rgba(28,51,40,0.04) 18px,rgba(28,51,40,0.04) 19px);}
+  .full-placeholder .ph-icon,.full-placeholder .ph-text{position:relative;z-index:1;}
+  .full-placeholder .ph-icon{width:38px;height:38px;border:0.5px solid var(--cream-mid);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink-faint);}
+  .full-placeholder .ph-text{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-faint);}
+
+  .feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:28px 0;}
+  .feature-card{background:#fff;border:0.5px solid var(--cream-dark);border-radius:4px;padding:24px 26px;}
+  .fc-num{font-family:'Playfair Display',serif;font-size:30px;color:var(--cream-dark);font-weight:400;line-height:1;margin-bottom:12px;}
+  .fc-title{font-size:13px;font-weight:500;color:var(--forest);margin-bottom:7px;letter-spacing:0.02em;}
+  .fc-desc{font-size:12px;color:var(--ink-muted);line-height:1.75;}
+
+  .pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px;}
+  .pill{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(232,234,226,0.45);border:0.5px solid rgba(255,255,255,0.15);padding:4px 10px;border-radius:2px;}
+
+  .author-row{display:flex;align-items:center;gap:14px;margin-top:52px;padding-top:24px;border-top:0.5px solid var(--cream-dark);}
+  .author-avatar{width:38px;height:38px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--cream);}
+  .author-name{font-size:13px;color:var(--forest);font-weight:500;}
+  .author-handle{font-size:11px;color:var(--terra);}
+
+  .flow-label{display:inline-block;background:var(--terra);color:#fff;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:2px;margin-bottom:10px;}
+</style>
+
+<div class="bh">
+
+  <div class="hero">
+    <div class="hero-stripe"></div>
+    <div class="hero-inner">
+      <div class="tag"><span class="tag-dot"></span>UI Showcase · 2024</div>
+      <h1 class="hero-title">Cozy <em>Cafe</em><br>Self-Order</h1>
+      <p class="hero-sub">Table QR · Mobile Experience · End-to-End Flow</p>
+      <div class="meta-row">
+        <div class="meta-item"><label>Designer</label><span>Aditya Nair</span></div>
+        <div class="meta-item"><label>Platform</label><span>iOS · Android</span></div>
+        <div class="meta-item"><label>Category</label><span>Food &amp; Beverage</span></div>
+      </div>
+      <div class="pill-row">
+        <span class="pill">UI Design</span>
+        <span class="pill">QR Ordering</span>
+        <span class="pill">Cafes</span>
+        <span class="pill">Mobile</span>
+        <span class="pill">Product Design</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+
+    <div class="brief-block">
+      <h2>The idea</h2>
+      <p>Cozy Cafe is a <strong>scan-to-order experience</strong> designed for dine-in cafes. Customers scan a QR code on the table, browse the menu, add items, and place their order — no app download, no waving for a waiter, no friction. The kitchen gets the order instantly, and guests track their items in real time right from the table.</p>
+    </div>
+
+
+
+    <div class="divider"></div>
+
+    <h2 class="section-heading">The flow</h2>
+    <p class="section-sub">Scan · Browse · Order · Track</p>
+
+    <div class="screens-row">
+      <div>
+        <div class="flow-label">01</div>
+        <p class="screen-label">Menu view</p>
+        <img src="Cafe_Menu_Project/Main Screen.png" alt="Menu View" style="width:100%; border-radius:6px; border:0.5px solid var(--cream-mid); display:block;">
+      </div>
+      <div>
+        <div class="flow-label">02</div>
+        <p class="screen-label">Adding items</p>
+        <img src="Cafe_Menu_Project/Main Screen 2.png" alt="Adding Items" style="width:100%; border-radius:6px; border:0.5px solid var(--cream-mid); display:block;">
+      </div>
+    </div>
+
+    <div class="screens-row">
+      <div>
+        <div class="flow-label">03</div>
+        <p class="screen-label">Cart review</p>
+        <img src="Cafe_Menu_Project/Cart View.png" alt="Cart Review" style="width:100%; border-radius:6px; border:0.5px solid var(--cream-mid); display:block;">
+      </div>
+      <div>
+        <div class="flow-label">04</div>
+        <p class="screen-label">Order tracking</p>
+        <img src="Cafe_Menu_Project/Order View.png" alt="Order Tracking" style="width:100%; border-radius:6px; border:0.5px solid var(--cream-mid); display:block;">
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2 class="section-heading">Key features</h2>
+    <p class="section-sub">Designed around the guest experience</p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="fc-num">01</div>
+        <div class="fc-title">QR-first access</div>
+        <div class="fc-desc">No app download. Guests scan the table QR and the menu loads instantly in the browser.</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-num">02</div>
+        <div class="fc-title">Live order tracking</div>
+        <div class="fc-desc">Each item shows a real-time status — Preparing, Ready, or Served — so guests always know what's coming.</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-num">03</div>
+        <div class="fc-title">Category browsing</div>
+        <div class="fc-desc">Coffee, Snacks, Bakery and more. Items are tagged as Best Seller, Popular, New, or Classic.</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-num">04</div>
+        <div class="fc-title">Cart &amp; bill summary</div>
+        <div class="fc-desc">Promo code support, GST breakdown, and a clear total before the order is confirmed.</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-num">05</div>
+        <div class="fc-title">Finalise &amp; call waiter</div>
+        <div class="fc-desc">Once done, guests tap to lock the bill and summon the waiter to their table.</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-num">06</div>
+        <div class="fc-title">Session-based ordering</div>
+        <div class="fc-desc">Tied to a table number and session, guests can keep adding items anytime during their visit.</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2 class="section-heading">All screens</h2>
+    <p class="section-sub">Full spread</p>
+
+    <div class="screens-row-4">
+      <div>
+        <p class="screen-label">Menu</p>
+        <img src="Cafe_Menu_Project/Main Screen.png" alt="Menu" style="width:100%; border-radius:6px; border:0.5px solid var(--cream-mid); display:block;">
+      </div>
+      <div>
+        <p class="screen-label">Detail</p>
+        <img src="Cafe_Menu_Project/Main Screen 2.png" alt="Detail" style="width:100%; border-radius:6px; border:0.5px solid var(--cream-mid); display:block;">
+      </div>
+      <div>
+        <p class="screen-label">Cart</p>
+        <img src="Cafe_Menu_Project/Cart View.png" alt="Cart" style="width:100%; border-radius:6px; border:0.5px solid var(--cream-mid); display:block;">
+      </div>
+      <div>
+        <p class="screen-label">Order</p>
+        <img src="Cafe_Menu_Project/Order View.png" alt="Order" style="width:100%; border-radius:6px; border:0.5px solid var(--cream-mid); display:block;">
+      </div>
+    </div>
+
+    <p class="screen-label" style="margin-top:40px">Color palette &amp; typography</p>
+    <div style="background: var(--white); padding: 32px; border-radius: 8px; border: 0.5px solid var(--cream-mid); margin: 16px 0 28px;">
+      <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="height: 80px; background: var(--forest); border-radius: 6px;"></div>
+          <div style="font-size: 11px; font-weight: 500; color: var(--ink);">Forest<br><span style="color: var(--ink-faint); font-weight: 400;">#1C3328</span></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="height: 80px; background: var(--forest-light); border-radius: 6px;"></div>
+          <div style="font-size: 11px; font-weight: 500; color: var(--ink);">Forest Light<br><span style="color: var(--ink-faint); font-weight: 400;">#2E5A3C</span></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="height: 80px; background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 6px;"></div>
+          <div style="font-size: 11px; font-weight: 500; color: var(--ink);">Cream<br><span style="color: var(--ink-faint); font-weight: 400;">#F4F0E6</span></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="height: 80px; background: var(--terra); border-radius: 6px;"></div>
+          <div style="font-size: 11px; font-weight: 500; color: var(--ink);">Terra<br><span style="color: var(--ink-faint); font-weight: 400;">#E8692A</span></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="height: 80px; background: var(--ink); border-radius: 6px;"></div>
+          <div style="font-size: 11px; font-weight: 500; color: var(--ink);">Ink<br><span style="color: var(--ink-faint); font-weight: 400;">#1C2420</span></div>
+        </div>
+      </div>
+      
+      <div style="margin-top: 32px; border-top: 0.5px solid var(--cream-dark); padding-top: 32px;">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 400; color: var(--forest); margin-bottom: 8px;">Playfair Display</h3>
+        <p style="font-size: 13px; color: var(--ink-muted); max-width: 600px; line-height: 1.6;">Playfair Display is used for elegant, editorial-style headings that evoke a premium cafe feel.</p>
+        
+        <h3 style="font-family: 'DM Sans', sans-serif; font-size: 24px; font-weight: 500; color: var(--forest); margin-top: 24px; margin-bottom: 8px;">DM Sans</h3>
+        <p style="font-size: 13px; color: var(--ink-muted); max-width: 600px; line-height: 1.6;">DM Sans provides clean, modern legibility for the interface, buttons, and small details.</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="author-row">
+      <div class="author-avatar">AN</div>
+      <div>
+        <div class="author-name">Aditya Nair</div>
+      </div>
+    </div>
+
+  </div>
+</div>
