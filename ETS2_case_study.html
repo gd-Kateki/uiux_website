@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Euro Truck Simulator 2 — UX Case Study</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e0f;
+    --surface: #161618;
+    --surface2: #1e1e21;
+    --border: #2a2a2e;
+    --amber: #f5a623;
+    --amber-dim: #c47d0e;
+    --amber-glow: rgba(245,166,35,0.12);
+    --red: #e05252;
+    --red-dim: rgba(224,82,82,0.15);
+    --green: #4caf7d;
+    --green-dim: rgba(76,175,125,0.15);
+    --blue: #5b8ef5;
+    --blue-dim: rgba(91,142,245,0.15);
+    --text: #e8e8ea;
+    --text-muted: #888890;
+    --text-faint: #555560;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Space Grotesk', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    border-bottom: 1px solid var(--border);
+    padding: 48px 0 40px;
+    background: linear-gradient(180deg, #111114 0%, var(--bg) 100%);
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 32px;
+  }
+  .header-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--amber);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-title {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  .header-title span { color: var(--amber); }
+  .header-desc {
+    color: var(--text-muted);
+    max-width: 520px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .header-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-faint);
+    margin-top: 18px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .header-meta span { color: var(--text-muted); }
+  .score-badge {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 28px;
+    text-align: center;
+    flex-shrink: 0;
+    min-width: 120px;
+  }
+  .score-badge .score-num {
+    font-family: var(--mono);
+    font-size: 52px;
+    font-weight: 700;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .score-badge .score-label {
+    font-size: 11px;
+    color: var(--text-faint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 6px;
+    font-family: var(--mono);
+  }
+
+  /* ── GLANCE STATS ── */
+  .glance {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 40px 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 40px;
+  }
+  .glance-item {
+    background: var(--surface);
+    padding: 24px 28px;
+    position: relative;
+  }
+  .glance-item:first-child { border-radius: 10px 0 0 10px; }
+  .glance-item:last-child { border-radius: 0 10px 10px 0; }
+  .glance-num {
+    font-family: var(--mono);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .glance-label {
+    font-size: 12px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: var(--mono);
+    margin-bottom: 4px;
+  }
+  .glance-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* ── SECTION WRAPPER ── */
+  .section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 56px 40px 0;
+  }
+  .section-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── HEURISTIC SCORES ── */
+  .heuristic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .heuristic-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .heuristic-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .heuristic-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .heuristic-score {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .heuristic-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .bar-track {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.6s ease;
+  }
+  .bar-red   { background: var(--red); }
+  .bar-amber { background: var(--amber); }
+  .bar-green { background: var(--green); }
+  .score-red   { color: var(--red); }
+  .score-amber { color: var(--amber); }
+  .score-green { color: var(--green); }
+
+  /* ── TABS ── */
+  .tab-bar {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0;
+  }
+  .tab {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 18px 10px;
+    color: var(--text-faint);
+    cursor: default;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .tab.active {
+    color: var(--amber);
+    border-bottom-color: var(--amber);
+  }
+
+  /* ── FINDINGS CARDS ── */
+  .findings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .finding-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .finding-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .finding-card.high::before  { background: var(--red); }
+  .finding-card.med::before   { background: var(--amber); }
+  .finding-card.low::before   { background: var(--green); }
+  .finding-card.positive::before { background: var(--blue); }
+
+  .finding-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    gap: 12px;
+  }
+  .finding-icon {
+    font-size: 22px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .finding-severity {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .sev-high     { background: var(--red-dim);   color: var(--red); }
+  .sev-medium   { background: var(--amber-glow); color: var(--amber); }
+  .sev-low      { background: var(--green-dim);  color: var(--green); }
+  .sev-positive { background: var(--blue-dim);   color: var(--blue); }
+
+  .finding-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .finding-body {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .finding-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-faint);
+    margin-bottom: 10px;
+  }
+
+  /* ── USER JOURNEY ── */
+  .journey-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .journey-step {
+    display: grid;
+    grid-template-columns: 200px 1fr 100px;
+    gap: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .journey-stage {
+    background: var(--surface2);
+    padding: 18px 20px;
+    border-right: 1px solid var(--border);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+  }
+  .journey-content {
+    padding: 18px 24px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    border-right: 1px solid var(--border);
+  }
+  .journey-sentiment {
+    padding: 18px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sentiment-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-align: center;
+  }
+  .s-bad     { background: var(--red-dim);   color: var(--red); }
+  .s-ok      { background: var(--amber-glow); color: var(--amber); }
+  .s-good    { background: var(--green-dim);  color: var(--green); }
+
+  /* ── SUMMARY GRID ── */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .summary-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .summary-box-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .summary-box-header.works { color: var(--green); background: var(--green-dim); }
+  .summary-box-header.needs { color: var(--red); background: var(--red-dim); }
+  .summary-list {
+    padding: 16px 20px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .summary-list li {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .summary-list li::before {
+    position: absolute;
+    left: 0;
+    top: 1px;
+    font-size: 12px;
+  }
+  .works .summary-list li::before { content: '✓'; color: var(--green); }
+  .needs .summary-list li::before { content: '✗'; color: var(--red); }
+
+  /* ── RECOMMENDATIONS ── */
+  .rec-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .rec-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 24px;
+    display: grid;
+    grid-template-columns: 40px 1fr 100px;
+    gap: 16px;
+    align-items: start;
+  }
+  .rec-num {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--amber);
+    padding-top: 2px;
+  }
+  .rec-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .rec-body {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .priority-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-align: center;
+    align-self: start;
+    margin-top: 2px;
+  }
+  .p-critical { background: var(--red-dim);   color: var(--red); }
+  .p-high     { background: var(--amber-glow); color: var(--amber); }
+  .p-medium   { background: var(--blue-dim);   color: var(--blue); }
+
+  /* ── FOOTER ── */
+  .footer {
+    max-width: 1100px;
+    margin: 64px auto 0;
+    padding: 32px 40px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-faint);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: var(--border); margin: 56px 40px 0; max-width: 1100px; margin-left: auto; margin-right: auto; }
+
+  /* highlight blocks */
+  .info-strip {
+    background: var(--amber-glow);
+    border: 1px solid rgba(245,166,35,0.25);
+    border-radius: 8px;
+    padding: 14px 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .info-strip strong { color: var(--amber); }
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div>
+      <div class="header-eyebrow">UX / Heuristic Evaluation</div>
+      <h1 class="header-title">Euro Truck<br><span>Simulator 2</span></h1>
+      <p class="header-desc">A detailed heuristic evaluation of eurotrucksimulator2.com — covering information architecture, visual design, conversion flow, and mobile experience across the homepage, about, and buy pages.</p>
+      <div class="header-meta">
+        <div>June 2020</div>
+        <div>2 pages audited</div>
+        <div><span>Desktop + Mobile</span></div>
+        <div><span>SCS Software</span></div>
+      </div>
+    </div>
+    <div class="score-badge">
+      <div class="score-num">5.8</div>
+      <div class="score-label">Overall Score</div>
+    </div>
+  </div>
+
+  <!-- GLANCE STATS -->
+  <div class="glance">
+    <div class="glance-item">
+      <div class="glance-label">Nav Items</div>
+      <div class="glance-num">7</div>
+      <div class="glance-sub">Home, About, Blog, Buy...</div>
+    </div>
+    <div class="glance-item">
+      <div class="glance-label">Primary CTAs</div>
+      <div class="glance-num">2</div>
+      <div class="glance-sub">Steam Buy, Blog</div>
+    </div>
+    <div class="glance-item">
+      <div class="glance-label">DLC Listings</div>
+      <div class="glance-num">13+</div>
+      <div class="glance-sub">No pricing shown</div>
+    </div>
+    <div class="glance-item">
+      <div class="glance-label">Mobile Breakpoint</div>
+      <div class="glance-num">1</div>
+      <div class="glance-sub">Limited responsiveness</div>
+    </div>
+  </div>
+</header>
+
+<!-- HEURISTIC SCORES -->
+<div class="section">
+  <div class="section-title">Nielsen Heuristic Summary</div>
+  <div class="heuristic-grid">
+
+    <div class="heuristic-row">
+      <div class="heuristic-top">
+        <div class="heuristic-name">Visibility of system status</div>
+        <div class="heuristic-score score-amber">5/10</div>
+      </div>
+      <div class="heuristic-desc">Carousel has no progress indicator or scrolling cue.</div>
+      <div class="bar-track"><div class="bar-fill bar-amber" style="width:50%"></div></div>
+    </div>
+
+    <div class="heuristic-row">
+      <div class="heuristic-top">
+        <div class="heuristic-name">Match between system and real world</div>
+        <div class="heuristic-score score-green">6/10</div>
+      </div>
+      <div class="heuristic-desc">Trucking language and geography with some inconsistencies.</div>
+      <div class="bar-track"><div class="bar-fill bar-green" style="width:60%"></div></div>
+    </div>
+
+    <div class="heuristic-row">
+      <div class="heuristic-top">
+        <div class="heuristic-name">User control and freedom</div>
+        <div class="heuristic-score score-red">4/10</div>
+      </div>
+      <div class="heuristic-desc">No exit/cancel paths. Buy flow is linear with no escape.</div>
+      <div class="bar-track"><div class="bar-fill bar-red" style="width:40%"></div></div>
+    </div>
+
+    <div class="heuristic-row">
+      <div class="heuristic-top">
+        <div class="heuristic-name">Consistency and standards</div>
+        <div class="heuristic-score score-green">6/10</div>
+      </div>
+      <div class="heuristic-desc">Asymmetric CTAs; visually identical secondary buttons.</div>
+      <div class="bar-track"><div class="bar-fill bar-green" style="width:60%"></div></div>
+    </div>
+
+    <div class="heuristic-row">
+      <div class="heuristic-top">
+        <div class="heuristic-name">Error prevention</div>
+        <div class="heuristic-score score-red">3/10</div>
+      </div>
+      <div class="heuristic-desc">No pricing info before Steam redirect. DLC page causes confusion.</div>
+      <div class="bar-track"><div class="bar-fill bar-red" style="width:30%"></div></div>
+    </div>
+
+    <div class="heuristic-row">
+      <div class="heuristic-top">
+        <div class="heuristic-name">Aesthetic and minimalist design</div>
+        <div class="heuristic-score score-green">6/10</div>
+      </div>
+      <div class="heuristic-desc">Homepage is clean but the About page is overcrowded.</div>
+      <div class="bar-track"><div class="bar-fill bar-green" style="width:60%"></div></div>
+    </div>
+
+    <div class="heuristic-row">
+      <div class="heuristic-top">
+        <div class="heuristic-name">Flexibility and efficiency of use</div>
+        <div class="heuristic-score score-red">4/10</div>
+      </div>
+      <div class="heuristic-desc">No shortcuts, no filtering, no personalisation for returning users.</div>
+      <div class="bar-track"><div class="bar-fill bar-red" style="width:40%"></div></div>
+    </div>
+
+    <div class="heuristic-row">
+      <div class="heuristic-top">
+        <div class="heuristic-name">Help and documentation</div>
+        <div class="heuristic-score score-amber">5/10</div>
+      </div>
+      <div class="heuristic-desc">Support link is in the footer. No in-context help on buy page.</div>
+      <div class="bar-track"><div class="bar-fill bar-amber" style="width:50%"></div></div>
+    </div>
+
+    <div class="heuristic-row">
+      <div class="heuristic-top">
+        <div class="heuristic-name">Recognition over recall</div>
+        <div class="heuristic-score score-amber">5/10</div>
+      </div>
+      <div class="heuristic-desc">DLC needs more visual differentiation. Some thumbnails are identical.</div>
+      <div class="bar-track"><div class="bar-fill bar-amber" style="width:50%"></div></div>
+    </div>
+
+    <div class="heuristic-row">
+      <div class="heuristic-top">
+        <div class="heuristic-name">Error recovery</div>
+        <div class="heuristic-score score-amber">7/10</div>
+      </div>
+      <div class="heuristic-desc">Clear 404 error page. 404 handling acceptable.</div>
+      <div class="bar-track"><div class="bar-fill bar-amber" style="width:70%"></div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FINDINGS: HOMEPAGE -->
+<div class="section">
+  <div class="section-title">Findings</div>
+  <div class="tab-bar">
+    <div class="tab active">Homepage</div>
+    <div class="tab">About</div>
+    <div class="tab">Buy / DLC</div>
+  </div>
+
+  <div class="findings-grid">
+
+    <div class="finding-card high">
+      <div class="finding-header">
+        <div class="finding-icon">🏠</div>
+        <div class="finding-severity sev-high">High severity</div>
+      </div>
+      <div class="finding-num">#01</div>
+      <div class="finding-title">Hero section lacks hierarchy clarity</div>
+      <div class="finding-body">The headline "Truckers Wanted" is bold but the value proposition beneath is a dense paragraph with no scannable structure. A first-time visitor cannot tell within 5 seconds whether this is free, paid, or subscription. The "Buy" and "Download Demo" CTAs compete equally with no visual weight distinction.</div>
+    </div>
+
+    <div class="finding-card high">
+      <div class="finding-header">
+        <div class="finding-icon">🎠</div>
+        <div class="finding-severity sev-high">High severity</div>
+      </div>
+      <div class="finding-num">#02</div>
+      <div class="finding-title">Carousel without controls</div>
+      <div class="finding-body">The homepage carousel autoplays with no pause controls, visible dots or progress indicator, and no pre-loaded thumbnails. A new user can't see how to stop it. This fails WCAG 2.1 AA Success Criterion 2.2.2 on motion control.</div>
+    </div>
+
+    <div class="finding-card low">
+      <div class="finding-header">
+        <div class="finding-icon">⭐</div>
+        <div class="finding-severity sev-positive">Strength</div>
+      </div>
+      <div class="finding-num">#03</div>
+      <div class="finding-title">Strong social proof placement</div>
+      <div class="finding-body">Steam Awards and review counts are placed directly below the hero, providing immediate credibility signals. The live "currently playing" player count in the footer reinforces an active community. These are well-executed trust elements that reduce purchase anxiety.</div>
+    </div>
+
+    <div class="finding-card high">
+      <div class="finding-header">
+        <div class="finding-icon">🃏</div>
+        <div class="finding-severity sev-high">High severity</div>
+      </div>
+      <div class="finding-num">#04</div>
+      <div class="finding-title">Feature cards lack scannable depth</div>
+      <div class="finding-body">The feature tiles link to anchor points on the About page. However, they are visually indistinct — identical size, no imagery, no micro-copy differences. Users cannot quickly identify which feature matters most to them before clicking through.</div>
+    </div>
+
+    <div class="finding-card high">
+      <div class="finding-header">
+        <div class="finding-icon">📱</div>
+        <div class="finding-severity sev-high">High severity</div>
+      </div>
+      <div class="finding-num">#05</div>
+      <div class="finding-title">Mobile experience is degraded</div>
+      <div class="finding-body">Navigation collapses appropriately but critical elements like the DLC expansion amount only become very small without legible labels. The hero paragraph text requires horizontal scrolling on narrow viewports. No mobile-specific affordances are provided for the truck carousel or feature sections.</div>
+    </div>
+
+  </div>
+
+  <!-- About page findings -->
+  <div class="tab-bar" style="margin-top:32px">
+    <div class="tab">Homepage</div>
+    <div class="tab active">About</div>
+    <div class="tab">Buy / DLC</div>
+  </div>
+
+  <div class="findings-grid">
+
+    <div class="finding-card high">
+      <div class="finding-header">
+        <div class="finding-icon">🌍</div>
+        <div class="finding-severity sev-high">High severity</div>
+      </div>
+      <div class="finding-num">#06</div>
+      <div class="finding-title">Country descriptions are repetitive and exhausting</div>
+      <div class="finding-body">The "Explore Europe" section lists DLC countries as an extremely long scroll with information density nearly identical for each. An interactive grid would deliver the same information in a fraction of the space.</div>
+    </div>
+
+    <div class="finding-card low">
+      <div class="finding-header">
+        <div class="finding-icon">🚛</div>
+        <div class="finding-severity sev-positive">Strength</div>
+      </div>
+      <div class="finding-num">#07</div>
+      <div class="finding-title">Interactive truck viewer is a standout</div>
+      <div class="finding-body">The 360° truck configurator widget on the About page is the site's strongest interactive element. Users can rotate trucks and toggle customisation categories, directly communicating the game's depth. This is excellent engagement design for the core audience.</div>
+    </div>
+
+    <div class="finding-card med">
+      <div class="finding-header">
+        <div class="finding-icon">🧭</div>
+        <div class="finding-severity sev-medium">Medium severity</div>
+      </div>
+      <div class="finding-num">#08</div>
+      <div class="finding-title">No contextual buy nudges during exploration</div>
+      <div class="finding-body">The About page is rich with content but contains very few contextual CTAs. A user who becomes excited reading about the career system or company management has to scroll all the way to the nav or footer to convert. In-context nudges are entirely absent.</div>
+    </div>
+
+    <div class="finding-card high">
+      <div class="finding-header">
+        <div class="finding-icon">👥</div>
+        <div class="finding-severity sev-high">High severity</div>
+      </div>
+      <div class="finding-num">#09</div>
+      <div class="finding-title">Modding section undersells the community</div>
+      <div class="finding-body">The modding section is text-heavy with category labels but no screenshots, links to popular mods, or community size numbers. For a game with an enormous modding ecosystem, this section punishes interest by delivering a long name-drop differentiation.</div>
+    </div>
+
+  </div>
+
+  <!-- Buy page findings -->
+  <div class="tab-bar" style="margin-top:32px">
+    <div class="tab">Homepage</div>
+    <div class="tab">About</div>
+    <div class="tab active">Buy / DLC</div>
+  </div>
+
+  <div class="findings-grid">
+
+    <div class="finding-card high">
+      <div class="finding-header">
+        <div class="finding-icon">💰</div>
+        <div class="finding-severity sev-high">High severity</div>
+      </div>
+      <div class="finding-num">#10</div>
+      <div class="finding-title">No prices displayed anywhere</div>
+      <div class="finding-body">Clicking any DLC sends the user to Steam for pricing. This is a major conversion friction point — users cannot compare value or make purchase decisions without leaving the site. Even approximate "from $X" pricing would dramatically reduce drop-off.</div>
+    </div>
+
+    <div class="finding-card high">
+      <div class="finding-header">
+        <div class="finding-icon">🛒</div>
+        <div class="finding-severity sev-high">High severity</div>
+      </div>
+      <div class="finding-num">#11</div>
+      <div class="finding-title">Wishlist vs Buy CTAs are visually identical</div>
+      <div class="finding-body">Recurring DLC pages use "Wishlist" and "Buy on Steam" in an identical "Pintrest-it" styled CTA. On a warning page there are no visual signals that some products are not yet purchasable, leading to friction and mismatched expectations.</div>
+    </div>
+
+    <div class="finding-card med">
+      <div class="finding-header">
+        <div class="finding-icon">🗺️</div>
+        <div class="finding-severity sev-medium">Medium severity</div>
+      </div>
+      <div class="finding-num">#12</div>
+      <div class="finding-title">No DLC list is overwhelming: no discovery aid</div>
+      <div class="finding-body">13+ DLC packs are listed with no filtering, no sorting by region or popularity, and no recommended entry point for new players. The cognitive load is severe for any first-time buyer trying to decide where to spend money.</div>
+    </div>
+
+    <div class="finding-card low">
+      <div class="finding-header">
+        <div class="finding-icon">🖼️</div>
+        <div class="finding-severity sev-positive">Strength</div>
+      </div>
+      <div class="finding-num">#13</div>
+      <div class="finding-title">Screenshot thumbnails per DLC are helpful</div>
+      <div class="finding-body">Each DLC page includes 3 thumbnail screenshots giving users a regional preview of each expansion's visual style before purchase. This is a solid content decision that meaningfully aids visual decision-making and communicates the visual breadth of each DLC pack.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- USER JOURNEY -->
+<div class="section">
+  <div class="section-title">User Journey — First-time visitor to purchase</div>
+  <div class="journey-list">
+
+    <div class="journey-step">
+      <div class="journey-stage">Discovery</div>
+      <div class="journey-content">User arrives from Google search or YouTube. Lands on the homepage. "Truckers Wanted" is bold and on-brand but the wall of descriptive text below requires effort to parse. No immediate price or clear value summary visible.</div>
+      <div class="journey-sentiment"><span class="sentiment-tag s-ok">Mixed</span></div>
+    </div>
+
+    <div class="journey-step">
+      <div class="journey-stage">Credibility check</div>
+      <div class="journey-content">Steam Awards and review quote quickly build credibility. The live player count (~10K currently playing) provides strong social proof. The feature grid gives a top-level view of game depth, creating confidence in overall offering.</div>
+      <div class="journey-sentiment"><span class="sentiment-tag s-good">Strong</span></div>
+    </div>
+
+    <div class="journey-step">
+      <div class="journey-stage">Research — About page</div>
+      <div class="journey-content">The 360° truck viewer is impressive but the 31-country scroll is exhausting. They want to understand scope but the UI buries the map. The repetitive country descriptions make the user skim and miss key features.</div>
+      <div class="journey-sentiment"><span class="sentiment-tag s-ok">Friction</span></div>
+    </div>
+
+    <div class="journey-step">
+      <div class="journey-stage">Purchase intent — Buy page</div>
+      <div class="journey-content">User clicks Buy and immediately faces 13+ DLC options with no prices and no "start here" recommendation. The base game is at the top but the value of each expansion isn't immediately clear. Users who haven't already decided face a confusing wall of choices.</div>
+      <div class="journey-sentiment"><span class="sentiment-tag s-bad">High drop</span></div>
+    </div>
+
+    <div class="journey-step">
+      <div class="journey-stage">Conversion — Buy page</div>
+      <div class="journey-content">User clicks "Buy on Steam" and is redirected to Steam. The Steam context is understandable given platform constraints, but all conversion data and abandoned-cart recovery happens outside SCS Software's control.</div>
+      <div class="journey-sentiment"><span class="sentiment-tag s-ok">Dependent</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div class="section">
+  <div class="section-title">Strengths & Weaknesses</div>
+  <div class="summary-grid">
+
+    <div class="summary-box works">
+      <div class="summary-box-header works">✓ What works well</div>
+      <ul class="summary-list">
+        <li>Brand atmosphere is strong — cinematic visuals match the game genre</li>
+        <li>Truck configurator is polished and immediately communicates depth</li>
+        <li>Steam Awards + review pull quote build instant credibility</li>
+        <li>DLC screenshots (landscape + interior) are polished and well-designed</li>
+        <li>Community ties (34k AER subscribers) is excellent social differentiation</li>
+        <li>Live player counter bridges the site to the living game community</li>
+      </ul>
+    </div>
+
+    <div class="summary-box needs">
+      <div class="summary-box-header needs">✗ What needs improvement</div>
+      <ul class="summary-list">
+        <li>No prices on the Buy page — a major conversion blocker</li>
+        <li>DLC discovery has no filtering, sorting, or new-user recommendation</li>
+        <li>Autoplay carousel with no controls — fails accessibility standards</li>
+        <li>Wishlist and Buy CTAs look identical — mismatched user expectations</li>
+        <li>About page country list is repetitive and excessively long</li>
+        <li>Mobile experience degrades significantly — small text, broken layouts</li>
+        <li>Wishlist and Buy CTAs look identical — mismatched expectations</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- RECOMMENDATIONS -->
+<div class="section">
+  <div class="section-title">Recommendations</div>
+  <div class="rec-list">
+
+    <div class="rec-card">
+      <div class="rec-num">01</div>
+      <div>
+        <div class="rec-title">Add price architecture to the Buy page</div>
+        <div class="rec-body">Add "Buy from $X on Steam" alongside each DLC listing. Even a relative indicator ($/$$/$$$ ) would reduce decision friction and prevent users from having to leave the site to evaluate value before returning to purchase.</div>
+      </div>
+      <div class="priority-tag p-critical">Critical</div>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">02</div>
+      <div>
+        <div class="rec-title">Introduce a DLC recommendation flow</div>
+        <div class="rec-body">Add a short two-question selector at the top of the Buy page. "New to ETS2? Get the base game. Like Scandinavia? Try Nordic Horizons." A short preference quiz in a region filter would dramatically reduce cognitive load for new players.</div>
+      </div>
+      <div class="priority-tag p-critical">Critical</div>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">03</div>
+      <div>
+        <div class="rec-title">Add carousel controls for accessibility</div>
+        <div class="rec-body">The autorotating carousel needs pause, previous, and next controls. This is both a usability issue (users can't examine screenshots at their own pace) and an accessibility failure under WCAG 2.1 AA Success Criterion 2.2.2 (Pause, Stop, Hide).</div>
+      </div>
+      <div class="priority-tag p-high">High</div>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">04</div>
+      <div>
+        <div class="rec-title">Replace the country list with an interactive map</div>
+        <div class="rec-body">The wall of text on the About page should be replaced with a clickable SVG map of Europe. Users can click each EU country or region to expand its description inline. This would visually communicate the game's scale and improve browsing experience significantly.</div>
+      </div>
+      <div class="priority-tag p-high">High</div>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">05</div>
+      <div>
+        <div class="rec-title">Differentiate primary and secondary CTAs visually</div>
+        <div class="rec-body">The "Wishlist" CTA should be outlined or secondary. On the Buy page, "Wishlist" should use a bookmark icon and softer styling (outlined muted button) to clearly signal it is not yet purchasable content.</div>
+      </div>
+      <div class="priority-tag p-high">High</div>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">06</div>
+      <div>
+        <div class="rec-title">Add in-context purchase nudges on the About page</div>
+        <div class="rec-body">After each major feature section (Trucks, Career, Company Management) add a small contextual CTA like "Ready to build your company? Get ETS2 →". This captures purchase intent at peak engagement rather than forcing a navigation detour at the wrong moment.</div>
+      </div>
+      <div class="priority-tag p-medium">Medium</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+<footer class="footer">
+  <div>Euro Truck Simulator 2 — UX Case Study</div>
+  <div>eurotrucksimulator2.com &nbsp;·&nbsp; SCS Software &nbsp;·&nbsp; June 2020</div>
+</footer>
+
+</body>
+</html>
