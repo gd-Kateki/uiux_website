@@ -19,11 +19,13 @@
 <!-- Nav -->
 <nav>
   <a href="index.html" class="logo">Aditya Nair<i>.</i></a>
-  <ul>
-    <li><a href="#about">About</a></li>
-    <li><a href="#work">Work</a></li>
-  </ul>
-  <a href="mailto:hello@alexdesigns.co" class="nav-hire">Available for work →</a>
+  <div class="nav-right">
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+    </ul>
+    <a href="mailto:hello@adityanair.com" class="nav-hire">Available for work →</a>
+  </div>
 </nav>
 
 <!-- Hero -->
@@ -58,6 +60,12 @@
 <section class="about-section" id="about">
   <div class="about-container">
     <div>
+      <p class="about-eyebrow">About me</p>
+      <p class="about-statement">I'm a product designer who thinks in systems but designs for <em>people</em>.</p>
+      <p class="about-body">My work spans mobile, web, and zero-to-one products — always starting with the question nobody wants to ask: are we solving the right problem? I partner closely with engineers and PMs, and I believe the best design decisions happen at the whiteboard, not in Figma.</p>
+    </div>
+
+    <div>
       <p class="about-eyebrow" style="margin-bottom: 24px;">Practical skills</p>
       <div class="skills-grid">
         <div class="skill-cell">
@@ -81,12 +89,6 @@
           <div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div>
         </div>
       </div>
-    </div>
-
-    <div>
-      <p class="about-eyebrow">About me</p>
-      <p class="about-statement">I'm a product designer who thinks in systems but designs for <em>people</em>.</p>
-      <p class="about-body">My work spans mobile, web, and zero-to-one products — always starting with the question nobody wants to ask: are we solving the right problem? I partner closely with engineers and PMs, and I believe the best design decisions happen at the whiteboard, not in Figma.</p>
     </div>
   </div>
 </section>
@@ -136,7 +138,7 @@
         <h3 class="proj-title">Cozy Cafe Self-Order</h3>
         <p class="proj-desc">A scan-to-order experience designed for dine-in cafes. Guests scan the table QR and the menu loads instantly in the browser — no friction.</p>
         <div class="proj-footer">
-          <span class="proj-year">2024</span>
+          <span class="proj-year">2026</span>
           <a href="CafeMenu.html" class="proj-link">View Showcase →</a>
         </div>
       </div>
@@ -157,7 +159,11 @@
   <div class="contact-inner">
     <p class="contact-eyebrow">Get in touch</p>
     <h2 class="contact-title">Let's build something <em>together</em>.</h2>
-    <form class="contact-form">
+    <form class="contact-form" action="https://formsubmit.co/hello@adityanair.com" method="POST">
+      <!-- FormSubmit configurations -->
+      <input type="hidden" name="_subject" value="New Contact from Portfolio Site!">
+      <input type="hidden" name="_captcha" value="false">
+      
       <div class="form-group">
         <label for="name">Name</label>
         <input type="text" id="name" name="name" required>
