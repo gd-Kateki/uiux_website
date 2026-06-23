@@ -13,6 +13,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=2">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 </head>
 <body>
 
@@ -57,7 +59,7 @@
 
 
 <!-- About -->
-<section class="about-section" id="about">
+<section class="about-section reveal" id="about">
   <div class="about-container">
     <div>
       <p class="about-eyebrow">About me</p>
@@ -105,9 +107,9 @@
 
   <div class="projects-grid">
     <!-- Single Featured Project -->
-    <div class="proj-card" style="cursor: pointer;" onclick="window.location.href='eCommerce_Dashboard_Portal.html'">
+    <div class="proj-card reveal" style="cursor: pointer;" onclick="window.location.href='eCommerce_Dashboard_Portal.html'">
       <div class="proj-visual" style="height: 380px; background: #0E0D12; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-        <img src="Dashboard_Portal_Project/Dashboard.png" style="width: 100%; height: 100%; object-fit: cover;" alt="eCommerce Dashboard UI">
+        <img src="Dashboard_Portal_Project/Dashboard.png" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" alt="eCommerce Dashboard UI">
       </div>
       <div class="proj-body">
         <div class="proj-tags">
@@ -125,9 +127,9 @@
     </div>
 
     <!-- Cafe Menu Project -->
-    <div class="proj-card" style="cursor: pointer;" onclick="window.location.href='CafeMenu.html'">
+    <div class="proj-card reveal" style="cursor: pointer;" onclick="window.location.href='CafeMenu.html'">
       <div class="proj-visual" style="height: 380px; background: #1C3328; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-        <img src="Cafe_Menu_Project/Main Screen.png" style="height: 90%; width: auto; object-fit: contain; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border-radius: 20px;" alt="Cozy Cafe Self-Order Mobile UI">
+        <img src="Cafe_Menu_Project/Main Screen.png" style="height: 90%; width: auto; object-fit: contain; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border-radius: 20px;" loading="lazy" alt="Cozy Cafe Self-Order Mobile UI">
       </div>
       <div class="proj-body">
         <div class="proj-tags">
@@ -155,7 +157,7 @@
 </div>
 
 <!-- Contact -->
-<section class="contact-section" id="contact">
+<section class="contact-section reveal" id="contact">
   <div class="contact-inner">
     <p class="contact-eyebrow">Get in touch</p>
     <h2 class="contact-title">Let's build something <em>together</em>.</h2>
@@ -185,7 +187,7 @@
 <footer>
   <div>
     <p class="footer-tagline">Let's make something<br><em>worth using.</em></p>
-    <p class="footer-sub">Currently open to new projects. <a href="mailto:hello@alexdesigns.co">Say hello →</a></p>
+    <p class="footer-sub">Currently open to new projects. <a href="mailto:hello@adityanair.com">Say hello →</a></p>
   </div>
   <div class="footer-links">
     <a href="#" class="f-link">LinkedIn ↗</a>
@@ -212,6 +214,19 @@
     });
   }, {threshold:.5});
   bars.forEach(b => { b.style.opacity='1'; bObs.observe(b); });
+
+  // Scroll reveal animations
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+  
+  reveals.forEach(r => revealObs.observe(r));
 </script>
 </body>
 </html>

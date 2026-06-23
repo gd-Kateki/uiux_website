@@ -10,6 +10,8 @@
 <meta property="og:title" content="eCommerce Dashboard Portal — Case Study | Aditya Nair">
 <meta property="og:description" content="A complete UX case study by Aditya Nair on redesigning an eCommerce seller dashboard portal, improving inventory control, shipping, analytics, and payouts.">
 <meta property="og:type" content="article">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -545,7 +547,7 @@
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <span class="lightbox-close" onclick="closeLightbox()">×</span>
-  <img id="lightbox-img" src="" alt="">
+  <img loading="lazy" id="lightbox-img" src="" alt="">
   <div class="lightbox-caption" id="lightbox-caption"></div>
 </div>
 
@@ -563,7 +565,7 @@
     </div>
   </div>
   <div class="hero-right">
-    <img src="Dashboard_Portal_Project/Dashboard.png" alt="Dashboard Hero" onclick="openLightbox(this, 'Dashboard')">
+    <img loading="lazy" src="Dashboard_Portal_Project/Dashboard.png" alt="Dashboard Hero" onclick="openLightbox(this, 'Dashboard')">
   </div>
 </section>
 
@@ -617,7 +619,7 @@
   <div class="eyebrow">Key Screen</div>
   <h2>The <em>Dashboard</em></h2>
   <p>The centrepiece of the portal. Sellers land here after login and get an immediate pulse on their business — revenue this month, pending orders, top products, and store health at a glance.</p>
-  <img class="key-screen-img" src="Dashboard_Portal_Project/Dashboard.png" alt="Dashboard UI" onclick="openLightbox(this, 'Dashboard — Main Overview')">
+  <img loading="lazy" class="key-screen-img" src="Dashboard_Portal_Project/Dashboard.png" alt="Dashboard UI" onclick="openLightbox(this, 'Dashboard — Main Overview')">
 </section>
 
 <!-- PROBLEM SPACE -->
@@ -668,7 +670,7 @@
           <span class="step-tag">Affinity mapping</span>
           <span class="step-tag">Survey (n=52)</span>
         </div>
-        <div class="step-img-wrap"><img class="step-img" src="Dashboard_Portal_Project/Customers.png" alt="Customer Research" onclick="openLightbox(this, 'Customer Research Screen')"></div>
+        <div class="step-img-wrap"><img loading="lazy" class="step-img" src="Dashboard_Portal_Project/Customers.png" alt="Customer Research" onclick="openLightbox(this, 'Customer Research Screen')"></div>
       </div>
     </div>
 
@@ -682,7 +684,7 @@
           <span class="step-tag">Sitemap</span>
           <span class="step-tag">User flows</span>
         </div>
-        <div class="step-img-wrap"><img class="step-img" src="Dashboard_Portal_Project/Settings.png" alt="Navigation Architecture" onclick="openLightbox(this, 'Navigation &amp; Settings Architecture')"></div>
+        <div class="step-img-wrap"><img loading="lazy" class="step-img" src="Dashboard_Portal_Project/Settings.png" alt="Navigation Architecture" onclick="openLightbox(this, 'Navigation &amp; Settings Architecture')"></div>
       </div>
     </div>
 
@@ -697,8 +699,8 @@
           <span class="step-tag">Usability testing</span>
         </div>
         <div class="step-img-pair">
-          <div class="step-img-wrap"><img class="step-img" src="Dashboard_Portal_Project/Products.png" alt="Product Listing Flow" onclick="openLightbox(this, 'Products — Listing Flow')"></div>
-          <div class="step-img-wrap"><img class="step-img" src="Dashboard_Portal_Project/Orders.png" alt="Order Fulfilment Flow" onclick="openLightbox(this, 'Orders — Fulfilment Flow')"></div>
+          <div class="step-img-wrap"><img loading="lazy" class="step-img" src="Dashboard_Portal_Project/Products.png" alt="Product Listing Flow" onclick="openLightbox(this, 'Products — Listing Flow')"></div>
+          <div class="step-img-wrap"><img loading="lazy" class="step-img" src="Dashboard_Portal_Project/Orders.png" alt="Order Fulfilment Flow" onclick="openLightbox(this, 'Orders — Fulfilment Flow')"></div>
         </div>
       </div>
     </div>
@@ -713,7 +715,7 @@
           <span class="step-tag">Component library</span>
           <span class="step-tag">Figma variants</span>
         </div>
-        <div class="step-img-wrap"><img class="step-img" src="Dashboard_Portal_Project/Promotions.png" alt="Promotions — Component Use" onclick="openLightbox(this, 'Promotions — Component System in Use')"></div>
+        <div class="step-img-wrap"><img loading="lazy" class="step-img" src="Dashboard_Portal_Project/Promotions.png" alt="Promotions — Component Use" onclick="openLightbox(this, 'Promotions — Component System in Use')"></div>
       </div>
     </div>
 
@@ -728,7 +730,7 @@
           <span class="step-tag">SUS scoring</span>
           <span class="step-tag">Developer handoff</span>
         </div>
-        <div class="step-img-wrap"><img class="step-img" src="Dashboard_Portal_Project/Reviews.png" alt="Reviews &amp; Refinement" onclick="openLightbox(this, 'Reviews — Testing &amp; Refinement')"></div>
+        <div class="step-img-wrap"><img loading="lazy" class="step-img" src="Dashboard_Portal_Project/Reviews.png" alt="Reviews &amp; Refinement" onclick="openLightbox(this, 'Reviews — Testing &amp; Refinement')"></div>
       </div>
     </div>
 
@@ -749,7 +751,7 @@
         <p>The inventory screen gives sellers live stock visibility. Inline status flags surface low-stock items immediately, and bulk editing means no more emailing CSV files to support. Sellers can update prices and quantities directly from the table.</p>
       </div>
       <div class="screen-frame">
-        <img class="screen-thumb" src="Dashboard_Portal_Project/Inventory.png" alt="Inventory Screen" onclick="openLightbox(this, 'Inventory Screen')">
+        <img loading="lazy" class="screen-thumb" src="Dashboard_Portal_Project/Inventory.png" alt="Inventory Screen" onclick="openLightbox(this, 'Inventory Screen')">
       </div>
     </div>
 
@@ -760,7 +762,7 @@
         <p>Bulk shipping label generation and carrier tracking, all without leaving the portal. Reduces fulfilment time from 12 minutes to under 3.</p>
       </div>
       <div class="screen-frame">
-        <img class="screen-thumb" src="Dashboard_Portal_Project/Shipping.png" alt="Shipping Screen" onclick="openLightbox(this, 'Shipping Screen')">
+        <img loading="lazy" class="screen-thumb" src="Dashboard_Portal_Project/Shipping.png" alt="Shipping Screen" onclick="openLightbox(this, 'Shipping Screen')">
       </div>
     </div>
 
@@ -771,7 +773,7 @@
         <p>Revenue trends, top-selling products, buyer segments, and conversion rates — clean charts that give context, not just numbers.</p>
       </div>
       <div class="screen-frame">
-        <img class="screen-thumb" src="Dashboard_Portal_Project/Analytics.png" alt="Analytics Screen" onclick="openLightbox(this, 'Analytics Screen')">
+        <img loading="lazy" class="screen-thumb" src="Dashboard_Portal_Project/Analytics.png" alt="Analytics Screen" onclick="openLightbox(this, 'Analytics Screen')">
       </div>
     </div>
 
@@ -782,7 +784,7 @@
         <p>Sellers can track every payout — pending, processed, and upcoming. Detailed breakdowns of fees and net earnings removed the single biggest reason sellers were leaving for competitor platforms.</p>
       </div>
       <div class="screen-frame">
-        <img class="screen-thumb" src="Dashboard_Portal_Project/Payouts.png" alt="Payouts Screen" onclick="openLightbox(this, 'Payouts Screen')">
+        <img loading="lazy" class="screen-thumb" src="Dashboard_Portal_Project/Payouts.png" alt="Payouts Screen" onclick="openLightbox(this, 'Payouts Screen')">
       </div>
     </div>
   </div>
@@ -797,51 +799,51 @@
   <div class="gallery-grid">
     <div class="gallery-item">
       <div class="gallery-label">Dashboard</div>
-      <img class="gallery-thumb" src="Dashboard_Portal_Project/Dashboard.png" alt="Dashboard" onclick="openLightbox(this, 'Dashboard')">
+      <img loading="lazy" class="gallery-thumb" src="Dashboard_Portal_Project/Dashboard.png" alt="Dashboard" onclick="openLightbox(this, 'Dashboard')">
     </div>
     <div class="gallery-item">
       <div class="gallery-label">Analytics</div>
-      <img class="gallery-thumb" src="Dashboard_Portal_Project/Analytics.png" alt="Analytics" onclick="openLightbox(this, 'Analytics')">
+      <img loading="lazy" class="gallery-thumb" src="Dashboard_Portal_Project/Analytics.png" alt="Analytics" onclick="openLightbox(this, 'Analytics')">
     </div>
     <div class="gallery-item">
       <div class="gallery-label">Orders</div>
-      <img class="gallery-thumb" src="Dashboard_Portal_Project/Orders.png" alt="Orders" onclick="openLightbox(this, 'Orders')">
+      <img loading="lazy" class="gallery-thumb" src="Dashboard_Portal_Project/Orders.png" alt="Orders" onclick="openLightbox(this, 'Orders')">
     </div>
     <div class="gallery-item">
       <div class="gallery-label">Inventory</div>
-      <img class="gallery-thumb" src="Dashboard_Portal_Project/Inventory.png" alt="Inventory" onclick="openLightbox(this, 'Inventory')">
+      <img loading="lazy" class="gallery-thumb" src="Dashboard_Portal_Project/Inventory.png" alt="Inventory" onclick="openLightbox(this, 'Inventory')">
     </div>
     <div class="gallery-item">
       <div class="gallery-label">Products</div>
-      <img class="gallery-thumb" src="Dashboard_Portal_Project/Products.png" alt="Products" onclick="openLightbox(this, 'Products')">
+      <img loading="lazy" class="gallery-thumb" src="Dashboard_Portal_Project/Products.png" alt="Products" onclick="openLightbox(this, 'Products')">
     </div>
     <div class="gallery-item">
       <div class="gallery-label">Customers</div>
-      <img class="gallery-thumb" src="Dashboard_Portal_Project/Customers.png" alt="Customers" onclick="openLightbox(this, 'Customers')">
+      <img loading="lazy" class="gallery-thumb" src="Dashboard_Portal_Project/Customers.png" alt="Customers" onclick="openLightbox(this, 'Customers')">
     </div>
     <div class="gallery-item">
       <div class="gallery-label">Payouts</div>
-      <img class="gallery-thumb" src="Dashboard_Portal_Project/Payouts.png" alt="Payouts" onclick="openLightbox(this, 'Payouts')">
+      <img loading="lazy" class="gallery-thumb" src="Dashboard_Portal_Project/Payouts.png" alt="Payouts" onclick="openLightbox(this, 'Payouts')">
     </div>
     <div class="gallery-item">
       <div class="gallery-label">Shipping</div>
-      <img class="gallery-thumb" src="Dashboard_Portal_Project/Shipping.png" alt="Shipping" onclick="openLightbox(this, 'Shipping')">
+      <img loading="lazy" class="gallery-thumb" src="Dashboard_Portal_Project/Shipping.png" alt="Shipping" onclick="openLightbox(this, 'Shipping')">
     </div>
     <div class="gallery-item">
       <div class="gallery-label">Reviews</div>
-      <img class="gallery-thumb" src="Dashboard_Portal_Project/Reviews.png" alt="Reviews" onclick="openLightbox(this, 'Reviews')">
+      <img loading="lazy" class="gallery-thumb" src="Dashboard_Portal_Project/Reviews.png" alt="Reviews" onclick="openLightbox(this, 'Reviews')">
     </div>
     <div class="gallery-item">
       <div class="gallery-label">Promotions</div>
-      <img class="gallery-thumb" src="Dashboard_Portal_Project/Promotions.png" alt="Promotions" onclick="openLightbox(this, 'Promotions')">
+      <img loading="lazy" class="gallery-thumb" src="Dashboard_Portal_Project/Promotions.png" alt="Promotions" onclick="openLightbox(this, 'Promotions')">
     </div>
     <div class="gallery-item">
       <div class="gallery-label">Profile</div>
-      <img class="gallery-thumb" src="Dashboard_Portal_Project/Profile.png" alt="Profile" onclick="openLightbox(this, 'Profile')">
+      <img loading="lazy" class="gallery-thumb" src="Dashboard_Portal_Project/Profile.png" alt="Profile" onclick="openLightbox(this, 'Profile')">
     </div>
     <div class="gallery-item">
       <div class="gallery-label">Settings</div>
-      <img class="gallery-thumb" src="Dashboard_Portal_Project/Settings.png" alt="Settings" onclick="openLightbox(this, 'Settings')">
+      <img loading="lazy" class="gallery-thumb" src="Dashboard_Portal_Project/Settings.png" alt="Settings" onclick="openLightbox(this, 'Settings')">
     </div>
   </div>
 </section>
@@ -852,8 +854,8 @@
   <h2>Colour, type, <em>space</em></h2>
   <p>A restrained, purposeful system built on an indigo palette — credible and calm for a financial tool, without the grey sterility of enterprise SaaS. Semantic colour (green = healthy, amber = warning, rose = urgent) lets sellers read the page without reading it.</p>
   <div class="style-grid">
-    <img src="Dashboard_Portal_Project/Colour_Palette.png" alt="Colour Palette" onclick="openLightbox(this, 'Colour Palette')">
-    <img src="Dashboard_Portal_Project/Typography.png" alt="Typography System" onclick="openLightbox(this, 'Typography System')">
+    <img loading="lazy" src="Dashboard_Portal_Project/Colour_Palette.png" alt="Colour Palette" onclick="openLightbox(this, 'Colour Palette')">
+    <img loading="lazy" src="Dashboard_Portal_Project/Typography.png" alt="Typography System" onclick="openLightbox(this, 'Typography System')">
   </div>
 </section>
 
@@ -896,10 +898,14 @@
   </div>
 </section>
 
+<div style="text-align: center; margin: 48px 0;">
+  <a href="index.html" style="display: inline-block; padding: 14px 28px; background: var(--indigo); color: var(--white); text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px; transition: background 0.2s;">← Back to Home</a>
+</div>
+
 <!-- FOOTER -->
 <footer>
-  <p><strong>eCommerce Dashboard</strong> — Aditya · UX Case Study · 2026</p>
-  <p style="margin-top: 6px;">© 2026 Aditya</p>
+  <p><strong>eCommerce Dashboard</strong> — Aditya Nair · UX Case Study · 2026</p>
+  <p style="margin-top: 6px;">© 2026 Aditya Nair</p>
 </footer>
 
 <script>
