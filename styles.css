@@ -225,24 +225,44 @@
   }
   .strip-track::-webkit-scrollbar { display: none; }
 
-  /* ── Projects Grid (vertical cards, stacked vertically) ── */
+  /* ── Projects Grid (Horizontal Scroll Stack) ── */
   .projects-grid {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-    padding: 0 48px 48px;
-    max-width: 1200px;
-    margin: 0 auto;
+    flex-direction: row;
+    align-items: stretch;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 28px;
+    padding: 16px 48px 48px;
+    margin: 0;
+    width: 100%;
     animation: fade-in .8s .4s ease both;
   }
 
-  /* Vertical card stacked in a column */
+  /* Custom subtle scrollbar on desktop */
+  .projects-grid::-webkit-scrollbar {
+    height: 6px;
+  }
+  .projects-grid::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .projects-grid::-webkit-scrollbar-thumb {
+    background: rgba(15, 23, 42, 0.08);
+    border-radius: 3px;
+    transition: background .2s;
+  }
+  .projects-grid:hover::-webkit-scrollbar-thumb {
+    background: rgba(15, 23, 42, 0.22);
+  }
+
+  /* Vertical card in horizontal scroll track */
   .proj-card-v {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    max-width: 680px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    width: 420px;
     border: 1px solid var(--border-md);
     background: #fff;
     overflow: hidden;
@@ -255,7 +275,7 @@
   }
   .proj-visual-v {
     width: 100%;
-    height: 380px;
+    height: 280px;
     overflow: hidden;
     flex-shrink: 0;
     display: flex;
@@ -727,9 +747,9 @@
     .hero-cta-group { align-items: flex-start; }
     .section-head { padding: 32px 24px 20px; }
     .strip-track { padding: 0 24px 32px; }
-    .projects-grid { gap: 28px; padding: 0 24px 32px; }
-    .proj-card-v { width: 100%; }
-    .proj-visual-v { height: 240px; }
+    .projects-grid { gap: 20px; padding: 0 24px 32px; }
+    .proj-card-v { width: 310px; }
+    .proj-visual-v { height: 210px; }
     .about-container { grid-template-columns: 1fr; padding: 40px 24px; gap: 40px; }
     .contact-section { padding: 40px 24px; }
     footer { grid-template-columns: 1fr; padding: 40px 24px 32px; }
