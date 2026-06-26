@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>NovelNest — UI/UX Design Showcase | Aditya Nair</title>
+<meta name="description" content="NovelNest is a dark-themed webnovel reading app designed by Aditya Nair. Full UI showcase covering Reader Screens, Author Dashboard screens, and Design Tokens."/>
+<meta name="author" content="Aditya Nair"/>
+<meta property="og:title" content="NovelNest — UI/UX Design Showcase | Aditya Nair"/>
+<meta property="og:description" content="A webnovel reading app with Reader Screens, Author Dashboard, and Design System by Aditya Nair."/>
+<meta property="og:type" content="article"/>
+<link rel="icon" type="image/png" href="favicon.png"/>
+<link rel="apple-touch-icon" href="favicon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0d14;
+  --bg2:#13131e;
+  --bg3:#1a1a2a;
+  --surface:#1e1e2e;
+  --surface2:#252538;
+  --gold:#f5c842;
+  --gold2:#ffd966;
+  --gold-dim:#c49b1c;
+  --gold-glow:rgba(245,200,66,.12);
+  --purple:#7c5cbf;
+  --purple2:#9b7fd4;
+  --text:#f0ede8;
+  --text2:#b0adb8;
+  --text3:#6e6b7a;
+  --border:rgba(255,255,255,.07);
+  --border2:rgba(255,255,255,.12);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'DM Sans',-apple-system,sans-serif;
+  --r:8px;--r2:14px;--r3:20px;
+}
+html{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:15px;line-height:1.65;scroll-behavior:smooth}
+
+/* ─── TOP NAV ─── */
+.top-nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(13,13,20,.85);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:0 40px;
+  display:flex;align-items:center;height:52px;gap:20px;
+}
+.nav-back{
+  font-size:13px;font-weight:500;color:var(--text2);
+  text-decoration:none;
+  display:flex;align-items:center;gap:6px;
+  transition:color .2s;
+}
+.nav-back:hover{color:var(--gold)}
+.nav-title{
+  font-family:var(--serif);font-size:15px;color:var(--gold);
+  margin-left:auto;margin-right:auto;
+  letter-spacing:.02em;
+}
+.nav-date{font-size:12px;color:var(--text3)}
+
+/* ─── HERO ─── */
+.hero{
+  background:linear-gradient(135deg, var(--bg2) 0%, #1a1030 100%);
+  padding:80px 40px 64px;
+  position:relative;overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 70% 50%, rgba(124,92,191,.15) 0%, transparent 70%);
+}
+.hero::after{
+  content:'';position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background:repeating-linear-gradient(45deg,rgba(255,255,255,.008) 0,rgba(255,255,255,.008) 1px,transparent 1px,transparent 40px);
+}
+.hero-inner{position:relative;z-index:1;max-width:960px;margin:0 auto}
+.hero-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);opacity:.8;margin-bottom:20px;
+  display:flex;align-items:center;gap:10px;
+}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold);opacity:.5}
+.hero-title{
+  font-family:var(--serif);
+  font-size:clamp(42px,7vw,80px);
+  font-weight:700;line-height:1.0;
+  color:var(--text);margin-bottom:12px;
+}
+.hero-title .gold{color:var(--gold)}
+.hero-title .italic{font-style:italic;color:var(--purple2)}
+.hero-sub{
+  font-size:16px;color:var(--text2);max-width:520px;
+  line-height:1.75;margin-bottom:40px;
+}
+.hero-pills{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:44px}
+.hero-pill{
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--border2);
+  border-radius:20px;padding:5px 14px;
+  font-size:12px;font-weight:500;color:var(--text2);
+}
+.hero-pill.gold{background:rgba(245,200,66,.1);border-color:rgba(245,200,66,.3);color:var(--gold)}
+.hero-stats-row{
+  display:flex;gap:40px;flex-wrap:wrap;
+  padding-top:32px;border-top:1px solid var(--border);
+}
+.hstat{display:flex;flex-direction:column;gap:4px}
+.hstat-num{font-family:var(--serif);font-size:30px;color:var(--gold);line-height:1}
+.hstat-label{font-size:11px;color:var(--text3);letter-spacing:.05em;text-transform:uppercase}
+
+/* ─── SECTION WRAPPER ─── */
+.cs-wrap{max-width:960px;margin:0 auto;padding:0 40px}
+.section{padding:72px 0;border-top:1px solid var(--border)}
+.section-label{
+  font-size:10px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold);
+  opacity:.7;margin-bottom:12px;
+}
+.section-title{
+  font-family:var(--serif);
+  font-size:clamp(28px,4vw,42px);
+  color:var(--text);line-height:1.15;margin-bottom:12px;
+}
+.section-sub{
+  font-size:14px;color:var(--text2);
+  line-height:1.8;max-width:600px;margin-bottom:44px;
+}
+
+/* ─── PHONE MOCKUP ─── */
+.phone{
+  width:220px;flex-shrink:0;
+  background:var(--surface);
+  border-radius:32px;
+  border:2px solid rgba(255,255,255,.1);
+  box-shadow:0 24px 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.08);
+  overflow:hidden;
+  position:relative;
+}
+.phone-notch{
+  width:90px;height:22px;
+  background:var(--bg);
+  border-radius:0 0 14px 14px;
+  margin:0 auto;
+  position:relative;z-index:2;
+}
+.phone-screen{padding:0;min-height:380px;position:relative}
+.phone-label{
+  text-align:center;margin-top:16px;
+  font-size:11px;color:var(--text3);
+  font-weight:500;letter-spacing:.05em;
+}
+
+/* ─── SCREENS GRID ─── */
+.screens-row{
+  display:flex;gap:20px;flex-wrap:wrap;
+  justify-content:flex-start;
+}
+.screens-row.center{justify-content:center}
+
+/* ─── SCREEN DESIGNS ─── */
+
+/* Splash Screen */
+.splash-screen{
+  background:linear-gradient(160deg,#12122a 0%,#1e1040 100%);
+  padding:40px 20px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  min-height:380px;
+  text-align:center;
+}
+.splash-logo-box{
+  width:64px;height:64px;background:var(--gold);
+  border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-size:28px;margin-bottom:16px;
+  box-shadow:0 8px 24px rgba(245,200,66,.3);
+}
+.splash-name{
+  font-family:var(--serif);font-size:22px;
+  color:var(--gold);margin-bottom:4px;letter-spacing:-.3px;
+}
+.splash-tag{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;margin-bottom:40px}
+.splash-btns{display:flex;flex-direction:column;gap:8px;width:100%}
+.sp-btn-primary{
+  background:var(--gold);color:#0d0d14;
+  border:none;border-radius:8px;
+  padding:10px;font-size:12px;font-weight:600;
+  cursor:pointer;
+}
+.sp-btn-outline{
+  background:transparent;color:var(--text2);
+  border:1px solid rgba(255,255,255,.15);border-radius:8px;
+  padding:10px;font-size:12px;font-weight:500;
+  cursor:pointer;
+}
+
+/* Home/Feed Screen */
+.home-screen{
+  background:#13131e;
+  min-height:380px;
+  display:flex;flex-direction:column;
+}
+.hs-topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px 6px;
+}
+.hs-logo{font-family:var(--serif);font-size:14px;color:var(--gold)}
+.hs-avatar{width:24px;height:24px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff}
+.hs-search{
+  margin:0 12px 8px;
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--border);
+  border-radius:8px;padding:7px 10px;
+  font-size:10px;color:var(--text3);
+  display:flex;align-items:center;gap:6px;
+}
+.hs-genres{
+  display:flex;gap:6px;padding:0 12px 10px;
+  overflow:hidden;
+}
+.hs-chip{
+  padding:3px 10px;border-radius:12px;
+  font-size:9px;font-weight:600;letter-spacing:.05em;
+  text-transform:uppercase;white-space:nowrap;
+  cursor:pointer;
+}
+.hs-chip.active{background:var(--gold);color:#0d0d14}
+.hs-chip:not(.active){background:rgba(255,255,255,.06);color:var(--text3)}
+.hs-section-label{padding:4px 12px;font-size:9px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.08em}
+.hs-book-row{
+  display:flex;gap:8px;padding:0 12px 12px;
+}
+.hs-book{
+  flex-shrink:0;
+  border-radius:6px;overflow:hidden;
+  position:relative;
+}
+.hs-book-cover{
+  width:64px;height:88px;
+  border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;
+}
+.hs-book-title{
+  font-size:8px;font-weight:600;color:var(--text);
+  margin-top:4px;text-align:center;line-height:1.3;
+  max-width:64px;
+}
+.hs-book-rating{
+  font-size:8px;color:var(--gold);text-align:center;margin-top:2px;
+}
+.hs-bottom-nav{
+  margin-top:auto;
+  display:flex;border-top:1px solid var(--border);
+  padding:8px 0 4px;
+}
+.hs-nav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+}
+.hs-nav-icon{font-size:14px}
+.hs-nav-label{font-size:8px;color:var(--text3)}
+.hs-nav-item.active .hs-nav-label{color:var(--gold)}
+
+/* Book Detail Screen */
+.detail-screen{
+  background:#13131e;min-height:380px;
+  display:flex;flex-direction:column;
+}
+.detail-hero{
+  background:linear-gradient(160deg,#1a1040,#13131e);
+  padding:12px 14px;
+  display:flex;gap:10px;
+}
+.detail-cover{
+  width:68px;height:96px;border-radius:8px;
+  flex-shrink:0;overflow:hidden;
+}
+.detail-info{flex:1}
+.detail-title{font-family:var(--serif);font-size:13px;color:var(--text);line-height:1.25;margin-bottom:4px}
+.detail-author{font-size:9px;color:var(--gold);margin-bottom:6px}
+.detail-stars{font-size:10px;color:var(--gold);margin-bottom:6px}
+.detail-tags{display:flex;gap:4px;flex-wrap:wrap}
+.detail-tag{
+  font-size:8px;padding:2px 7px;
+  border-radius:10px;
+  background:rgba(124,92,191,.2);
+  color:var(--purple2);
+}
+.detail-stats{
+  display:flex;justify-content:space-around;
+  padding:8px 14px;border-bottom:1px solid var(--border);
+}
+.ds-stat{text-align:center}
+.ds-num{font-size:13px;font-weight:600;color:var(--text)}
+.ds-label{font-size:8px;color:var(--text3)}
+.detail-synopsis{
+  padding:10px 14px;
+  font-size:10px;color:var(--text2);line-height:1.65;
+  flex:1;
+}
+.detail-cta{
+  padding:10px 14px;
+  background:var(--gold);
+  margin:0 14px 14px;
+  border-radius:8px;
+  text-align:center;
+  font-size:11px;font-weight:700;color:#0d0d14;
+}
+
+/* Reader Screen */
+.reader-screen{
+  background:#0e0e16;min-height:380px;
+  display:flex;flex-direction:column;
+}
+.reader-topbar{
+  padding:10px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+.reader-back{font-size:14px;color:var(--text2)}
+.reader-chap{font-size:9px;color:var(--text3)}
+.reader-settings{font-size:14px;color:var(--text2)}
+.reader-progress{
+  height:2px;background:rgba(255,255,255,.06);
+}
+.reader-progress-fill{height:100%;background:var(--gold);width:35%}
+.reader-content{
+  padding:16px 14px;flex:1;
+}
+.rc-chap-title{
+  font-family:var(--serif);font-size:14px;color:var(--text);
+  margin-bottom:12px;line-height:1.3;
+}
+.rc-body{
+  font-size:10px;color:rgba(255,255,255,.6);line-height:1.85;
+}
+.rc-body p{margin-bottom:8px}
+.reader-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 14px;border-top:1px solid var(--border);
+}
+.rn-btn{
+  font-size:9px;font-weight:600;
+  padding:6px 12px;border-radius:6px;
+  border:1px solid var(--border2);
+  color:var(--text2);background:transparent;cursor:pointer;
+}
+.rn-btn.primary{background:var(--gold);color:#0d0d14;border-color:var(--gold)}
+.rn-chap{font-size:9px;color:var(--text3)}
+
+/* Library Screen */
+.library-screen{
+  background:#13131e;min-height:380px;
+}
+.library-header{
+  padding:12px 14px 0;
+  font-family:var(--serif);font-size:16px;color:var(--text);
+  margin-bottom:8px;
+}
+.library-tabs{
+  display:flex;border-bottom:1px solid var(--border);
+  padding:0 14px;
+}
+.lib-tab{
+  padding:6px 10px;font-size:9px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.06em;
+  color:var(--text3);border-bottom:2px solid transparent;
+}
+.lib-tab.active{color:var(--gold);border-color:var(--gold)}
+.lib-book-item{
+  display:flex;gap:10px;padding:10px 14px;
+  border-bottom:1px solid var(--border);
+  align-items:center;
+}
+.lib-cover{
+  width:40px;height:54px;border-radius:5px;
+  flex-shrink:0;
+}
+.lib-info{flex:1}
+.lib-title{font-size:11px;font-weight:600;color:var(--text);margin-bottom:2px}
+.lib-author{font-size:9px;color:var(--text3);margin-bottom:5px}
+.lib-progress-bar{height:3px;background:rgba(255,255,255,.1);border-radius:2px;margin-bottom:3px}
+.lib-progress-fill{height:100%;background:var(--gold);border-radius:2px}
+.lib-pct{font-size:8px;color:var(--text3)}
+
+/* ─── AUTHOR SCREENS ─── */
+/* Author Dashboard */
+.author-screen{
+  background:#13131e;min-height:380px;
+  display:flex;flex-direction:column;
+}
+.author-topbar{
+  padding:10px 14px;
+  display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid var(--border);
+}
+.author-avatar{
+  width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--gold-dim));
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;color:#0d0d14;font-weight:700;
+}
+.author-name-sm{font-size:11px;font-weight:600;color:var(--text)}
+.author-badge{
+  margin-left:auto;
+  background:rgba(245,200,66,.12);
+  border:1px solid rgba(245,200,66,.3);
+  border-radius:10px;padding:2px 8px;
+  font-size:8px;color:var(--gold);font-weight:600;
+}
+.author-stats-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:var(--border);
+  margin:0;
+}
+.as-cell{
+  background:#13131e;padding:12px 14px;
+}
+.as-num{font-family:var(--serif);font-size:20px;color:var(--gold);line-height:1}
+.as-label{font-size:8px;color:var(--text3);margin-top:3px;text-transform:uppercase;letter-spacing:.06em}
+.as-trend{font-size:8px;color:#4caf7d;margin-top:2px}
+.author-book-row{
+  padding:10px 14px;
+  display:flex;gap:10px;align-items:center;
+  border-bottom:1px solid var(--border);
+}
+.ab-cover{
+  width:36px;height:50px;border-radius:5px;
+  flex-shrink:0;
+}
+.ab-info{flex:1}
+.ab-title{font-size:10px;font-weight:600;color:var(--text);margin-bottom:2px}
+.ab-stats{font-size:8px;color:var(--text3)}
+.ab-actions{display:flex;gap:5px}
+.ab-btn{
+  font-size:8px;padding:4px 8px;
+  border-radius:5px;font-weight:600;cursor:pointer;
+}
+.ab-btn.primary{background:var(--gold);color:#0d0d14;border:none}
+.ab-btn.outline{background:transparent;border:1px solid var(--border2);color:var(--text2)}
+.author-add-btn{
+  margin:10px 14px;
+  border:1.5px dashed rgba(245,200,66,.3);
+  border-radius:8px;padding:10px;
+  text-align:center;font-size:10px;
+  color:var(--gold);opacity:.7;
+  cursor:pointer;
+}
+
+/* Earnings Screen */
+.earnings-screen{
+  background:#13131e;min-height:380px;
+}
+.earnings-hero{
+  background:linear-gradient(135deg,#1a1040 0%,#251050 100%);
+  padding:16px 14px;text-align:center;
+}
+.earnings-label{font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.earnings-amount{font-family:var(--serif);font-size:32px;color:var(--gold);line-height:1;margin-bottom:4px}
+.earnings-sub{font-size:9px;color:rgba(255,255,255,.3)}
+.earnings-chart{
+  height:60px;
+  padding:0 14px;
+  display:flex;align-items:flex-end;gap:3px;
+  margin:12px 0 6px;
+}
+.ec-bar{
+  flex:1;border-radius:3px 3px 0 0;
+  background:rgba(245,200,66,.2);
+  min-height:10px;
+}
+.ec-bar.hi{background:var(--gold)}
+.earnings-breakdown{
+  padding:0 14px;display:flex;flex-direction:column;gap:8px;
+}
+.eb-row{display:flex;justify-content:space-between;align-items:center}
+.eb-key{font-size:10px;color:var(--text2)}
+.eb-val{font-size:11px;font-weight:600;color:var(--gold)}
+.eb-divider{height:1px;background:var(--border)}
+.earnings-payout-btn{
+  margin:14px;
+  background:var(--gold);color:#0d0d14;
+  border:none;border-radius:8px;
+  padding:10px;width:calc(100% - 28px);
+  font-size:11px;font-weight:700;
+  cursor:pointer;text-align:center;display:block;
+}
+
+/* Chapter Edit Screen */
+.chapter-screen{
+  background:#13131e;min-height:380px;
+  display:flex;flex-direction:column;
+}
+.chapter-topbar{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 14px;border-bottom:1px solid var(--border);
+}
+.ct-back{font-size:14px;color:var(--text2)}
+.ct-title{font-size:11px;font-weight:600;color:var(--text);flex:1}
+.ct-publish{
+  background:var(--gold);color:#0d0d14;
+  border:none;border-radius:6px;
+  padding:5px 10px;font-size:9px;font-weight:700;
+  cursor:pointer;
+}
+.chapter-editor{
+  padding:12px 14px;flex:1;
+}
+.ce-input-title{
+  font-family:var(--serif);font-size:14px;color:var(--text);
+  background:transparent;border:none;
+  border-bottom:1px solid var(--border);
+  padding-bottom:8px;margin-bottom:10px;
+  width:100%;
+}
+.ce-input-title::placeholder{color:var(--text3)}
+.ce-body{
+  font-size:10px;color:var(--text2);
+  line-height:1.85;
+}
+.chapter-toolbar{
+  display:flex;gap:8px;padding:8px 14px;
+  border-top:1px solid var(--border);
+  flex-wrap:wrap;
+}
+.ct-tool{
+  font-size:11px;color:var(--text3);
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--border);
+  border-radius:5px;padding:4px 8px;
+  cursor:pointer;
+}
+
+/* ─── DESIGN TOKENS ─── */
+.tokens-section{background:var(--bg2)}
+.color-swatches{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:32px}
+.swatch{
+  display:flex;flex-direction:column;gap:6px;
+  align-items:center;
+}
+.swatch-box{
+  width:52px;height:52px;border-radius:10px;
+  border:1px solid rgba(255,255,255,.1);
+}
+.swatch-name{font-size:10px;color:var(--text3);text-align:center}
+.swatch-hex{font-size:9px;color:var(--text3);font-family:monospace}
+
+.type-sample{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r2);padding:24px 28px;margin-bottom:20px;
+}
+.ts-label{font-size:10px;color:var(--text3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em}
+.ts-serif-xl{font-family:var(--serif);font-size:36px;color:var(--text);line-height:1.1;margin-bottom:8px}
+.ts-serif-md{font-family:var(--serif);font-size:22px;color:var(--text);margin-bottom:8px}
+.ts-serif-sm{font-family:var(--serif);font-size:15px;font-style:italic;color:var(--gold)}
+.ts-body{font-size:14px;color:var(--text2);line-height:1.75;margin-bottom:8px}
+.ts-caption{font-size:11px;color:var(--text3);letter-spacing:.05em}
+
+.comp-row{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:24px}
+.comp-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px}
+.c-btn-gold{
+  background:var(--gold);color:#0d0d14;
+  border:none;border-radius:8px;padding:10px 20px;
+  font-size:13px;font-weight:600;cursor:pointer;
+}
+.c-btn-outline{
+  background:transparent;color:var(--text);
+  border:1px solid var(--border2);border-radius:8px;
+  padding:10px 20px;font-size:13px;font-weight:500;cursor:pointer;
+}
+.c-btn-ghost{
+  background:rgba(124,92,191,.15);color:var(--purple2);
+  border:1px solid rgba(124,92,191,.3);border-radius:8px;
+  padding:10px 20px;font-size:13px;font-weight:500;cursor:pointer;
+}
+.c-chip-active{
+  background:var(--gold);color:#0d0d14;
+  border-radius:14px;padding:4px 14px;
+  font-size:11px;font-weight:600;
+}
+.c-chip{
+  background:rgba(255,255,255,.07);color:var(--text2);
+  border:1px solid var(--border);border-radius:14px;
+  padding:4px 14px;font-size:11px;
+}
+.c-badge-critical{background:#3b1010;color:#ef5350;border-radius:10px;padding:2px 8px;font-size:10px;font-weight:700}
+.c-badge-gold{background:rgba(245,200,66,.15);color:var(--gold);border-radius:10px;padding:2px 8px;font-size:10px;font-weight:700}
+.c-badge-purple{background:rgba(124,92,191,.15);color:var(--purple2);border-radius:10px;padding:2px 8px;font-size:10px;font-weight:700}
+.c-badge-green{background:rgba(76,175,125,.15);color:#4caf7d;border-radius:10px;padding:2px 8px;font-size:10px;font-weight:700}
+
+/* ─── AUTHOR CREDIT ─── */
+.author-credit{
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  padding:64px 40px;
+}
+.author-credit-inner{
+  max-width:960px;margin:0 auto;
+  display:flex;align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;gap:28px;
+}
+.ac-left{}
+.ac-eyebrow{font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text3);margin-bottom:10px}
+.ac-name{font-family:var(--serif);font-size:36px;color:var(--text);margin-bottom:8px}
+.ac-meta{font-size:13px;color:var(--text3)}
+.ac-meta .gold{color:var(--gold)}
+.ac-right{display:flex;flex-direction:column;align-items:flex-end;gap:14px}
+.ac-back{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--gold);color:#0d0d14;
+  font-size:13px;font-weight:700;
+  padding:12px 28px;border-radius:var(--r);
+  text-decoration:none;transition:opacity .2s;
+}
+.ac-back:hover{opacity:.85}
+.ac-note{font-size:11px;color:var(--text3);text-align:right;line-height:1.5}
+
+/* ─── FOOTER ─── */
+.page-footer{
+  background:var(--bg);
+  padding:24px 40px;
+  text-align:center;
+  border-top:1px solid var(--border);
+}
+.page-footer p{font-size:12px;color:var(--text3)}
+
+/* ─── UTILITIES ─── */
+.divider{height:1px;background:var(--border);margin:0 40px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+
+@media(max-width:640px){
+  .hero{padding:56px 24px 48px}
+  .cs-wrap{padding:0 24px}
+  .screens-row{justify-content:center}
+  .hero-stats-row{gap:24px}
+  .author-credit{padding:48px 24px}
+  .author-credit-inner{flex-direction:column;align-items:flex-start}
+  .ac-right{align-items:flex-start}
+  .ac-note{text-align:left}
+  .grid-2{grid-template-columns:1fr}
+  .top-nav{padding:0 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top-nav">
+  <a class="nav-back" href="index.html">← Portfolio</a>
+  <span class="nav-title">NovelNest</span>
+  <span class="nav-date">May 2026</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">UI / UX Design Showcase</p>
+    <h1 class="hero-title">
+      <span class="gold">Novel</span><span class="italic">Nest</span>
+    </h1>
+    <p class="hero-sub">A dark-themed webnovel reading and writing app — designed from scratch. Reader experience, Author dashboard, and a complete design system.</p>
+    <div class="hero-pills">
+      <span class="hero-pill gold">Mobile App</span>
+      <span class="hero-pill">UI Design</span>
+      <span class="hero-pill">Webnovel Platform</span>
+      <span class="hero-pill">Reader + Author Flow</span>
+      <span class="hero-pill">Design Tokens</span>
+    </div>
+    <div class="hero-stats-row">
+      <div class="hstat">
+        <span class="hstat-num">2</span>
+        <span class="hstat-label">User Types</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-num">12+</span>
+        <span class="hstat-label">Screens</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-num">1</span>
+        <span class="hstat-label">Design System</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-num">May 2026</span>
+        <span class="hstat-label">Completed</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- READER SCREENS -->
+<section class="section">
+  <div class="cs-wrap">
+    <p class="section-label">01 — Reader Screens</p>
+    <h2 class="section-title">Built for readers who disappear into stories</h2>
+    <p class="section-sub">The reader flow covers onboarding, discovery, book detail, and an immersive reader mode. Every screen keeps distractions out of the way so readers can focus on what matters.</p>
+
+    <div class="screens-row">
+      <!-- Splash -->
+      <div>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="splash-screen">
+              <div class="splash-logo-box">📖</div>
+              <div class="splash-name">NovelNest</div>
+              <div class="splash-tag">Where Stories Live</div>
+              <div class="splash-btns">
+                <button class="sp-btn-primary">Get Started</button>
+                <button class="sp-btn-outline">Sign In</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-label">Splash / Onboarding</div>
+      </div>
+
+      <!-- Home Feed -->
+      <div>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="home-screen">
+              <div class="hs-topbar">
+                <div class="hs-logo">NovelNest</div>
+                <div class="hs-avatar">A</div>
+              </div>
+              <div class="hs-search">🔍&nbsp; Search novels, authors…</div>
+              <div class="hs-genres">
+                <span class="hs-chip active">All</span>
+                <span class="hs-chip">Fantasy</span>
+                <span class="hs-chip">Romance</span>
+                <span class="hs-chip">Action</span>
+              </div>
+              <div class="hs-section-label">🔥 Trending</div>
+              <div class="hs-book-row">
+                <div class="hs-book">
+                  <div class="hs-book-cover" style="background:linear-gradient(135deg,#2d1b69,#7c3aed)">🌙</div>
+                  <div class="hs-book-title">Shadow Realm</div>
+                  <div class="hs-book-rating">★ 4.8</div>
+                </div>
+                <div class="hs-book">
+                  <div class="hs-book-cover" style="background:linear-gradient(135deg,#1a3a5c,#2d6a9f)">⚔️</div>
+                  <div class="hs-book-title">Iron Throne Chronicles</div>
+                  <div class="hs-book-rating">★ 4.6</div>
+                </div>
+                <div class="hs-book">
+                  <div class="hs-book-cover" style="background:linear-gradient(135deg,#1a5c3a,#27ae60)">🌿</div>
+                  <div class="hs-book-title">The Last Cultivator</div>
+                  <div class="hs-book-rating">★ 4.9</div>
+                </div>
+              </div>
+              <div class="hs-section-label">✨ New Releases</div>
+              <div class="hs-book-row">
+                <div class="hs-book">
+                  <div class="hs-book-cover" style="background:linear-gradient(135deg,#5c1a1a,#c0392b)">🔥</div>
+                  <div class="hs-book-title">Crimson Legacy</div>
+                  <div class="hs-book-rating">★ 4.5</div>
+                </div>
+                <div class="hs-book">
+                  <div class="hs-book-cover" style="background:linear-gradient(135deg,#1a3353,#2980b9)">💫</div>
+                  <div class="hs-book-title">Stardust Drift</div>
+                  <div class="hs-book-rating">★ 4.7</div>
+                </div>
+              </div>
+              <div class="hs-bottom-nav">
+                <div class="hs-nav-item active"><div class="hs-nav-icon">🏠</div><div class="hs-nav-label">Home</div></div>
+                <div class="hs-nav-item"><div class="hs-nav-icon">🔍</div><div class="hs-nav-label">Discover</div></div>
+                <div class="hs-nav-item"><div class="hs-nav-icon">📚</div><div class="hs-nav-label">Library</div></div>
+                <div class="hs-nav-item"><div class="hs-nav-icon">👤</div><div class="hs-nav-label">Profile</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-label">Home / Feed</div>
+      </div>
+
+      <!-- Book Detail -->
+      <div>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="detail-screen">
+              <div class="detail-hero">
+                <div class="detail-cover" style="background:linear-gradient(135deg,#2d1b69,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:28px">🌙</div>
+                <div class="detail-info">
+                  <div class="detail-title">Shadow Realm: The Awakening</div>
+                  <div class="detail-author">by StormWriter</div>
+                  <div class="detail-stars">★★★★★ 4.8</div>
+                  <div class="detail-tags">
+                    <span class="detail-tag">Fantasy</span>
+                    <span class="detail-tag">Cultivation</span>
+                    <span class="detail-tag">Ongoing</span>
+                  </div>
+                </div>
+              </div>
+              <div class="detail-stats">
+                <div class="ds-stat"><div class="ds-num">142</div><div class="ds-label">Chapters</div></div>
+                <div class="ds-stat"><div class="ds-num">2.4M</div><div class="ds-label">Views</div></div>
+                <div class="ds-stat"><div class="ds-num">18.2k</div><div class="ds-label">Likes</div></div>
+              </div>
+              <div class="detail-synopsis">In a world where shadows hold power, one man awakens to abilities no one can explain. The realm of darkness calls — but at what cost?</div>
+              <div class="detail-cta">📖 Start Reading</div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-label">Book Detail</div>
+      </div>
+
+      <!-- Reader Mode -->
+      <div>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="reader-screen">
+              <div class="reader-topbar">
+                <span class="reader-back">←</span>
+                <span class="reader-chap">Ch. 3 of 142</span>
+                <span class="reader-settings">⚙</span>
+              </div>
+              <div class="reader-progress"><div class="reader-progress-fill"></div></div>
+              <div class="reader-content">
+                <div class="rc-chap-title">Chapter 3: The Veil Breaks</div>
+                <div class="rc-body">
+                  <p>The darkness was not absent — it was waiting. Every shadow in the room breathed with an intelligence Kael had refused to acknowledge until now.</p>
+                  <p>He pressed his back against the cold stone wall, fingers tracing the sigils his master had carved there. Old protection. Older fear.</p>
+                  <p>"You cannot run from what you are," the voice said. It had no direction. It came from the dark itself.</p>
+                  <p>Kael exhaled. Closed his eyes. And stepped forward.</p>
+                </div>
+              </div>
+              <div class="reader-nav">
+                <button class="rn-btn">← Prev</button>
+                <span class="rn-chap">35% read</span>
+                <button class="rn-btn primary">Next →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-label">Reader Mode</div>
+      </div>
+
+      <!-- Library -->
+      <div>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="library-screen">
+              <div class="library-header">My Library</div>
+              <div class="library-tabs">
+                <div class="lib-tab active">Reading</div>
+                <div class="lib-tab">Saved</div>
+                <div class="lib-tab">History</div>
+              </div>
+              <div class="lib-book-item">
+                <div class="lib-cover" style="background:linear-gradient(135deg,#2d1b69,#7c3aed);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:16px">🌙</div>
+                <div class="lib-info">
+                  <div class="lib-title">Shadow Realm</div>
+                  <div class="lib-author">StormWriter · Ch. 3/142</div>
+                  <div class="lib-progress-bar"><div class="lib-progress-fill" style="width:2%"></div></div>
+                  <div class="lib-pct">2% complete</div>
+                </div>
+              </div>
+              <div class="lib-book-item">
+                <div class="lib-cover" style="background:linear-gradient(135deg,#1a3a5c,#2d6a9f);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:16px">⚔️</div>
+                <div class="lib-info">
+                  <div class="lib-title">Iron Throne Chronicles</div>
+                  <div class="lib-author">BladeAuthor · Ch. 22/89</div>
+                  <div class="lib-progress-bar"><div class="lib-progress-fill" style="width:25%"></div></div>
+                  <div class="lib-pct">25% complete</div>
+                </div>
+              </div>
+              <div class="lib-book-item">
+                <div class="lib-cover" style="background:linear-gradient(135deg,#5c1a1a,#c0392b);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:16px">🔥</div>
+                <div class="lib-info">
+                  <div class="lib-title">Crimson Legacy</div>
+                  <div class="lib-author">RedAuthor · Ch. 67/120</div>
+                  <div class="lib-progress-bar"><div class="lib-progress-fill" style="width:56%"></div></div>
+                  <div class="lib-pct">56% complete</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-label">Library</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTHOR SCREENS -->
+<section class="section">
+  <div class="cs-wrap">
+    <p class="section-label">02 — Author Screens</p>
+    <h2 class="section-title">A full writing workspace in your pocket</h2>
+    <p class="section-sub">Authors get their own dashboard — stats, novels, chapter editor, and earnings all in one place. The goal was to make publishing feel professional, not intimidating.</p>
+
+    <div class="screens-row">
+      <!-- Author Dashboard -->
+      <div>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="author-screen">
+              <div class="author-topbar">
+                <div class="author-avatar">A</div>
+                <div class="author-name-sm">StormWriter</div>
+                <div class="author-badge">✍ Author</div>
+              </div>
+              <div class="author-stats-grid">
+                <div class="as-cell">
+                  <div class="as-num">2.4M</div>
+                  <div class="as-label">Total Views</div>
+                  <div class="as-trend">↑ 12% this week</div>
+                </div>
+                <div class="as-cell">
+                  <div class="as-num">₹12,840</div>
+                  <div class="as-label">Earnings</div>
+                  <div class="as-trend">↑ 8% this month</div>
+                </div>
+                <div class="as-cell">
+                  <div class="as-num">3</div>
+                  <div class="as-label">Active Novels</div>
+                  <div class="as-trend">1 new draft</div>
+                </div>
+                <div class="as-cell">
+                  <div class="as-num">18.2k</div>
+                  <div class="as-label">Followers</div>
+                  <div class="as-trend">↑ 240 new</div>
+                </div>
+              </div>
+              <div class="author-book-row">
+                <div class="ab-cover" style="background:linear-gradient(135deg,#2d1b69,#7c3aed);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:16px">🌙</div>
+                <div class="ab-info">
+                  <div class="ab-title">Shadow Realm</div>
+                  <div class="ab-stats">142 chapters · 2.4M views</div>
+                </div>
+                <div class="ab-actions">
+                  <button class="ab-btn primary">Edit</button>
+                  <button class="ab-btn outline">+Ch</button>
+                </div>
+              </div>
+              <div class="author-book-row">
+                <div class="ab-cover" style="background:linear-gradient(135deg,#1a3a5c,#2d6a9f);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:16px">⚔️</div>
+                <div class="ab-info">
+                  <div class="ab-title">Iron Throne Chron.</div>
+                  <div class="ab-stats">89 chapters · 1.1M views</div>
+                </div>
+                <div class="ab-actions">
+                  <button class="ab-btn primary">Edit</button>
+                  <button class="ab-btn outline">+Ch</button>
+                </div>
+              </div>
+              <div class="author-add-btn">+ New Novel</div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-label">Author Dashboard</div>
+      </div>
+
+      <!-- Chapter Editor -->
+      <div>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="chapter-screen">
+              <div class="chapter-topbar">
+                <span class="ct-back">←</span>
+                <span class="ct-title">Shadow Realm — Ch. 143</span>
+                <button class="ct-publish">Publish</button>
+              </div>
+              <div class="chapter-editor">
+                <input class="ce-input-title" placeholder="Chapter Title…" value="Chapter 143: The Void Speaks"/>
+                <div class="ce-body">
+                  <p>The silence after the explosion was the loudest thing Kael had ever heard. He stood in the crater where the ancient temple had been, ash settling around him like grey snow.</p>
+                  <p>The Void was not angry. It was patient. That was worse.</p>
+                  <p>His hands were shaking — not from fear, but from what he now held within them. The power didn't burn. It simply was. Inevitable. Final.</p>
+                </div>
+              </div>
+              <div class="chapter-toolbar">
+                <span class="ct-tool">B</span>
+                <span class="ct-tool">I</span>
+                <span class="ct-tool">U</span>
+                <span class="ct-tool">¶</span>
+                <span class="ct-tool">🖼</span>
+                <span class="ct-tool">Draft</span>
+                <span class="ct-tool">Schedule</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-label">Chapter Editor</div>
+      </div>
+
+      <!-- Earnings -->
+      <div>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="earnings-screen">
+              <div class="earnings-hero">
+                <div class="earnings-label">Total Earnings — June 2026</div>
+                <div class="earnings-amount">₹12,840</div>
+                <div class="earnings-sub">↑ 8% from last month</div>
+              </div>
+              <div class="earnings-chart">
+                <div class="ec-bar" style="height:30%"></div>
+                <div class="ec-bar" style="height:45%"></div>
+                <div class="ec-bar" style="height:38%"></div>
+                <div class="ec-bar" style="height:60%"></div>
+                <div class="ec-bar" style="height:52%"></div>
+                <div class="ec-bar hi" style="height:75%"></div>
+                <div class="ec-bar hi" style="height:88%"></div>
+                <div class="ec-bar hi" style="height:100%"></div>
+              </div>
+              <div class="earnings-breakdown">
+                <div class="eb-row"><span class="eb-key">Coin Unlocks</span><span class="eb-val">₹8,200</span></div>
+                <div class="eb-divider"></div>
+                <div class="eb-row"><span class="eb-key">Tips from readers</span><span class="eb-val">₹3,140</span></div>
+                <div class="eb-divider"></div>
+                <div class="eb-row"><span class="eb-key">Bonus Reward</span><span class="eb-val">₹1,500</span></div>
+                <div class="eb-divider"></div>
+                <div class="eb-row"><span class="eb-key">Platform Fee (10%)</span><span class="eb-val" style="color:#ef5350">−₹1,284</span></div>
+              </div>
+              <a class="earnings-payout-btn">Request Payout</a>
+            </div>
+          </div>
+        </div>
+        <div class="phone-label">Earnings Dashboard</div>
+      </div>
+
+      <!-- Analytics / Notifications Screen -->
+      <div>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="author-screen">
+              <div class="author-topbar">
+                <span style="font-size:11px;font-weight:600;color:var(--text)">Notifications</span>
+                <span style="font-size:10px;color:var(--gold);margin-left:auto">Mark all read</span>
+              </div>
+              <div style="display:flex;flex-direction:column">
+                <div style="padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;gap:10px;align-items:flex-start">
+                  <div style="width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:4px"></div>
+                  <div>
+                    <div style="font-size:10px;font-weight:600;color:var(--text);margin-bottom:2px">New comment on Shadow Realm Ch.142</div>
+                    <div style="font-size:9px;color:var(--text3)">"This chapter absolutely destroyed me..." — MoonReader</div>
+                    <div style="font-size:8px;color:var(--text3);margin-top:3px">2 min ago</div>
+                  </div>
+                </div>
+                <div style="padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;gap:10px;align-items:flex-start">
+                  <div style="width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:4px"></div>
+                  <div>
+                    <div style="font-size:10px;font-weight:600;color:var(--text);margin-bottom:2px">You received a ₹200 tip!</div>
+                    <div style="font-size:9px;color:var(--text3)">From SkyReader — "Keep writing!"</div>
+                    <div style="font-size:8px;color:var(--text3);margin-top:3px">15 min ago</div>
+                  </div>
+                </div>
+                <div style="padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;gap:10px;align-items:flex-start">
+                  <div style="width:8px;height:8px;border-radius:50%;background:transparent;border:1px solid var(--border2);flex-shrink:0;margin-top:4px"></div>
+                  <div>
+                    <div style="font-size:10px;font-weight:600;color:var(--text2);margin-bottom:2px">500 new readers added Shadow Realm to Library</div>
+                    <div style="font-size:8px;color:var(--text3);margin-top:3px">1 hour ago</div>
+                  </div>
+                </div>
+                <div style="padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;gap:10px;align-items:flex-start">
+                  <div style="width:8px;height:8px;border-radius:50%;background:transparent;border:1px solid var(--border2);flex-shrink:0;margin-top:4px"></div>
+                  <div>
+                    <div style="font-size:10px;font-weight:600;color:var(--text2);margin-bottom:2px">Shadow Realm reached #1 in Fantasy today 🎉</div>
+                    <div style="font-size:8px;color:var(--text3);margin-top:3px">3 hours ago</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-label">Notifications</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DESIGN TOKENS -->
+<section class="section tokens-section">
+  <div class="cs-wrap">
+    <p class="section-label">03 — Design Tokens & Components</p>
+    <h2 class="section-title">The system behind the screens</h2>
+    <p class="section-sub">A consistent set of color tokens, typography scale, and reusable components makes the app feel coherent — dark, readable, and premium.</p>
+
+    <!-- Colors -->
+    <p class="comp-label">Color Palette</p>
+    <div class="color-swatches">
+      <div class="swatch">
+        <div class="swatch-box" style="background:#0d0d14;border-color:rgba(255,255,255,.2)"></div>
+        <div class="swatch-name">Background</div>
+        <div class="swatch-hex">#0d0d14</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background:#1e1e2e"></div>
+        <div class="swatch-name">Surface</div>
+        <div class="swatch-hex">#1e1e2e</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background:#252538"></div>
+        <div class="swatch-name">Surface 2</div>
+        <div class="swatch-hex">#252538</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background:#f5c842"></div>
+        <div class="swatch-name">Gold</div>
+        <div class="swatch-hex">#f5c842</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background:#7c5cbf"></div>
+        <div class="swatch-name">Purple</div>
+        <div class="swatch-hex">#7c5cbf</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background:#f0ede8"></div>
+        <div class="swatch-name">Text</div>
+        <div class="swatch-hex">#f0ede8</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background:#b0adb8"></div>
+        <div class="swatch-name">Text 2</div>
+        <div class="swatch-hex">#b0adb8</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background:#6e6b7a"></div>
+        <div class="swatch-name">Text 3</div>
+        <div class="swatch-hex">#6e6b7a</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background:#4caf7d"></div>
+        <div class="swatch-name">Success</div>
+        <div class="swatch-hex">#4caf7d</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background:#ef5350"></div>
+        <div class="swatch-name">Error</div>
+        <div class="swatch-hex">#ef5350</div>
+      </div>
+    </div>
+
+    <!-- Typography -->
+    <p class="comp-label" style="margin-top:8px">Typography</p>
+    <div class="type-sample">
+      <div class="ts-label">Heading — DM Serif Display</div>
+      <div class="ts-serif-xl">NovelNest</div>
+      <div class="ts-serif-md">Where Stories Live</div>
+      <div class="ts-serif-sm">Chapter 143: The Void Speaks</div>
+    </div>
+    <div class="type-sample">
+      <div class="ts-label">Body — DM Sans</div>
+      <div class="ts-body">The darkness was not absent — it was waiting. Every shadow in the room breathed with an intelligence Kael had refused to acknowledge until now.</div>
+      <div class="ts-caption">Author · StormWriter &nbsp;·&nbsp; 142 Chapters &nbsp;·&nbsp; 2.4M Views</div>
+    </div>
+
+    <!-- Components -->
+    <p class="comp-label" style="margin-top:8px">Buttons</p>
+    <div class="comp-row">
+      <button class="c-btn-gold">Start Reading</button>
+      <button class="c-btn-outline">Add to Library</button>
+      <button class="c-btn-ghost">Write a Novel</button>
+    </div>
+
+    <p class="comp-label">Chips & Badges</p>
+    <div class="comp-row" style="align-items:center;flex-wrap:wrap;gap:10px">
+      <span class="c-chip-active">Fantasy</span>
+      <span class="c-chip">Romance</span>
+      <span class="c-chip">Cultivation</span>
+      <span class="c-badge-critical">Critical</span>
+      <span class="c-badge-gold">Ongoing</span>
+      <span class="c-badge-purple">Featured</span>
+      <span class="c-badge-green">Completed</span>
+    </div>
+  </div>
+</section>
+
+<!-- AUTHOR CREDIT -->
+<div class="author-credit">
+  <div class="author-credit-inner">
+    <div class="ac-left">
+      <p class="ac-eyebrow">UI / UX Design by</p>
+      <p class="ac-name">Aditya Nair</p>
+      <p class="ac-meta">UI/UX Designer &nbsp;<span class="gold">·</span>&nbsp; May 2026</p>
+    </div>
+    <div class="ac-right">
+      <a class="ac-back" href="index.html">← Back to Portfolio</a>
+      <p class="ac-note">NovelNest is a concept UI/UX project.<br>Designed for portfolio purposes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <p>NovelNest UI Showcase &nbsp;·&nbsp; Aditya Nair &nbsp;·&nbsp; May 2026</p>
+</footer>
+
+</body>
+</html>
