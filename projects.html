@@ -31,78 +31,16 @@
   </div>
 </nav>
 
-<!-- Hero -->
-<section class="hero">
-  <div class="hero-meta">
-    <span class="hero-meta-dot"></span>
-    <span class="hero-meta-text">UI / UX Designer · Product Thinker</span>
-    <span class="hero-meta-line"></span>
-    <span class="hero-meta-year">2026</span>
-  </div>
-
-  <h1 class="hero-heading">
-    Crafting<br>
-    experiences<br>
-    <span class="ital">that</span> <span class="outline">matter.</span>
-  </h1>
-
-  <div class="hero-bottom">
-    <p class="hero-sub">I design stuff that actually makes sense to use. Mostly mobile, games & web — always starting from the problem, not the pixels.</p>
-    <div class="hero-cta-group">
-      <a href="#work" class="cta-primary">View Selected Work</a>
-    </div>
-  </div>
-</section>
-
-
-<!-- About -->
-<section class="about-section reveal" id="about">
-  <div class="about-container">
-    <div>
-      <p class="about-eyebrow">About me</p>
-      <p class="about-statement">I'm a UI/UX designer based in India. I like making things feel <em>simple</em>.</p>
-      <p class="about-body">I've worked on games, mobile apps, web dashboards, and a few things in between. I spend a lot of time figuring out what the actual problem is before I touch Figma. I think good design is mostly invisible - you only notice it when something goes wrong.</p>
-    </div>
-
-    <div>
-      <p class="about-eyebrow" style="margin-bottom: 24px;">Practical skills</p>
-      <div class="skills-grid">
-        <div class="skill-cell">
-          <div class="skill-name">Figma & Prototyping</div>
-          <div class="skill-sub">Intermediate</div>
-          <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div>
-        </div>
-        <div class="skill-cell">
-          <div class="skill-name">User Research</div>
-          <div class="skill-sub">Intermediate</div>
-          <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div>
-        </div>
-        <div class="skill-cell">
-          <div class="skill-name">Design Systems</div>
-          <div class="skill-sub">Intermediate</div>
-          <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div>
-        </div>
-        <div class="skill-cell">
-          <div class="skill-name">Motion & Framer</div>
-          <div class="skill-sub">Intermediate</div>
-          <div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- Work -->
-<div id="work">
-  <div class="section-head">
+<div id="work" style="padding-top: 60px;">
+  <div class="section-head" style="max-width: 1200px; margin: 0 auto;">
     <div>
       <p class="section-label">Selected work</p>
-      <h2 class="section-title">Recent Projects</h2>
+      <h2 class="section-title">All Projects</h2>
     </div>
-    <a href="projects.html" class="see-all">All projects →</a>
   </div>
 
-  <div class="projects-grid reveal">
+  <div class="all-projects-grid reveal">
     <!-- NovelNest App -->
     <div class="proj-card-v" style="cursor: pointer;" onclick="window.location.href='NovelNest_Project.html'">
       <div class="proj-visual-v" style="background: #181820; border: 1px solid #2E2E3E;">
@@ -218,43 +156,8 @@
         </div>
       </div>
     </div>
-  </div><!-- /projects-grid -->
+  </div><!-- /all-projects-grid -->
 </div>
-
-<!-- Marquee -->
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <div class="marquee-item">User Research <span class="marquee-sep">·</span> Wireframing <span class="marquee-sep">·</span> Interaction Design <span class="marquee-sep">·</span> Design Systems <span class="marquee-sep">·</span> Accessibility <span class="marquee-sep">·</span> Prototyping <span class="marquee-sep">·</span> Usability Testing <span class="marquee-sep">·</span> Motion Design <span class="marquee-sep">·</span> Information Architecture <span class="marquee-sep">·</span> Visual Design <span class="marquee-sep">·</span></div>
-    <div class="marquee-item">User Research <span class="marquee-sep">·</span> Wireframing <span class="marquee-sep">·</span> Interaction Design <span class="marquee-sep">·</span> Design Systems <span class="marquee-sep">·</span> Accessibility <span class="marquee-sep">·</span> Prototyping <span class="marquee-sep">·</span> Usability Testing <span class="marquee-sep">·</span> Motion Design <span class="marquee-sep">·</span> Information Architecture <span class="marquee-sep">·</span> Visual Design <span class="marquee-sep">·</span></div>
-  </div>
-</div>
-
-<!-- Contact -->
-<section class="contact-section reveal" id="contact">
-  <div class="contact-inner">
-    <p class="contact-eyebrow">Get in touch</p>
-    <h2 class="contact-title">Let's build something <em>together</em>.</h2>
-    <form class="contact-form" action="https://formsubmit.co/hello@adityanair.com" method="POST">
-      <!-- FormSubmit configurations -->
-      <input type="hidden" name="_subject" value="New Contact from Portfolio Site!">
-      <input type="hidden" name="_captcha" value="false">
-      
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-      <div class="form-group">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="4" required></textarea>
-      </div>
-      <button type="submit" class="cta-primary">Send Message</button>
-    </form>
-  </div>
-</section>
 
 <!-- Footer -->
 <footer>
@@ -297,53 +200,6 @@
   }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
   
   reveals.forEach(r => revealObs.observe(r));
-
-  // Drag-to-scroll for projects carousel
-  const slider = document.querySelector('.projects-grid');
-  let isDown = false;
-  let startX;
-  let scrollLeft;
-
-  if (slider) {
-    slider.addEventListener('mousedown', (e) => {
-      isDown = true;
-      slider.classList.add('active');
-      startX = e.pageX - slider.offsetLeft;
-      scrollLeft = slider.scrollLeft;
-    });
-    slider.addEventListener('mouseleave', () => {
-      isDown = false;
-      slider.classList.remove('active');
-    });
-    slider.addEventListener('mouseup', () => {
-      isDown = false;
-      slider.classList.remove('active');
-    });
-    slider.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - slider.offsetLeft;
-      const walk = (x - startX) * 1.5; // Scroll speed multiplier
-      slider.scrollLeft = scrollLeft - walk;
-    });
-
-    // Prevent native drag on elements to allow smooth scrolling
-    slider.querySelectorAll('img, a, .proj-card-v, .proj-visual-v').forEach(el => {
-      el.addEventListener('dragstart', e => e.preventDefault());
-    });
-
-    // Wheel-to-horizontal scroll logic
-    slider.addEventListener('wheel', (e) => {
-      if (e.deltaY !== 0) {
-        const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
-        // Check if we have room to scroll in the direction of the wheel
-        if ((e.deltaY > 0 && slider.scrollLeft < maxScrollLeft - 1) || (e.deltaY < 0 && slider.scrollLeft > 1)) {
-          e.preventDefault();
-          slider.scrollLeft += e.deltaY;
-        }
-      }
-    }, { passive: false });
-  }
 </script>
 </body>
 </html>
