@@ -31,8 +31,7 @@
     padding: 28px 48px;
     border-bottom: 1px solid var(--border);
     position: sticky; top: 0;
-    background: rgba(248,250,252,.92); /* Updated to match slate theme */
-    backdrop-filter: blur(12px);
+    background: var(--chalk);
     z-index: 100;
     animation: fade-in .6s ease both;
   }
@@ -231,13 +230,17 @@
     flex-direction: row;
     align-items: stretch;
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     gap: 28px;
     padding: 16px 48px 48px;
     margin: 0;
     width: 100%;
     animation: fade-in .8s .4s ease both;
+    cursor: grab;
+  }
+  .projects-grid.active {
+    cursor: grabbing;
+    scroll-behavior: auto; /* Ensure no smooth scrolling interference during drag */
   }
 
   /* Custom subtle scrollbar on desktop */
@@ -261,7 +264,6 @@
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    scroll-snap-align: start;
     width: 420px;
     border: 1px solid var(--border-md);
     background: #fff;
@@ -513,6 +515,7 @@
     display: flex;
     animation: marquee 18s linear infinite;
     width: max-content;
+    will-change: transform;
   }
   .marquee-item {
     display: flex;
