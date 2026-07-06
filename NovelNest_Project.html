@@ -3,712 +3,421 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NovelNest — Hi-Fi Wireframes</title>
+<title>NovelNest — Case Study · Aditya Nair</title>
+<meta name="description" content="NovelNest Hi-Fi Wireframes — A mobile reading and publishing platform case study by Aditya Nair, UI/UX Designer.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ── DESIGN TOKENS ── */
+/* ══════════════════════════════════════════════
+   DESIGN TOKENS
+══════════════════════════════════════════════ */
 :root {
-  --ink:       #0D0D12;
-  --ink-2:     #1C1C26;
-  --ink-3:     #2A2A38;
-  --ash:       #3A3A4A;
-  --muted:     #6B6B80;
-  --border:    #2E2E3E;
-  --amber:     #E8A838;
-  --amber-dim: #C48820;
-  --amber-glow:#F5C060;
-  --violet:    #7B6FA0;
-  --violet-dim:#5A5078;
-  --parchment: #F5F0E8;
-  --parch-dim: #DDD8CF;
-  --parch-dark:#BDB8AF;
-  --surface:   #181820;
-  --surface-2: #1F1F2C;
-  --glass:     rgba(255,255,255,0.04);
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --shadow:    0 4px 24px rgba(0,0,0,0.5);
+  --ink:        #0A0A10;
+  --ink-2:      #141420;
+  --ink-3:      #1C1C2A;
+  --ash:        #3A3A4A;
+  --muted:      #6B6B80;
+  --border:     rgba(255,255,255,0.08);
+  --amber:      #E8A838;
+  --amber-dim:  #C48820;
+  --amber-glow: #F5C060;
+  --violet:     #7B6FA0;
+  --parchment:  #F0EBE2;
+  --parch-dim:  #C8C2B8;
+  --surface:    rgba(255,255,255,0.05);
+  --surface-2:  rgba(255,255,255,0.08);
+  --glass:      rgba(255,255,255,0.04);
+  --r-sm: 10px; --r-md: 16px; --r-lg: 24px; --r-xl: 36px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.5);
   --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+  --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
 }
 
-/* ── RESET ── */
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-body{
+/* ══════════════════════════════════════════════
+   RESET & BASE
+══════════════════════════════════════════════ */
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:16px; }
+body {
   font-family:'Inter',sans-serif;
-  background:#0A0A10;
+  background:#08080F;
   color:var(--parchment);
   min-height:100vh;
-  padding:48px 32px 80px;
   -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
 }
 
-/* ── COVER ── */
-.cover{
-  text-align:center;
-  padding:80px 40px 72px;
-  margin-bottom:80px;
-  background:linear-gradient(160deg,var(--ink-2) 0%,var(--ink) 60%,#1A1020 100%);
-  border:1px solid var(--border);
-  border-radius:var(--radius-lg);
-  position:relative;
-  overflow:hidden;
+/* ══════════════════════════════════════════════
+   STATIC BACKGROUND
+══════════════════════════════════════════════ */
+.bg-canvas {
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 40% at 50% -5%, rgba(232,168,56,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 30% at 85% 80%, rgba(123,111,160,0.06) 0%, transparent 50%);
 }
-.cover::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(232,168,56,0.12),transparent);
+
+/* ══════════════════════════════════════════════
+   TOP NAV
+══════════════════════════════════════════════ */
+.case-nav {
+  position:fixed; top:16px; left:50%; transform:translateX(-50%);
+  z-index:1000; width:calc(100% - 48px); max-width:900px;
+  background:rgba(14,14,22,0.75);
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border);
+  border-radius:100px;
+  padding:0 8px;
+  height:52px;
+  display:flex; align-items:center; justify-content:space-between;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.case-nav-back {
+  display:flex; align-items:center; gap:8px;
+  text-decoration:none;
+  padding:6px 14px;
+  border-radius:100px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid var(--border);
+  color:var(--parch-dim);
+  font-size:13px; font-weight:500;
+  transition:var(--transition);
+}
+.case-nav-back:hover { background:rgba(255,255,255,0.1); color:var(--parchment); }
+.case-nav-back svg { width:14px; height:14px; }
+.case-nav-brand {
+  font-family:'Fraunces',serif;
+  font-size:15px; font-weight:600; color:var(--amber); letter-spacing:-0.3px;
+}
+.case-nav-tag {
+  font-size:11px; color:var(--muted);
+  padding:4px 12px; border-radius:100px;
+  background:var(--glass); border:1px solid var(--border); white-space:nowrap;
+}
+
+/* ══════════════════════════════════════════════
+   PAGE WRAPPER
+══════════════════════════════════════════════ */
+.page {
+  position:relative; z-index:1;
+  max-width:1100px; margin:0 auto;
+  padding:108px 24px 80px;
+}
+
+/* ══════════════════════════════════════════════
+   HERO / COVER
+══════════════════════════════════════════════ */
+.hero {
+  text-align:center;
+  padding:72px 40px 64px;
+  margin-bottom:80px;
+  background:linear-gradient(160deg,var(--ink-2) 0%,var(--ink) 60%,#120D1E 100%);
+  border:1px solid var(--border);
+  border-radius:var(--r-xl);
+  position:relative; overflow:hidden;
+}
+.hero::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 70% 50% at 50% 0%, rgba(232,168,56,0.10),transparent);
   pointer-events:none;
 }
-.cover-eyebrow{
-  font-size:11px;letter-spacing:4px;text-transform:uppercase;
-  color:var(--amber);margin-bottom:20px;font-weight:500;
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:11px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--amber); margin-bottom:24px; font-weight:500;
 }
-.cover h1{
-  font-family:'Fraunces',serif;font-size:72px;font-weight:700;
-  line-height:1;letter-spacing:-2px;
+.hero h1 {
+  font-family:'Fraunces',serif;
+  font-size:clamp(48px,8vw,88px);
+  font-weight:700; line-height:1; letter-spacing:-3px;
   background:linear-gradient(135deg,var(--parchment) 0%,var(--amber-glow) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
   margin-bottom:16px;
 }
-.cover-sub{font-size:16px;color:var(--muted);margin-bottom:48px;font-weight:300;}
-.cover-pills{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
-.cover-pill{
-  padding:8px 20px;border-radius:100px;
-  background:var(--glass);border:1px solid var(--border);
-  font-size:12px;color:var(--parch-dim);
+.hero-sub {
+  font-size:clamp(14px,2vw,17px); color:var(--muted);
+  margin-bottom:40px; font-weight:300;
+  max-width:480px; margin-left:auto; margin-right:auto;
 }
-.cover-pill strong{color:var(--amber);}
+.hero-pills {
+  display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:40px;
+}
+.hero-pill {
+  padding:8px 18px; border-radius:100px;
+  background:var(--glass); border:1px solid var(--border);
+  font-size:12px; color:var(--parch-dim); transition:var(--transition);
+}
+.hero-pill strong { color:var(--amber); }
+.hero-pill:hover { background:rgba(232,168,56,0.08); border-color:rgba(232,168,56,0.25); }
+.hero-meta { display:flex; justify-content:center; gap:32px; flex-wrap:wrap; }
+.hero-meta-item { display:flex; flex-direction:column; align-items:center; gap:4px; }
+.hero-meta-val {
+  font-family:'Fraunces',serif; font-size:28px; font-weight:700; color:var(--amber); line-height:1;
+}
+.hero-meta-lbl { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); }
+.hero-divider { width:1px; height:40px; background:var(--border); align-self:center; }
 
-/* ── SECTION ── */
-.section-block{margin-bottom:96px;}
-.section-eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--amber);margin-bottom:8px;}
-.section-title{
-  font-family:'Fraunces',serif;font-size:36px;font-weight:600;
-  color:var(--parchment);margin-bottom:8px;
+/* ══════════════════════════════════════════════
+   CONTEXT GRID
+══════════════════════════════════════════════ */
+.context-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:80px;
 }
-.section-desc{font-size:14px;color:var(--muted);margin-bottom:36px;max-width:560px;}
-.flow-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:6px 16px;border-radius:100px;
-  background:var(--amber);color:var(--ink);
-  font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  margin-bottom:32px;
+.context-card {
+  padding:28px 24px;
+  background:var(--glass); border:1px solid var(--border); border-radius:var(--r-lg);
+  transition:var(--transition);
 }
+.context-card:hover { background:var(--surface); border-color:rgba(232,168,56,0.2); }
+.context-card-icon { font-size:24px; margin-bottom:14px; display:block; }
+.context-card-label { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--amber); margin-bottom:8px; }
+.context-card-title { font-size:16px; font-weight:700; color:var(--parchment); margin-bottom:8px; }
+.context-card-desc { font-size:13px; color:var(--muted); line-height:1.6; }
 
-/* ── SCREEN GRIDS ── */
-.screen-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:40px;}
-.screen-grid-wide{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:40px;}
-
-/* ── SCREEN CARD ── */
-.screen-card{display:flex;flex-direction:column;gap:0;}
-.screen-label{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:12px;
-}
-.screen-label-name{font-size:13px;font-weight:600;color:var(--parchment);}
-.screen-label-tag{
-  font-size:10px;letter-spacing:2px;text-transform:uppercase;
-  color:var(--muted);background:var(--ink-2);
-  padding:3px 10px;border-radius:100px;
-  border:1px solid var(--border);
-}
-.screen-note{
-  margin-top:12px;padding:12px 14px;
-  background:var(--ink-2);border-left:2px solid var(--amber);
-  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
-  font-size:11px;color:var(--muted);line-height:1.6;
-}
-.screen-note strong{color:var(--parch-dim);}
-
-/* ── PHONE SHELL ── */
-.phone{
-  width:100%;
-  aspect-ratio:9/19.5;
-  background:var(--ink);
-  border-radius:36px;
-  border:1.5px solid #3A3A4A;
-  box-shadow:
-    var(--shadow),
-    0 0 0 6px rgba(255,255,255,0.03),
-    inset 0 0 0 1px rgba(255,255,255,0.06);
-  overflow:hidden;
-  display:flex;flex-direction:column;
-  position:relative;
-  min-height:520px;
-}
-/* notch */
-.phone::before{
-  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:90px;height:28px;background:var(--ink);
-  border-radius:0 0 18px 18px;z-index:100;
-}
-.phone-inner{
-  display:flex;flex-direction:column;
-  width:100%;height:100%;
-  padding-top:28px;
-  overflow:hidden;
+/* ══════════════════════════════════════════════
+   SECTION HEADERS
+══════════════════════════════════════════════ */
+.section-block { margin-bottom:100px; }
+.section-header { margin-bottom:40px; }
+.section-eyebrow { font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--amber); margin-bottom:8px; font-weight:500; }
+.section-title { font-family:'Fraunces',serif; font-size:clamp(28px,4vw,40px); font-weight:600; color:var(--parchment); margin-bottom:10px; letter-spacing:-1px; }
+.section-desc { font-size:14px; color:var(--muted); max-width:520px; line-height:1.7; }
+.flow-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:7px 18px; border-radius:100px;
+  background:var(--amber); color:var(--ink);
+  font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-top:16px;
 }
 
-/* ── STATUS BAR ── */
-.sbar{
-  height:20px;display:flex;justify-content:space-between;align-items:center;
-  padding:0 20px;flex-shrink:0;
-}
-.sbar-time{font-size:10px;font-weight:600;color:var(--parchment);}
-.sbar-icons{display:flex;gap:4px;align-items:center;}
-.sbar-icons span{font-size:9px;color:var(--parchment);}
+/* ══════════════════════════════════════════════
+   SCREEN GRID
+══════════════════════════════════════════════ */
+.screen-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:40px; }
+.screen-grid-wide { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:40px; }
+.screen-card { display:flex; flex-direction:column; }
+.screen-label { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+.screen-label-name { font-size:13px; font-weight:600; color:var(--parchment); }
+.screen-label-tag { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); background:var(--ink-2); padding:3px 10px; border-radius:100px; border:1px solid var(--border); }
+.screen-note { margin-top:14px; padding:12px 14px; background:var(--ink-2); border-left:2px solid var(--amber); border-radius:0 var(--r-sm) var(--r-sm) 0; font-size:11px; color:var(--muted); line-height:1.6; }
+.screen-note strong { color:var(--parch-dim); }
 
-/* ── NAV TOP ── */
-.ntop{
-  height:44px;display:flex;align-items:center;
-  padding:0 16px;gap:10px;flex-shrink:0;
+/* ══════════════════════════════════════════════
+   PHONE SHELL
+══════════════════════════════════════════════ */
+.phone {
+  width:100%; aspect-ratio:9/19.5;
+  background:var(--ink); border-radius:var(--r-xl);
+  border:1.5px solid rgba(255,255,255,0.1);
+  box-shadow:var(--shadow), 0 0 0 6px rgba(255,255,255,0.02), inset 0 0 0 1px rgba(255,255,255,0.05);
+  overflow:hidden; display:flex; flex-direction:column;
+  position:relative; min-height:480px; transition:var(--transition);
 }
-.ntop-back{
-  width:32px;height:32px;border-radius:50%;
-  background:var(--glass);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  font-size:14px;color:var(--parch-dim);flex-shrink:0;
-}
-.ntop-title{
-  font-family:'Fraunces',serif;font-size:17px;font-weight:600;
-  color:var(--parchment);flex:1;letter-spacing:-0.3px;
-}
-.ntop-sub{font-size:10px;color:var(--muted);}
-.ntop-action{
-  font-size:11px;font-weight:600;color:var(--amber);
-  padding:4px 10px;border-radius:100px;
-  background:rgba(232,168,56,0.12);border:1px solid rgba(232,168,56,0.25);
-}
-.ntop-icon{font-size:18px;color:var(--parch-dim);}
+.screen-card:hover .phone { transform:translateY(-4px); box-shadow:0 16px 48px rgba(0,0,0,0.6), 0 0 0 6px rgba(255,255,255,0.03); }
+.phone::before { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:80px; height:26px; background:var(--ink); border-radius:0 0 16px 16px; z-index:100; }
+.phone-inner { display:flex; flex-direction:column; width:100%; height:100%; padding-top:26px; overflow:hidden; }
 
-/* ── SCROLL CONTENT ── */
-.pcontent{flex:1;overflow:hidden;display:flex;flex-direction:column;}
-.pscroll{flex:1;overflow-y:auto;display:flex;flex-direction:column;}
-.pscroll::-webkit-scrollbar{display:none;}
-
-/* ── TAB BAR ── */
-.tbar{
-  height:56px;background:rgba(13,13,18,0.95);
-  border-top:1px solid var(--border);
-  display:flex;align-items:stretch;
-  flex-shrink:0;
-  backdrop-filter:blur(16px);
-}
-.titem{
-  flex:1;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:3px;
-  font-size:9px;color:var(--muted);
-  position:relative;
-}
-.titem.active{color:var(--amber);}
-.titem.active::before{
-  content:'';position:absolute;top:0;left:25%;right:25%;height:2px;
-  background:var(--amber);border-radius:0 0 4px 4px;
-}
-.titem-icon{font-size:20px;line-height:1;}
-
-/* ── SEARCH BAR ── */
-.searchbar{
-  margin:8px 14px 0;height:38px;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:100px;display:flex;align-items:center;
-  padding:0 14px;gap:8px;flex-shrink:0;
-}
-.searchbar-icon{font-size:14px;color:var(--muted);}
-.searchbar-text{font-size:12px;color:var(--ash);}
-
-/* ── CHIPS ── */
-.chips{display:flex;gap:8px;padding:10px 14px;overflow:hidden;flex-shrink:0;}
-.chip{
-  padding:5px 14px;border-radius:100px;
-  font-size:11px;font-weight:500;white-space:nowrap;
-  background:var(--surface);border:1px solid var(--border);
-  color:var(--muted);flex-shrink:0;
-}
-.chip.on{background:var(--amber);color:var(--ink);border-color:var(--amber);font-weight:700;}
-
-/* ── SECTION HEAD ── */
-.sh{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:14px 14px 6px;flex-shrink:0;
-}
-.sh-title{font-size:14px;font-weight:700;color:var(--parchment);}
-.sh-link{font-size:11px;color:var(--amber);}
-
-/* ── COVER CARD (novel) ── */
-.cover-cards{display:flex;gap:12px;padding:0 14px;overflow:hidden;flex-shrink:0;}
-.ccard{width:110px;flex-shrink:0;cursor:pointer;}
-.ccard-img{
-  width:110px;height:155px;border-radius:var(--radius-sm);
-  position:relative;overflow:hidden;flex-shrink:0;
-  box-shadow:var(--shadow-sm);
-}
-.ccard-bg{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  font-size:36px;
-}
-.ccard-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,0.85) 100%);
-}
-.ccard-inner-title{
-  position:absolute;bottom:0;left:0;right:0;padding:8px;
-  font-family:'Fraunces',serif;font-size:11px;font-weight:600;
-  color:#fff;line-height:1.2;
-}
-.ccard-meta{margin-top:6px;}
-.ccard-name{font-size:11px;font-weight:600;color:var(--parch-dim);line-height:1.2;}
-.ccard-sub{font-size:10px;color:var(--muted);margin-top:2px;}
-
-/* ── HERO BANNER ── */
-.hero-banner{
-  margin:10px 14px 0;height:160px;border-radius:var(--radius-md);
-  position:relative;overflow:hidden;flex-shrink:0;
-}
-.hero-bg{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;font-size:64px;
-}
-.hero-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(90deg,rgba(0,0,0,0.85) 30%,transparent 100%);
-}
-.hero-content{position:absolute;bottom:0;left:0;padding:16px;}
-.hero-eyebrow{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:4px;}
-.hero-title{font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:4px;}
-.hero-author{font-size:11px;color:rgba(255,255,255,0.7);}
-.hero-cta{
-  position:absolute;bottom:16px;right:12px;
-  padding:7px 14px;border-radius:100px;
-  background:var(--amber);color:var(--ink);
-  font-size:10px;font-weight:700;
-}
-
-/* ── CONTINUE READING CARD ── */
-.cont-card{
-  margin:8px 14px;padding:12px;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius-md);display:flex;gap:10px;
-  align-items:center;flex-shrink:0;
-}
-.cont-thumb{
-  width:46px;height:62px;border-radius:6px;
-  position:relative;overflow:hidden;flex-shrink:0;
-}
-.cont-info{flex:1;}
-.cont-label{font-size:9px;color:var(--amber);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;}
-.cont-title{font-size:13px;font-weight:600;color:var(--parchment);margin-bottom:1px;}
-.cont-ch{font-size:11px;color:var(--muted);}
-.prog-bar{height:3px;background:var(--border);border-radius:100px;margin-top:6px;}
-.prog-fill{height:100%;background:var(--amber);border-radius:100px;}
-.cont-btn{
-  width:32px;height:32px;border-radius:50%;
-  background:var(--amber);display:flex;align-items:center;justify-content:center;
-  font-size:12px;flex-shrink:0;
-}
-
-/* ── LIST ITEM (novel) ── */
-.nlist{padding:0 14px;display:flex;flex-direction:column;gap:0;}
-.nitem{
-  display:flex;gap:10px;padding:10px 0;
-  border-bottom:1px solid var(--border);align-items:flex-start;
-}
-.nitem:last-child{border-bottom:none;}
-.nthumb{
-  width:50px;height:68px;border-radius:6px;
-  position:relative;overflow:hidden;flex-shrink:0;
-}
-.ninfo{flex:1;}
-.ntitle{font-size:13px;font-weight:600;color:var(--parchment);margin-bottom:3px;}
-.nauthor{font-size:11px;color:var(--muted);margin-bottom:5px;}
-.ntags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px;}
-.ntag{
-  font-size:9px;padding:2px 8px;border-radius:100px;
-  background:rgba(123,111,160,0.2);color:var(--violet);
-  border:1px solid rgba(123,111,160,0.3);
-}
-.nmeta{display:flex;gap:10px;font-size:10px;color:var(--muted);}
-.nstar{color:var(--amber);}
-
-/* ── GENRE GRID ── */
-.genre-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 14px;}
-.gtile{
-  height:70px;border-radius:var(--radius-md);
-  position:relative;overflow:hidden;cursor:pointer;
-  display:flex;flex-direction:column;justify-content:flex-end;padding:10px;
-}
-.gtile-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:32px;opacity:0.25;}
-.gtile-overlay{position:absolute;inset:0;border-radius:var(--radius-md);}
-.gtile-name{font-size:12px;font-weight:700;color:var(--parchment);position:relative;z-index:1;}
-.gtile-count{font-size:10px;color:rgba(255,255,255,0.5);position:relative;z-index:1;}
-
-/* ── STATS ROW ── */
-.stats-row{
-  display:flex;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  flex-shrink:0;
-}
-.stat{flex:1;padding:10px 6px;text-align:center;border-right:1px solid var(--border);}
-.stat:last-child{border-right:none;}
-.stat-val{font-size:16px;font-weight:700;color:var(--parchment);}
-.stat-val.amber{color:var(--amber);}
-.stat-lbl{font-size:9px;color:var(--muted);margin-top:1px;}
-
-/* ── BUTTONS ── */
-.btn{
-  margin:8px 14px;height:46px;border-radius:100px;
-  display:flex;align-items:center;justify-content:center;gap:6px;
-  font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0;
-}
-.btn-primary{background:var(--amber);color:var(--ink);}
-.btn-secondary{
-  background:transparent;color:var(--parchment);
-  border:1px solid var(--border);
-}
-.btn-pair{display:flex;gap:8px;margin:8px 14px;flex-shrink:0;}
-.btn-pair .btn{flex:1;margin:0;}
-
-/* ── AVATAR ROW ── */
-.av-row{display:flex;gap:14px;padding:0 14px;overflow:hidden;flex-shrink:0;}
-.av-item{display:flex;flex-direction:column;align-items:center;gap:4px;}
-.av-ring{
-  width:48px;height:48px;border-radius:50%;
-  background:linear-gradient(135deg,var(--amber),var(--violet));
-  padding:2px;
-}
-.av-inner{
-  width:100%;height:100%;border-radius:50%;
-  background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:18px;
-}
-.av-name{font-size:9px;color:var(--muted);}
-
-/* ── TOGGLE TABS ── */
-.ttabs{
-  display:flex;margin:8px 14px;background:var(--surface);
-  border-radius:100px;border:1px solid var(--border);
-  overflow:hidden;flex-shrink:0;
-}
-.ttab{
-  flex:1;height:34px;display:flex;align-items:center;justify-content:center;
-  font-size:11px;font-weight:500;color:var(--muted);border-radius:100px;
-  margin:3px;
-}
-.ttab.on{background:var(--ink-2);color:var(--parchment);font-weight:700;}
-
-/* ── DIVIDER ── */
-.divider{height:1px;background:var(--border);margin:6px 14px;}
-
-/* ── SPLASH ── */
-.splash-full{
-  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  background:radial-gradient(ellipse at center,#1A1030 0%,#0D0D12 70%);
-  gap:12px;
-}
-.splash-logo-wrap{
-  width:72px;height:72px;border-radius:20px;
-  background:linear-gradient(135deg,var(--amber),#C47820);
-  display:flex;align-items:center;justify-content:center;
-  font-size:32px;box-shadow:0 8px 32px rgba(232,168,56,0.3);
-}
-.splash-brand{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--parchment);}
-.splash-tag{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);}
-.splash-loader{width:48px;height:2px;background:var(--border);border-radius:100px;margin-top:24px;overflow:hidden;}
-.splash-fill{width:40%;height:100%;background:var(--amber);border-radius:100px;animation:ld 1.4s ease-in-out infinite;}
-@keyframes ld{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
-
-/* ── AUTH ── */
-.auth-top{padding:32px 14px 16px;text-align:center;}
-.auth-logo{font-family:'Fraunces',serif;font-size:24px;font-weight:700;color:var(--parchment);margin-bottom:4px;}
-.auth-sub{font-size:12px;color:var(--muted);}
-.form-group{padding:0 14px;margin-bottom:12px;flex-shrink:0;}
-.form-label{font-size:11px;color:var(--muted);font-weight:500;margin-bottom:6px;display:block;}
-.form-input{
-  width:100%;height:44px;background:var(--surface);
-  border:1px solid var(--border);border-radius:var(--radius-sm);
-  padding:0 14px;font-size:13px;color:var(--parch-dim);
-  display:flex;align-items:center;
-}
-.form-input.placeholder{color:var(--ash);}
-.or-row{display:flex;align-items:center;gap:10px;padding:0 14px;margin:4px 0;}
-.or-line{flex:1;height:1px;background:var(--border);}
-.or-text{font-size:11px;color:var(--ash);}
-.social-btn{
-  margin:4px 14px;height:42px;border-radius:var(--radius-sm);
-  background:var(--surface);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  font-size:12px;color:var(--parch-dim);font-weight:500;flex-shrink:0;
-}
-.forgot{text-align:right;padding:0 14px 8px;font-size:11px;color:var(--amber);}
-.auth-switch{text-align:center;padding:10px;font-size:11px;color:var(--muted);}
-.auth-switch span{color:var(--amber);font-weight:600;}
-
-/* ── READING SCREEN ── */
-.reading-wrap{
-  flex:1;background:#0E0C0A;display:flex;flex-direction:column;overflow:hidden;
-}
-.reading-header{
-  height:44px;display:flex;align-items:center;padding:0 16px;gap:10px;
-  background:rgba(14,12,10,0.95);border-bottom:1px solid #2A2520;flex-shrink:0;
-}
-.read-back{color:#8A8070;font-size:16px;}
-.read-info{flex:1;}
-.read-title{font-family:'Fraunces',serif;font-size:13px;color:#E8E0D0;}
-.read-ch{font-size:10px;color:#6A6050;}
-.read-settings{font-size:13px;color:#8A8070;}
-.amber-thread{height:2px;background:linear-gradient(90deg,var(--amber) 22%,var(--border) 22%);flex-shrink:0;}
-.reading-body{flex:1;padding:20px 20px;overflow:hidden;}
-.read-chaptitle{font-family:'Fraunces',serif;font-size:18px;color:#E8E0D0;margin-bottom:16px;}
-.read-line{height:9px;background:#2A2520;border-radius:4px;margin-bottom:8px;}
-.read-line.s{width:75%;}
-.read-line.xs{width:50%;}
-.read-gap{height:14px;}
-.reading-footer{
-  height:48px;background:rgba(14,12,10,0.95);border-top:1px solid #2A2520;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 20px;flex-shrink:0;
-}
-.read-nav{font-size:12px;color:#8A8070;display:flex;align-items:center;gap:4px;}
-.read-actions{display:flex;gap:14px;align-items:center;}
-.read-act{font-size:12px;color:#8A8070;}
-.read-act.amber{color:var(--amber);}
-
-/* ── PROFILE ── */
-.prof-hero{
-  height:90px;background:linear-gradient(135deg,#1A1535,#0D1A2A);
-  position:relative;display:flex;align-items:flex-end;
-  padding:0 14px 12px;flex-shrink:0;
-}
-.prof-avatar{
-  width:52px;height:52px;border-radius:50%;
-  background:linear-gradient(135deg,var(--amber),var(--violet));
-  padding:2px;margin-right:10px;
-}
-.prof-avatar-inner{
-  width:100%;height:100%;border-radius:50%;
-  background:#1A1030;display:flex;align-items:center;justify-content:center;font-size:22px;
-}
-.prof-name{font-size:14px;font-weight:700;color:var(--parchment);}
-.prof-handle{font-size:11px;color:var(--muted);}
-.prof-edit{
-  position:absolute;right:14px;bottom:12px;
-  padding:5px 12px;border-radius:100px;border:1px solid var(--border);
-  font-size:10px;color:var(--parch-dim);background:var(--surface);
-}
-
-/* ── BADGES ── */
-.badge-row{display:flex;gap:8px;padding:0 14px;overflow:hidden;flex-shrink:0;}
-.badge{
-  width:52px;height:60px;border-radius:var(--radius-sm);
-  background:var(--surface);border:1px solid var(--border);
-  display:flex;flex-direction:column;align-items:center;
-  justify-content:center;gap:3px;flex-shrink:0;
-}
-.badge-icon{font-size:18px;}
-.badge-lbl{font-size:7px;color:var(--muted);text-align:center;line-height:1.2;}
-.badge.locked{opacity:0.3;filter:grayscale(1);}
-
-/* ── COMMENT ── */
-.comment{padding:10px 14px;border-bottom:1px solid var(--border);}
-.cm-head{display:flex;gap:8px;align-items:center;margin-bottom:5px;}
-.cm-av{
-  width:26px;height:26px;border-radius:50%;
-  background:linear-gradient(135deg,var(--amber),var(--violet));
-  display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;
-}
-.cm-author{font-size:11px;font-weight:600;color:var(--parchment);}
-.cm-time{font-size:10px;color:var(--muted);margin-left:4px;}
-.cm-text{font-size:11px;color:var(--parch-dim);line-height:1.5;}
-.cm-likes{font-size:10px;color:var(--muted);margin-top:4px;}
-
-/* ── DASH CARDS ── */
-.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 14px;flex-shrink:0;}
-.dash-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius-md);padding:12px;
-}
-.dc-lbl{font-size:10px;color:var(--muted);margin-bottom:4px;}
-.dc-val{font-size:20px;font-weight:700;color:var(--parchment);}
-.dc-val.amber{color:var(--amber);}
-.dc-delta{font-size:10px;color:#5BAD7A;margin-top:2px;}
-.dc-delta.warn{color:var(--amber);}
-
-/* ── CHART ── */
-.chart-area{
-  margin:8px 14px;height:80px;background:var(--surface);
-  border:1px solid var(--border);border-radius:var(--radius-md);
-  padding:12px 12px 6px;display:flex;align-items:flex-end;
-  gap:6px;flex-shrink:0;
-}
-.bar{
-  flex:1;background:var(--ash);border-radius:4px 4px 0 0;
-  position:relative;
-}
-.bar.hi{background:var(--amber);}
-.bar.hi2{background:rgba(232,168,56,0.5);}
-
-.line-chart{
-  margin:4px 14px;height:72px;background:var(--surface);
-  border:1px solid var(--border);border-radius:var(--radius-md);
-  padding:8px;flex-shrink:0;position:relative;overflow:hidden;
-}
-
-/* ── TABLE ── */
-.wf-table{margin:0 14px;flex-shrink:0;}
-.tr{
-  display:flex;padding:7px 0;
-  border-bottom:1px solid var(--border);font-size:11px;
-}
-.tr.head{font-size:9px;color:var(--muted);font-weight:600;letter-spacing:1px;text-transform:uppercase;}
-.td{flex:1;color:var(--parch-dim);}
-.td.r{text-align:right;color:var(--amber);}
-
-/* ── EARNINGS HERO ── */
-.earn-hero{
-  background:linear-gradient(135deg,#1A1535 0%,#0D1A2A 100%);
-  padding:20px 14px;text-align:center;flex-shrink:0;
-}
-.earn-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
-.earn-val{font-family:'Fraunces',serif;font-size:36px;font-weight:700;color:var(--amber);}
-.earn-delta{font-size:11px;color:#5BAD7A;margin-top:4px;}
-
-/* ── FORM ── */
-.fl{font-size:11px;color:var(--muted);padding:8px 14px 4px;flex-shrink:0;}
-.fi{
-  margin:0 14px 8px;height:40px;background:var(--surface);
-  border:1px solid var(--border);border-radius:var(--radius-sm);
-  display:flex;align-items:center;padding:0 12px;
-  font-size:12px;color:var(--ash);flex-shrink:0;
-}
-.ftextarea{
-  margin:0 14px 8px;height:68px;background:var(--surface);
-  border:1px solid var(--border);border-radius:var(--radius-sm);
-  padding:10px 12px;font-size:12px;color:var(--ash);flex-shrink:0;
-  display:flex;align-items:flex-start;
-}
-.fselect{
-  margin:0 14px 8px;height:40px;background:var(--surface);
-  border:1px solid var(--border);border-radius:var(--radius-sm);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 12px;font-size:12px;color:var(--ash);flex-shrink:0;
-}
-.step-bar{display:flex;margin:8px 14px;gap:0;flex-shrink:0;}
-.step{
-  flex:1;text-align:center;font-size:10px;padding:6px 0;
-  border-bottom:2px solid var(--border);color:var(--muted);
-}
-.step.on{border-color:var(--amber);color:var(--amber);font-weight:700;}
-
-/* ── UPLOAD AREA ── */
-.upload-area{
-  margin:0 14px 8px;height:70px;background:var(--surface);
-  border:1.5px dashed var(--border);border-radius:var(--radius-md);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:4px;font-size:11px;color:var(--muted);flex-shrink:0;
-}
-.upload-area-icon{font-size:20px;}
-
-/* ── TOOLBAR ── */
-.editor-toolbar{
-  display:flex;margin:0 14px 4px;background:var(--surface);
-  border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;
-  flex-shrink:0;
-}
-.et-btn{
-  flex:1;height:32px;display:flex;align-items:center;justify-content:center;
-  font-size:12px;color:var(--muted);border-right:1px solid var(--border);
-}
-.et-btn:last-child{border-right:none;}
-
-/* ── FEEDBACK ── */
-.fb-item{padding:10px 14px;border-bottom:1px solid var(--border);}
-.fb-head{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:4px;}
-.fb-body{font-size:11px;color:var(--parch-dim);line-height:1.5;margin-bottom:6px;}
-.fb-actions{display:flex;gap:8px;}
-.fb-reply{
-  padding:4px 12px;border-radius:100px;
-  background:var(--amber);color:var(--ink);font-size:10px;font-weight:700;
-}
-.fb-like{
-  padding:4px 12px;border-radius:100px;
-  background:var(--surface);border:1px solid var(--border);
-  font-size:10px;color:var(--muted);
-}
-.fb-done{
-  padding:4px 12px;border-radius:100px;
-  background:rgba(91,173,122,0.15);border:1px solid rgba(91,173,122,0.3);
-  font-size:10px;color:#5BAD7A;
-}
-
-/* ── NOVEL DETAIL SPECIFIC ── */
-.nd-hero{
-  height:160px;position:relative;overflow:hidden;flex-shrink:0;
-}
-.nd-hero-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:72px;}
-.nd-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(13,13,18,0.1) 0%,rgba(13,13,18,0.95) 100%);
-}
-.nd-cover{
-  position:absolute;bottom:14px;left:14px;
-  width:70px;height:100px;border-radius:8px;overflow:hidden;
-  box-shadow:var(--shadow);
-}
-.nd-info{position:absolute;bottom:14px;left:94px;right:50px;}
-.nd-title{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--parchment);line-height:1.2;}
-.nd-author{font-size:11px;color:var(--amber);margin-top:3px;}
-.nd-status{
-  display:inline-block;font-size:9px;padding:2px 8px;border-radius:100px;
-  background:rgba(91,173,122,0.2);color:#5BAD7A;border:1px solid rgba(91,173,122,0.3);
-  margin-top:4px;
-}
-.nd-actions{position:absolute;top:12px;right:12px;display:flex;gap:8px;}
-.nd-action-btn{
-  width:32px;height:32px;border-radius:50%;
-  background:rgba(13,13,18,0.7);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;font-size:14px;
-}
-.chapter-row{
-  display:flex;align-items:center;padding:9px 14px;
-  border-bottom:1px solid var(--border);
-}
-.ch-num{font-size:10px;color:var(--muted);width:28px;}
-.ch-title{flex:1;font-size:12px;color:var(--parch-dim);}
-.ch-badge{
-  font-size:9px;padding:2px 8px;border-radius:100px;
-  background:rgba(91,173,122,0.15);color:#5BAD7A;
-}
-.ch-badge.locked{background:rgba(123,111,160,0.15);color:var(--violet);}
-
-/* ── NOTIF DOT ── */
-.notif{
-  width:8px;height:8px;border-radius:50%;background:var(--amber);
-  flex-shrink:0;
-}
-
-/* ── LIB CARD ── */
-.lib-item{
-  display:flex;gap:10px;padding:10px 14px;
-  border-bottom:1px solid var(--border);align-items:center;
-}
-.lib-thumb{width:44px;height:62px;border-radius:6px;overflow:hidden;position:relative;flex-shrink:0;}
-.lib-info{flex:1;}
-.lib-title{font-size:13px;font-weight:600;color:var(--parchment);margin-bottom:2px;}
-.lib-ch{font-size:11px;color:var(--muted);margin-bottom:6px;}
-.lib-new{
-  font-size:9px;padding:1px 6px;border-radius:100px;
-  background:rgba(232,168,56,0.2);color:var(--amber);
-  border:1px solid rgba(232,168,56,0.3);margin-left:6px;
-}
-.lib-pct{font-size:9px;color:var(--muted);margin-top:3px;}
-.lib-play{
-  width:30px;height:30px;border-radius:50%;
-  background:var(--amber);display:flex;align-items:center;justify-content:center;
-  font-size:11px;flex-shrink:0;
-}
-
-/* ── COLOUR STRIPS FOR TILES/COVERS ── */
+/* ══════════════════════════════════════════════
+   PHONE UI COMPONENTS
+══════════════════════════════════════════════ */
+.sbar { height:20px; display:flex; justify-content:space-between; align-items:center; padding:0 20px; flex-shrink:0; }
+.sbar-time { font-size:10px; font-weight:600; color:var(--parchment); }
+.sbar-icons span { font-size:9px; color:var(--parchment); }
+.ntop { height:44px; display:flex; align-items:center; padding:0 16px; gap:10px; flex-shrink:0; }
+.ntop-back { width:32px; height:32px; border-radius:50%; background:var(--glass); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--parch-dim); flex-shrink:0; }
+.ntop-title { font-family:'Fraunces',serif; font-size:17px; font-weight:600; color:var(--parchment); flex:1; letter-spacing:-0.3px; }
+.ntop-sub { font-size:10px; color:var(--muted); }
+.ntop-action { font-size:11px; font-weight:600; color:var(--amber); padding:4px 10px; border-radius:100px; background:rgba(232,168,56,0.12); border:1px solid rgba(232,168,56,0.25); }
+.ntop-icon { font-size:18px; color:var(--parch-dim); }
+.pcontent { flex:1; overflow:hidden; display:flex; flex-direction:column; }
+.pscroll { flex:1; overflow-y:auto; display:flex; flex-direction:column; }
+.pscroll::-webkit-scrollbar { display:none; }
+.tbar { height:56px; background:rgba(10,10,16,0.95); border-top:1px solid var(--border); display:flex; align-items:stretch; flex-shrink:0; }
+.titem { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; font-size:9px; color:var(--muted); position:relative; }
+.titem.active { color:var(--amber); }
+.titem.active::before { content:''; position:absolute; top:0; left:25%; right:25%; height:2px; background:var(--amber); border-radius:0 0 4px 4px; }
+.titem-icon { font-size:20px; line-height:1; }
+.searchbar { margin:8px 14px 0; height:38px; background:var(--surface); border:1px solid var(--border); border-radius:100px; display:flex; align-items:center; padding:0 14px; gap:8px; flex-shrink:0; }
+.searchbar-icon { font-size:14px; color:var(--muted); }
+.searchbar-text { font-size:12px; color:var(--ash); }
+.chips { display:flex; gap:8px; padding:10px 14px; overflow:hidden; flex-shrink:0; }
+.chip { padding:5px 14px; border-radius:100px; font-size:11px; font-weight:500; white-space:nowrap; background:var(--surface); border:1px solid var(--border); color:var(--muted); flex-shrink:0; }
+.chip.on { background:var(--amber); color:var(--ink); border-color:var(--amber); font-weight:700; }
+.sh { display:flex; justify-content:space-between; align-items:center; padding:14px 14px 6px; flex-shrink:0; }
+.sh-title { font-size:14px; font-weight:700; color:var(--parchment); }
+.sh-link { font-size:11px; color:var(--amber); }
+.cover-cards { display:flex; gap:12px; padding:0 14px; overflow:hidden; flex-shrink:0; }
+.ccard { width:110px; flex-shrink:0; cursor:pointer; }
+.ccard-img { width:110px; height:155px; border-radius:var(--r-sm); position:relative; overflow:hidden; flex-shrink:0; box-shadow:var(--shadow-sm); }
+.ccard-bg { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:36px; }
+.ccard-overlay { position:absolute; inset:0; background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,0.85) 100%); }
+.ccard-inner-title { position:absolute; bottom:0; left:0; right:0; padding:8px; font-family:'Fraunces',serif; font-size:11px; font-weight:600; color:#fff; line-height:1.2; }
+.ccard-meta { margin-top:6px; }
+.ccard-name { font-size:11px; font-weight:600; color:var(--parch-dim); line-height:1.2; }
+.ccard-sub { font-size:10px; color:var(--muted); margin-top:2px; }
+.hero-banner { margin:10px 14px 0; height:160px; border-radius:var(--r-md); position:relative; overflow:hidden; flex-shrink:0; }
+.hero-bg { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:64px; }
+.hero-overlay { position:absolute; inset:0; background:linear-gradient(90deg,rgba(0,0,0,0.85) 30%,transparent 100%); }
+.hero-content { position:absolute; bottom:0; left:0; padding:16px; }
+.hero-eyebrow-inner { font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--amber); margin-bottom:4px; }
+.hero-title-inner { font-family:'Fraunces',serif; font-size:18px; font-weight:700; color:#fff; line-height:1.2; margin-bottom:4px; }
+.hero-author-inner { font-size:11px; color:rgba(255,255,255,0.7); }
+.hero-cta { position:absolute; bottom:16px; right:12px; padding:7px 14px; border-radius:100px; background:var(--amber); color:var(--ink); font-size:10px; font-weight:700; }
+.cont-card { margin:8px 14px; padding:12px; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-md); display:flex; gap:10px; align-items:center; flex-shrink:0; }
+.cont-thumb { width:46px; height:62px; border-radius:6px; position:relative; overflow:hidden; flex-shrink:0; }
+.cont-info { flex:1; }
+.cont-label { font-size:9px; color:var(--amber); font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:2px; }
+.cont-title { font-size:13px; font-weight:600; color:var(--parchment); margin-bottom:1px; }
+.cont-ch { font-size:11px; color:var(--muted); }
+.prog-bar { height:3px; background:var(--border); border-radius:100px; margin-top:6px; }
+.prog-fill { height:100%; background:var(--amber); border-radius:100px; }
+.cont-btn { width:32px; height:32px; border-radius:50%; background:var(--amber); display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; }
+.nlist { padding:0 14px; display:flex; flex-direction:column; }
+.nitem { display:flex; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); align-items:flex-start; }
+.nitem:last-child { border-bottom:none; }
+.nthumb { width:50px; height:68px; border-radius:6px; position:relative; overflow:hidden; flex-shrink:0; }
+.ninfo { flex:1; }
+.ntitle { font-size:13px; font-weight:600; color:var(--parchment); margin-bottom:3px; }
+.nauthor { font-size:11px; color:var(--muted); margin-bottom:5px; }
+.ntags { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:5px; }
+.ntag { font-size:9px; padding:2px 8px; border-radius:100px; background:rgba(123,111,160,0.2); color:var(--violet); border:1px solid rgba(123,111,160,0.3); }
+.nmeta { display:flex; gap:10px; font-size:10px; color:var(--muted); }
+.nstar { color:var(--amber); }
+.genre-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:0 14px; }
+.gtile { height:70px; border-radius:var(--r-md); position:relative; overflow:hidden; cursor:pointer; display:flex; flex-direction:column; justify-content:flex-end; padding:10px; }
+.gtile-bg { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:32px; opacity:0.25; }
+.gtile-overlay { position:absolute; inset:0; border-radius:var(--r-md); }
+.gtile-name { font-size:12px; font-weight:700; color:var(--parchment); position:relative; z-index:1; }
+.gtile-count { font-size:10px; color:rgba(255,255,255,0.5); position:relative; z-index:1; }
+.stats-row { display:flex; border-top:1px solid var(--border); border-bottom:1px solid var(--border); flex-shrink:0; }
+.stat { flex:1; padding:10px 6px; text-align:center; border-right:1px solid var(--border); }
+.stat:last-child { border-right:none; }
+.stat-val { font-size:16px; font-weight:700; color:var(--parchment); }
+.stat-val.amber { color:var(--amber); }
+.stat-lbl { font-size:9px; color:var(--muted); margin-top:1px; }
+.btn { margin:8px 14px; height:46px; border-radius:100px; display:flex; align-items:center; justify-content:center; gap:6px; font-size:13px; font-weight:700; cursor:pointer; flex-shrink:0; }
+.btn-primary { background:var(--amber); color:var(--ink); }
+.btn-secondary { background:transparent; color:var(--parchment); border:1px solid var(--border); }
+.av-row { display:flex; gap:14px; padding:0 14px; overflow:hidden; flex-shrink:0; }
+.av-item { display:flex; flex-direction:column; align-items:center; gap:4px; }
+.av-ring { width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg,var(--amber),var(--violet)); padding:2px; }
+.av-inner { width:100%; height:100%; border-radius:50%; background:var(--surface); display:flex; align-items:center; justify-content:center; font-size:18px; }
+.av-name { font-size:9px; color:var(--muted); }
+.ttabs { display:flex; margin:8px 14px; background:var(--surface); border-radius:100px; border:1px solid var(--border); overflow:hidden; flex-shrink:0; }
+.ttab { flex:1; height:34px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:500; color:var(--muted); border-radius:100px; margin:3px; }
+.ttab.on { background:var(--ink-2); color:var(--parchment); font-weight:700; }
+.divider { height:1px; background:var(--border); margin:6px 14px; }
+.splash-full { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; background:radial-gradient(ellipse at center,#1A1030 0%,#0D0D12 70%); gap:12px; }
+.splash-logo-wrap { width:72px; height:72px; border-radius:20px; background:linear-gradient(135deg,var(--amber),#C47820); display:flex; align-items:center; justify-content:center; font-size:32px; box-shadow:0 8px 32px rgba(232,168,56,0.3); }
+.splash-brand { font-family:'Fraunces',serif; font-size:28px; font-weight:700; color:var(--parchment); }
+.splash-tag { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); }
+.splash-loader { width:48px; height:2px; background:var(--border); border-radius:100px; margin-top:24px; overflow:hidden; }
+.splash-fill { width:40%; height:100%; background:var(--amber); border-radius:100px; animation:ld 1.4s ease-in-out infinite; }
+@keyframes ld { 0%{transform:translateX(-100%)} 100%{transform:translateX(350%)} }
+.auth-top { padding:32px 14px 16px; text-align:center; }
+.auth-logo { font-family:'Fraunces',serif; font-size:24px; font-weight:700; color:var(--parchment); margin-bottom:4px; }
+.auth-sub { font-size:12px; color:var(--muted); }
+.form-group { padding:0 14px; margin-bottom:12px; flex-shrink:0; }
+.form-label { font-size:11px; color:var(--muted); font-weight:500; margin-bottom:6px; display:block; }
+.form-input { width:100%; height:44px; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-sm); padding:0 14px; font-size:13px; color:var(--parch-dim); display:flex; align-items:center; }
+.form-input.placeholder { color:var(--ash); }
+.or-row { display:flex; align-items:center; gap:10px; padding:0 14px; margin:4px 0; }
+.or-line { flex:1; height:1px; background:var(--border); }
+.or-text { font-size:11px; color:var(--ash); }
+.social-btn { margin:4px 14px; height:42px; border-radius:var(--r-sm); background:var(--surface); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; gap:8px; font-size:12px; color:var(--parch-dim); font-weight:500; flex-shrink:0; }
+.forgot { text-align:right; padding:0 14px 8px; font-size:11px; color:var(--amber); }
+.auth-switch { text-align:center; padding:10px; font-size:11px; color:var(--muted); }
+.auth-switch span { color:var(--amber); font-weight:600; }
+.reading-wrap { flex:1; background:#0E0C0A; display:flex; flex-direction:column; overflow:hidden; }
+.reading-header { height:44px; display:flex; align-items:center; padding:0 16px; gap:10px; background:rgba(14,12,10,0.95); border-bottom:1px solid #2A2520; flex-shrink:0; }
+.read-back { color:#8A8070; font-size:16px; }
+.read-info { flex:1; }
+.read-title { font-family:'Fraunces',serif; font-size:13px; color:#E8E0D0; }
+.read-ch { font-size:10px; color:#6A6050; }
+.read-settings { font-size:13px; color:#8A8070; }
+.amber-thread { height:2px; background:linear-gradient(90deg,var(--amber) 22%,var(--border) 22%); flex-shrink:0; }
+.reading-body { flex:1; padding:20px; overflow:hidden; }
+.read-chaptitle { font-family:'Fraunces',serif; font-size:18px; color:#E8E0D0; margin-bottom:16px; }
+.read-line { height:9px; background:#2A2520; border-radius:4px; margin-bottom:8px; }
+.read-line.s { width:75%; }
+.read-line.xs { width:50%; }
+.read-gap { height:14px; }
+.reading-footer { height:48px; background:rgba(14,12,10,0.95); border-top:1px solid #2A2520; display:flex; align-items:center; justify-content:space-between; padding:0 20px; flex-shrink:0; }
+.read-nav { font-size:12px; color:#8A8070; display:flex; align-items:center; gap:4px; }
+.read-actions { display:flex; gap:14px; align-items:center; }
+.read-act { font-size:12px; color:#8A8070; }
+.read-act.amber { color:var(--amber); }
+.prof-hero { height:90px; background:linear-gradient(135deg,#1A1535,#0D1A2A); position:relative; display:flex; align-items:flex-end; padding:0 14px 12px; flex-shrink:0; }
+.prof-avatar { width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg,var(--amber),var(--violet)); padding:2px; margin-right:10px; }
+.prof-avatar-inner { width:100%; height:100%; border-radius:50%; background:#1A1030; display:flex; align-items:center; justify-content:center; font-size:22px; }
+.prof-name { font-size:14px; font-weight:700; color:var(--parchment); }
+.prof-handle { font-size:11px; color:var(--muted); }
+.prof-edit { position:absolute; right:14px; bottom:12px; padding:5px 12px; border-radius:100px; border:1px solid var(--border); font-size:10px; color:var(--parch-dim); background:var(--surface); }
+.badge-row { display:flex; gap:8px; padding:0 14px; overflow:hidden; flex-shrink:0; }
+.badge { width:52px; height:60px; border-radius:var(--r-sm); background:var(--surface); border:1px solid var(--border); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; flex-shrink:0; }
+.badge-icon { font-size:18px; }
+.badge-lbl { font-size:7px; color:var(--muted); text-align:center; line-height:1.2; }
+.badge.locked { opacity:0.3; filter:grayscale(1); }
+.comment { padding:10px 14px; border-bottom:1px solid var(--border); }
+.cm-head { display:flex; gap:8px; align-items:center; margin-bottom:5px; }
+.cm-av { width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,var(--amber),var(--violet)); display:flex; align-items:center; justify-content:center; font-size:11px; flex-shrink:0; }
+.cm-author { font-size:11px; font-weight:600; color:var(--parchment); }
+.cm-time { font-size:10px; color:var(--muted); margin-left:4px; }
+.cm-text { font-size:11px; color:var(--parch-dim); line-height:1.5; }
+.cm-likes { font-size:10px; color:var(--muted); margin-top:4px; }
+.dash-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:0 14px; flex-shrink:0; }
+.dash-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--r-md); padding:12px; }
+.dc-lbl { font-size:10px; color:var(--muted); margin-bottom:4px; }
+.dc-val { font-size:20px; font-weight:700; color:var(--parchment); }
+.dc-val.amber { color:var(--amber); }
+.dc-delta { font-size:10px; color:#5BAD7A; margin-top:2px; }
+.dc-delta.warn { color:var(--amber); }
+.chart-area { margin:8px 14px; height:80px; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-md); padding:12px 12px 6px; display:flex; align-items:flex-end; gap:6px; flex-shrink:0; }
+.bar { flex:1; background:var(--ash); border-radius:4px 4px 0 0; position:relative; }
+.bar.hi { background:var(--amber); }
+.bar.hi2 { background:rgba(232,168,56,0.5); }
+.line-chart { margin:4px 14px; height:72px; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-md); padding:8px; flex-shrink:0; position:relative; overflow:hidden; }
+.wf-table { margin:0 14px; flex-shrink:0; }
+.tr { display:flex; padding:7px 0; border-bottom:1px solid var(--border); font-size:11px; }
+.tr.head { font-size:9px; color:var(--muted); font-weight:600; letter-spacing:1px; text-transform:uppercase; }
+.td { flex:1; color:var(--parch-dim); }
+.td.r { text-align:right; color:var(--amber); }
+.earn-hero { background:linear-gradient(135deg,#1A1535 0%,#0D1A2A 100%); padding:20px 14px; text-align:center; flex-shrink:0; }
+.earn-lbl { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+.earn-val { font-family:'Fraunces',serif; font-size:36px; font-weight:700; color:var(--amber); }
+.earn-delta { font-size:11px; color:#5BAD7A; margin-top:4px; }
+.fl { font-size:11px; color:var(--muted); padding:8px 14px 4px; flex-shrink:0; }
+.fi { margin:0 14px 8px; height:40px; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-sm); display:flex; align-items:center; padding:0 12px; font-size:12px; color:var(--ash); flex-shrink:0; }
+.ftextarea { margin:0 14px 8px; height:68px; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-sm); padding:10px 12px; font-size:12px; color:var(--ash); flex-shrink:0; display:flex; align-items:flex-start; }
+.fselect { margin:0 14px 8px; height:40px; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-sm); display:flex; align-items:center; justify-content:space-between; padding:0 12px; font-size:12px; color:var(--ash); flex-shrink:0; }
+.step-bar { display:flex; margin:8px 14px; gap:0; flex-shrink:0; }
+.step { flex:1; text-align:center; font-size:10px; padding:6px 0; border-bottom:2px solid var(--border); color:var(--muted); }
+.step.done { border-color:var(--amber); color:var(--amber); }
+.step.active { border-color:var(--amber); color:var(--parchment); font-weight:600; }
+.nd-hero { height:160px; position:relative; overflow:hidden; flex-shrink:0; }
+.nd-hero-bg { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:72px; }
+.nd-overlay { position:absolute; inset:0; background:linear-gradient(180deg,rgba(13,13,18,0.1) 0%,rgba(13,13,18,0.95) 100%); }
+.nd-cover { position:absolute; bottom:14px; left:14px; width:70px; height:100px; border-radius:8px; overflow:hidden; box-shadow:var(--shadow); }
+.nd-info { position:absolute; bottom:14px; left:94px; right:50px; }
+.nd-title { font-family:'Fraunces',serif; font-size:16px; font-weight:700; color:var(--parchment); line-height:1.2; }
+.nd-author { font-size:11px; color:var(--amber); margin-top:3px; }
+.nd-status { display:inline-block; font-size:9px; padding:2px 8px; border-radius:100px; background:rgba(91,173,122,0.2); color:#5BAD7A; border:1px solid rgba(91,173,122,0.3); margin-top:4px; }
+.nd-actions { position:absolute; top:12px; right:12px; display:flex; gap:8px; }
+.nd-action-btn { width:32px; height:32px; border-radius:50%; background:rgba(13,13,18,0.7); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:14px; }
+.chapter-row { display:flex; align-items:center; padding:9px 14px; border-bottom:1px solid var(--border); }
+.ch-num { font-size:10px; color:var(--muted); width:28px; }
+.ch-title { flex:1; font-size:12px; color:var(--parch-dim); }
+.ch-badge { font-size:9px; padding:2px 8px; border-radius:100px; background:rgba(91,173,122,0.15); color:#5BAD7A; }
+.ch-badge.locked { background:rgba(123,111,160,0.15); color:var(--violet); }
+.notif { width:8px; height:8px; border-radius:50%; background:var(--amber); flex-shrink:0; }
+.lib-item { display:flex; gap:10px; padding:10px 14px; border-bottom:1px solid var(--border); align-items:center; }
+.lib-thumb { width:44px; height:62px; border-radius:6px; overflow:hidden; position:relative; flex-shrink:0; }
+.lib-info { flex:1; }
+.lib-title { font-size:13px; font-weight:600; color:var(--parchment); margin-bottom:2px; }
+.lib-ch { font-size:11px; color:var(--muted); margin-bottom:6px; }
+.lib-new { font-size:9px; padding:1px 6px; border-radius:100px; background:rgba(232,168,56,0.2); color:var(--amber); border:1px solid rgba(232,168,56,0.3); margin-left:6px; }
+.lib-pct { font-size:9px; color:var(--muted); margin-top:3px; }
+.lib-play { width:30px; height:30px; border-radius:50%; background:var(--amber); display:flex; align-items:center; justify-content:center; font-size:11px; flex-shrink:0; }
 .c1{background:linear-gradient(135deg,#1A1535,#3A1060);}
 .c2{background:linear-gradient(135deg,#0D1A2A,#1A3A2A);}
 .c3{background:linear-gradient(135deg,#2A0D1A,#1A1020);}
@@ -716,68 +425,168 @@ body{
 .c5{background:linear-gradient(135deg,#0D1A2A,#1A2A3A);}
 .c6{background:linear-gradient(135deg,#2A1A2A,#1A0D2A);}
 .c7{background:linear-gradient(135deg,#1A1A0D,#2A2A0D);}
-
-/* ── MINI SVG CHART ── */
 .svg-chart{width:100%;height:100%;}
-
-/* ── AUTHOR NOVEL ROW ── */
-.author-novel-row{
-  display:flex;gap:10px;padding:10px 14px;
-  border-bottom:1px solid var(--border);align-items:center;
-}
+.author-novel-row{display:flex;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);align-items:center;}
 .an-thumb{width:42px;height:58px;border-radius:6px;overflow:hidden;position:relative;flex-shrink:0;}
 .an-info{flex:1;}
 .an-title{font-size:12px;font-weight:600;color:var(--parchment);}
 .an-sub{font-size:10px;color:var(--muted);margin-top:2px;}
 .an-arrow{font-size:16px;color:var(--muted);}
-
-/* ── FOOTER ── */
-.footer{
-  border-top:1px solid var(--border);margin-top:80px;padding:40px 0 0;
-  display:flex;justify-content:space-between;align-items:flex-end;
-}
-.footer-brand{font-family:'Fraunces',serif;font-size:28px;color:var(--parchment);}
-.footer-sub{font-size:12px;color:var(--muted);margin-top:4px;}
-.footer-meta{font-size:11px;color:var(--ash);text-align:right;}
-
-/* ── OFFLINE ROW ── */
-.offline-row{
-  display:flex;gap:8px;padding:8px 14px;font-size:11px;color:var(--muted);
-  border-top:1px solid var(--border);align-items:center;flex-shrink:0;
-}
-
-/* ── SCHEDULE TOGGLE ── */
 .sched-info{padding:4px 14px 8px;font-size:10px;color:var(--muted);}
+.fb-item{padding:10px 14px;border-bottom:1px solid var(--border);}
+.fb-head{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);margin-bottom:4px;}
+.fb-body{font-size:12px;color:var(--parch-dim);line-height:1.5;}
 
+/* ══════════════════════════════════════════════
+   DESIGN SYSTEM
+══════════════════════════════════════════════ */
+.ds-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:32px; }
+.ds-card { background:var(--glass); border:1px solid var(--border); border-radius:var(--r-lg); padding:24px; }
+.ds-eyebrow { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--amber); margin-bottom:16px; }
+.ux-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.ux-item { display:flex; gap:12px; padding:20px; background:var(--glass); border:1px solid var(--border); border-radius:var(--r-md); transition:var(--transition); }
+.ux-item:hover { background:var(--surface); border-color:rgba(232,168,56,0.2); }
+.ux-num { width:32px; height:32px; border-radius:50%; background:var(--amber); color:var(--ink); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
+.ux-title { font-size:13px; font-weight:600; color:var(--parchment); margin-bottom:4px; }
+.ux-desc { font-size:12px; color:var(--muted); line-height:1.6; }
+
+/* ══════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════ */
+.footer { border-top:1px solid var(--border); margin-top:80px; padding:40px 0 0; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px; }
+.footer-brand { font-family:'Fraunces',serif; font-size:28px; color:var(--parchment); }
+.footer-sub { font-size:12px; color:var(--muted); margin-top:4px; }
+.footer-meta { font-size:11px; color:var(--ash); text-align:right; }
+
+/* ══════════════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════════════ */
+.reveal { opacity:0; transform:translateY(24px); transition:opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-delay-1 { transition-delay:0.1s; }
+.reveal-delay-2 { transition-delay:0.2s; }
+.reveal-delay-3 { transition-delay:0.3s; }
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════ */
+@media (max-width:768px) {
+  .page { padding:100px 16px 60px; }
+  .case-nav { width:calc(100% - 32px); top:12px; height:48px; }
+  .case-nav-tag { display:none; }
+  .hero { padding:48px 24px 40px; margin-bottom:48px; border-radius:var(--r-lg); }
+  .hero h1 { letter-spacing:-1px; }
+  .hero-meta { gap:16px; }
+  .hero-meta-val { font-size:22px; }
+  .hero-divider { height:28px; }
+  .context-grid { grid-template-columns:1fr; }
+  .context-card { padding:20px 18px; }
+  .section-block { margin-bottom:64px; }
+  .screen-grid, .screen-grid-wide { grid-template-columns:1fr; gap:32px; }
+  .ds-grid { grid-template-columns:1fr; }
+  .ux-grid { grid-template-columns:1fr; }
+  .footer { flex-direction:column; align-items:flex-start; }
+  .footer-meta { text-align:left; }
+}
+@media (min-width:769px) and (max-width:1024px) {
+  .context-grid { grid-template-columns:1fr 1fr; }
+  .ds-grid { grid-template-columns:1fr 1fr; }
+  .screen-grid { grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); }
+  .screen-grid-wide { grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); }
+}
+@media (max-width:480px) {
+  .hero-pills { gap:6px; }
+  .hero-pill { padding:6px 12px; font-size:11px; }
+  .hero-divider { display:none; }
+}
 </style>
 </head>
 <body>
+<div class="bg-canvas"></div>
 
-<!-- ═══════ COVER ═══════ -->
-<div class="cover">
-  <div class="cover-eyebrow">UI/UX Case Study &nbsp;·&nbsp; Hi-Fi Wireframes &nbsp;·&nbsp; v1.0</div>
+<!-- ═══════ NAV ═══════ -->
+<nav class="case-nav">
+  <a href="index.html#projects" class="case-nav-back" id="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    Back
+  </a>
+  <div class="case-nav-brand">NovelNest</div>
+  <div class="case-nav-tag">Case Study</div>
+</nav>
+
+<!-- ═══════ PAGE ═══════ -->
+<div class="page">
+
+<!-- HERO -->
+<div class="hero reveal">
+  <div class="hero-eyebrow">UI/UX Case Study &nbsp;·&nbsp; Hi-Fi Wireframes &nbsp;·&nbsp; v1.0</div>
   <h1>NovelNest</h1>
-  <div class="cover-sub">A Modern Reading &amp; Publishing Platform</div>
-  <div class="cover-pills">
-    <div class="cover-pill"><strong>16</strong> &nbsp;Screens</div>
-    <div class="cover-pill"><strong>2</strong> &nbsp;User Flows</div>
-    <div class="cover-pill"><strong>Hi-Fi</strong> &nbsp;Fidelity</div>
-    <div class="cover-pill">Dark Mode &nbsp;<strong>First</strong></div>
-    <div class="cover-pill">Mobile &nbsp;<strong>Native</strong></div>
+  <div class="hero-sub">A Modern Reading &amp; Publishing Platform — designed for the mobile-first story lover</div>
+  <div class="hero-pills">
+    <div class="hero-pill"><strong>16</strong>&nbsp;Screens</div>
+    <div class="hero-pill"><strong>2</strong>&nbsp;User Flows</div>
+    <div class="hero-pill"><strong>Hi-Fi</strong>&nbsp;Fidelity</div>
+    <div class="hero-pill">Dark Mode&nbsp;<strong>First</strong></div>
+    <div class="hero-pill">Mobile&nbsp;<strong>Native</strong></div>
+  </div>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="hero-meta-val">16</div>
+      <div class="hero-meta-lbl">Screens</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-val">2</div>
+      <div class="hero-meta-lbl">User Flows</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-val">4</div>
+      <div class="hero-meta-lbl">UX Challenges</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-val">May</div>
+      <div class="hero-meta-lbl">2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTEXT CARDS -->
+<div class="context-grid reveal reveal-delay-1">
+  <div class="context-card">
+    <span class="context-card-icon">🎯</span>
+    <div class="context-card-label">The Problem</div>
+    <div class="context-card-title">Fragmented Reading Journeys</div>
+    <div class="context-card-desc">Existing platforms made discovery, reading, and community interaction feel disjointed. Users struggled to find new stories matching their taste without friction-heavy flows.</div>
+  </div>
+  <div class="context-card">
+    <span class="context-card-icon">✨</span>
+    <div class="context-card-label">The Solution</div>
+    <div class="context-card-title">Unified Reading Ecosystem</div>
+    <div class="context-card-desc">NovelNest brings discovery, immersive reading, publishing tools, and community into a seamless mobile-first experience with an expressive dark visual language.</div>
+  </div>
+  <div class="context-card">
+    <span class="context-card-icon">🛠️</span>
+    <div class="context-card-label">My Role</div>
+    <div class="context-card-title">End-to-End UI/UX Designer</div>
+    <div class="context-card-desc">Conducted user research, defined personas, created information architecture, and designed all 16 hi-fi screens across 2 user flows — reader and author.</div>
   </div>
 </div>
 
 <!-- ═══════ READER FLOW ═══════ -->
-<div class="section-block">
-  <div class="section-eyebrow">Flow 01</div>
-  <div class="section-title">Reader Screens</div>
-  <div class="section-desc">The journey from first launch to deep reading — designed for Aarav's on-the-go mobile habits.</div>
-  <div class="flow-badge">📖 Reader Flow</div>
+<div class="section-block reveal">
+  <div class="section-header">
+    <div class="section-eyebrow">Flow 01</div>
+    <div class="section-title">Reader Screens</div>
+    <div class="section-desc">The journey from first launch to deep reading — designed for Aarav's on-the-go mobile habits.</div>
+    <div class="flow-badge">📖 Reader Flow</div>
+  </div>
 
   <div class="screen-grid">
 
   <!-- S-01 SPLASH -->
-  <div class="screen-card">
+  <div class="screen-card reveal">
     <div class="screen-label">
       <div class="screen-label-name">S-01 &nbsp;·&nbsp; Splash Screen</div>
       <div class="screen-label-tag">Onboarding</div>
@@ -797,7 +606,7 @@ body{
   </div>
 
   <!-- S-02 LOGIN -->
-  <div class="screen-card">
+  <div class="screen-card reveal reveal-delay-1">
     <div class="screen-label">
       <div class="screen-label-name">S-02 &nbsp;·&nbsp; Login / Sign Up</div>
       <div class="screen-label-tag">Auth</div>
@@ -835,7 +644,7 @@ body{
   </div>
 
   <!-- S-03 HOME FEED -->
-  <div class="screen-card">
+  <div class="screen-card reveal reveal-delay-2">
     <div class="screen-label">
       <div class="screen-label-name">S-03 &nbsp;·&nbsp; Home Feed</div>
       <div class="screen-label-tag">Discovery</div>
@@ -849,78 +658,71 @@ body{
           <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--amber),var(--violet));display:flex;align-items:center;justify-content:center;font-size:14px;">👤</div>
         </div>
         <div class="pcontent">
-          <div class="searchbar"><span class="searchbar-icon">🔍</span><span class="searchbar-text">Search titles, authors, genres…</span></div>
-          <div class="chips">
-            <div class="chip on">For You</div>
-            <div class="chip">Trending</div>
-            <div class="chip">Fantasy</div>
-            <div class="chip">Romance</div>
-            <div class="chip">New</div>
-          </div>
-          <!-- Hero Banner -->
-          <div class="hero-banner">
-            <div class="hero-bg c1">🌙</div>
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-              <div class="hero-eyebrow">✦ Featured</div>
-              <div class="hero-title">Moonlit<br>Contract</div>
-              <div class="hero-author">by Sara J. Kim</div>
+          <div class="pscroll">
+            <div class="searchbar">
+              <div class="searchbar-icon">🔍</div>
+              <div class="searchbar-text">Search stories, authors…</div>
             </div>
-            <div class="hero-cta">Read Now →</div>
-          </div>
-          <!-- Continue -->
-          <div class="sh"><div class="sh-title">Continue Reading</div></div>
-          <div class="cont-card">
-            <div class="cont-thumb"><div style="position:absolute;inset:0;" class="c3"></div><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;">🔥</div></div>
-            <div class="cont-info">
-              <div class="cont-label">Currently Reading</div>
-              <div class="cont-title">The Iron Throne Chronicles</div>
-              <div class="cont-ch">Chapter 34 &nbsp;·&nbsp; 12 min left</div>
-              <div class="prog-bar"><div class="prog-fill" style="width:68%"></div></div>
+            <div class="chips">
+              <div class="chip on">For You</div>
+              <div class="chip">Fantasy</div>
+              <div class="chip">Romance</div>
+              <div class="chip">Thriller</div>
             </div>
-            <div class="cont-btn">▶</div>
-          </div>
-          <!-- Recommended -->
-          <div class="sh"><div class="sh-title">Recommended</div><div class="sh-link">See all</div></div>
-          <div class="cover-cards">
-            <div class="ccard">
-              <div class="ccard-img c1"><div class="ccard-bg">🌙</div><div class="ccard-overlay"></div><div class="ccard-inner-title">Echoes of Aether</div></div>
-              <div class="ccard-meta"><div class="ccard-name">Echoes of Aether</div><div class="ccard-sub"><span class="nstar">★</span>4.8 · Fantasy</div></div>
+            <div class="sh"><div class="sh-title">✦ Featured</div><div class="sh-link">See all</div></div>
+            <div class="hero-banner">
+              <div class="hero-bg">🌌</div>
+              <div class="hero-overlay"></div>
+              <div class="hero-content">
+                <div class="hero-eyebrow-inner">Editor's Pick</div>
+                <div class="hero-title-inner">Echoes of Aether</div>
+                <div class="hero-author-inner">by Elara Voss</div>
+              </div>
+              <div class="hero-cta">Read Now</div>
             </div>
-            <div class="ccard">
-              <div class="ccard-img c3"><div class="ccard-bg">🌹</div><div class="ccard-overlay"></div><div class="ccard-inner-title">Crimson Petal</div></div>
-              <div class="ccard-meta"><div class="ccard-name">Crimson Petal</div><div class="ccard-sub"><span class="nstar">★</span>4.6 · Romance</div></div>
+            <div class="sh" style="margin-top:8px;"><div class="sh-title">Continue Reading</div></div>
+            <div class="cont-card">
+              <div class="cont-thumb c1"><div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:22px;">🏰</div></div>
+              <div class="cont-info">
+                <div class="cont-label">In Progress</div>
+                <div class="cont-title">The Iron Veil</div>
+                <div class="cont-ch">Ch. 14 of 32</div>
+                <div class="prog-bar"><div class="prog-fill" style="width:44%;"></div></div>
+              </div>
+              <div class="cont-btn">▶</div>
             </div>
-            <div class="ccard">
-              <div class="ccard-img c5"><div class="ccard-bg">⚡</div><div class="ccard-overlay"></div><div class="ccard-inner-title">Shadow Code</div></div>
-              <div class="ccard-meta"><div class="ccard-name">Shadow Code</div><div class="ccard-sub"><span class="nstar">★</span>4.5 · Thriller</div></div>
+            <div class="sh"><div class="sh-title">Trending Now</div><div class="sh-link">See all</div></div>
+            <div class="cover-cards">
+              <div class="ccard">
+                <div class="ccard-img c2"><div class="ccard-bg">🌊</div><div class="ccard-overlay"></div><div class="ccard-inner-title">The Deep Blue Oath</div></div>
+                <div class="ccard-meta"><div class="ccard-name">A. Chen</div><div class="ccard-sub">Fantasy · 4.9★</div></div>
+              </div>
+              <div class="ccard">
+                <div class="ccard-img c3"><div class="ccard-bg">🥀</div><div class="ccard-overlay"></div><div class="ccard-inner-title">Her Crimson Letters</div></div>
+                <div class="ccard-meta"><div class="ccard-name">S. Park</div><div class="ccard-sub">Romance · 4.8★</div></div>
+              </div>
+              <div class="ccard">
+                <div class="ccard-img c5"><div class="ccard-bg">⚡</div><div class="ccard-overlay"></div><div class="ccard-inner-title">Storm Protocol</div></div>
+                <div class="ccard-meta"><div class="ccard-name">M. Reyes</div><div class="ccard-sub">Sci-Fi · 4.7★</div></div>
+              </div>
             </div>
           </div>
-          <!-- Trending Authors -->
-          <div class="sh" style="margin-top:8px;"><div class="sh-title">Trending Authors</div><div class="sh-link">Follow all</div></div>
-          <div class="av-row">
-            <div class="av-item"><div class="av-ring"><div class="av-inner">✍️</div></div><div class="av-name">@k.writes</div></div>
-            <div class="av-item"><div class="av-ring"><div class="av-inner">📝</div></div><div class="av-name">@sarah_f</div></div>
-            <div class="av-item"><div class="av-ring"><div class="av-inner">🖊️</div></div><div class="av-name">@moonpen</div></div>
-            <div class="av-item"><div class="av-ring"><div class="av-inner">📖</div></div><div class="av-name">@novalist</div></div>
-          </div>
-          <div style="height:16px;"></div>
         </div>
         <div class="tbar">
           <div class="titem active"><div class="titem-icon">🏠</div>Home</div>
-          <div class="titem"><div class="titem-icon">🔭</div>Explore</div>
+          <div class="titem"><div class="titem-icon">🔍</div>Explore</div>
           <div class="titem"><div class="titem-icon">📚</div>Library</div>
           <div class="titem"><div class="titem-icon">👤</div>Profile</div>
         </div>
       </div>
     </div>
-    <div class="screen-note"><strong>Design intent:</strong> Hero banner is the signature — gradient-lit cover art sets NovelNest apart from list-based competitors. Amber progress thread on "Continue" card drives re-engagement.</div>
+    <div class="screen-note"><strong>Design intent:</strong> "Continue Reading" card is the first high-visibility element post-search — returns Aarav to his story with one tap. Hero banner doubles as editorial curation.</div>
   </div>
 
   <!-- S-04 EXPLORE -->
-  <div class="screen-card">
+  <div class="screen-card reveal">
     <div class="screen-label">
-      <div class="screen-label-name">S-04 &nbsp;·&nbsp; Explore &amp; Genres</div>
+      <div class="screen-label-name">S-04 &nbsp;·&nbsp; Explore / Browse</div>
       <div class="screen-label-tag">Discovery</div>
     </div>
     <div class="phone">
@@ -928,96 +730,56 @@ body{
         <div class="sbar"><span class="sbar-time">9:41</span><div class="sbar-icons"><span>●●●</span></div></div>
         <div class="ntop"><div class="ntop-title">Explore</div></div>
         <div class="pcontent">
-          <div class="searchbar"><span class="searchbar-icon">🔍</span><span class="searchbar-text">Search…</span></div>
-          <div class="sh"><div class="sh-title">Browse by Genre</div><div class="sh-link">All genres</div></div>
-          <div class="genre-grid">
-            <div class="gtile c1"><div class="gtile-bg">🗡️</div><div class="gtile-overlay" style="background:linear-gradient(180deg,transparent,rgba(26,21,53,0.8))"></div><div class="gtile-name">Fantasy</div><div class="gtile-count">12,400 novels</div></div>
-            <div class="gtile c3"><div class="gtile-bg">🌹</div><div class="gtile-overlay" style="background:linear-gradient(180deg,transparent,rgba(42,13,26,0.8))"></div><div class="gtile-name">Romance</div><div class="gtile-count">9,800 novels</div></div>
-            <div class="gtile c5"><div class="gtile-bg">🔫</div><div class="gtile-overlay" style="background:linear-gradient(180deg,transparent,rgba(13,26,42,0.8))"></div><div class="gtile-name">Thriller</div><div class="gtile-count">5,200 novels</div></div>
-            <div class="gtile c2"><div class="gtile-bg">🚀</div><div class="gtile-overlay" style="background:linear-gradient(180deg,transparent,rgba(13,26,26,0.8))"></div><div class="gtile-name">Sci-Fi</div><div class="gtile-count">4,100 novels</div></div>
-            <div class="gtile c6"><div class="gtile-bg">👁️</div><div class="gtile-overlay" style="background:linear-gradient(180deg,transparent,rgba(42,13,42,0.8))"></div><div class="gtile-name">Horror</div><div class="gtile-count">3,300 novels</div></div>
-            <div class="gtile c7"><div class="gtile-bg">🔍</div><div class="gtile-overlay" style="background:linear-gradient(180deg,transparent,rgba(26,26,13,0.8))"></div><div class="gtile-name">Mystery</div><div class="gtile-count">2,900 novels</div></div>
-          </div>
-          <div class="sh" style="margin-top:10px;"><div class="sh-title">New Releases</div><div class="sh-link">See all</div></div>
-          <div class="nlist">
-            <div class="nitem">
-              <div class="nthumb c1"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;">🌙</div></div>
-              <div class="ninfo"><div class="ntitle">The Last Ember</div><div class="nauthor">by Priya Mehta</div><div class="ntags"><div class="ntag">Fantasy</div><div class="ntag">Epic</div></div><div class="nmeta"><span class="nstar">★</span><span>4.7</span><span>New today</span></div></div>
+          <div class="pscroll">
+            <div class="searchbar">
+              <div class="searchbar-icon">🔍</div>
+              <div class="searchbar-text">What are you in the mood for?</div>
             </div>
-            <div class="nitem">
-              <div class="nthumb c2"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;">🚀</div></div>
-              <div class="ninfo"><div class="ntitle">Orbit of Stars</div><div class="nauthor">by Leon A.</div><div class="ntags"><div class="ntag">Sci-Fi</div><div class="ntag">Romance</div></div><div class="nmeta"><span class="nstar">★</span><span>4.5</span><span>New today</span></div></div>
+            <div class="sh" style="margin-top:8px;"><div class="sh-title">Browse by Genre</div></div>
+            <div class="genre-grid">
+              <div class="gtile c1"><div class="gtile-bg">🧙</div><div class="gtile-overlay"></div><div class="gtile-name">Fantasy</div><div class="gtile-count">12,400 stories</div></div>
+              <div class="gtile c3"><div class="gtile-bg">🥀</div><div class="gtile-overlay"></div><div class="gtile-name">Romance</div><div class="gtile-count">9,800 stories</div></div>
+              <div class="gtile c5"><div class="gtile-bg">🚀</div><div class="gtile-overlay"></div><div class="gtile-name">Sci-Fi</div><div class="gtile-count">6,200 stories</div></div>
+              <div class="gtile c4"><div class="gtile-bg">🔪</div><div class="gtile-overlay"></div><div class="gtile-name">Thriller</div><div class="gtile-count">5,100 stories</div></div>
             </div>
-          </div>
-        </div>
-        <div class="tbar">
-          <div class="titem"><div class="titem-icon">🏠</div>Home</div>
-          <div class="titem active"><div class="titem-icon">🔭</div>Explore</div>
-          <div class="titem"><div class="titem-icon">📚</div>Library</div>
-          <div class="titem"><div class="titem-icon">👤</div>Profile</div>
-        </div>
-      </div>
-    </div>
-    <div class="screen-note"><strong>Design intent:</strong> Genre tiles use thematic emoji + layered gradient to suggest content mood without custom illustration. Solves UX Challenge 1: quick content discovery.</div>
-  </div>
-
-  <!-- S-05 SEARCH RESULTS -->
-  <div class="screen-card">
-    <div class="screen-label">
-      <div class="screen-label-name">S-05 &nbsp;·&nbsp; Search Results</div>
-      <div class="screen-label-tag">Discovery</div>
-    </div>
-    <div class="phone">
-      <div class="phone-inner">
-        <div class="sbar"><span class="sbar-time">9:41</span><div class="sbar-icons"><span>●●●</span></div></div>
-        <div class="ntop">
-          <div class="ntop-back">←</div>
-          <div class="searchbar" style="flex:1;margin:0;height:34px;"><span class="searchbar-icon">🔍</span><span style="font-size:12px;color:var(--parch-dim);">fantasy romance</span></div>
-          <div style="font-size:11px;color:var(--amber);">Filter</div>
-        </div>
-        <div class="pcontent">
-          <div style="padding:6px 14px;font-size:11px;color:var(--muted);">1,240 results</div>
-          <div class="chips" style="padding-top:0;">
-            <div class="chip on">All</div>
-            <div class="chip">Novels</div>
-            <div class="chip">Authors</div>
-            <div class="chip">Series</div>
-          </div>
-          <div class="nlist">
-            <div class="nitem">
-              <div class="nthumb c1"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;">🌙</div></div>
-              <div class="ninfo"><div class="ntitle">Moonlit Contract</div><div class="nauthor">by Sara J. Kim</div><div class="ntags"><div class="ntag">Fantasy</div><div class="ntag">Romance</div></div><div class="nmeta"><span class="nstar">★</span><span>4.9</span><span>2.3M reads</span><span>142 chs</span></div></div>
-              <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;"><div style="font-size:10px;color:var(--amber);background:rgba(232,168,56,0.1);padding:2px 6px;border-radius:100px;border:1px solid rgba(232,168,56,0.2);">Top</div></div>
-            </div>
-            <div class="nitem">
-              <div class="nthumb c3"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;">👑</div></div>
-              <div class="ninfo"><div class="ntitle">Crown of Petals</div><div class="nauthor">by Maya Liu</div><div class="ntags"><div class="ntag">Fantasy</div><div class="ntag">Romance</div></div><div class="nmeta"><span class="nstar">★</span><span>4.7</span><span>1.1M reads</span><span>89 chs</span></div></div>
-            </div>
-            <div class="nitem">
-              <div class="nthumb c6"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;">🌸</div></div>
-              <div class="ninfo"><div class="ntitle">The Silver Vow</div><div class="nauthor">by A. Rhys</div><div class="ntags"><div class="ntag">Fantasy</div><div class="ntag">Romance</div></div><div class="nmeta"><span class="nstar">★</span><span>4.6</span><span>874K reads</span></div></div>
-            </div>
-            <div class="nitem">
-              <div class="nthumb c4"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;">🔥</div></div>
-              <div class="ninfo"><div class="ntitle">Ember &amp; Frost</div><div class="nauthor">by D. Morgan</div><div class="ntags"><div class="ntag">Fantasy</div><div class="ntag">Romance</div></div><div class="nmeta"><span class="nstar">★</span><span>4.5</span><span>620K reads</span></div></div>
+            <div class="sh" style="margin-top:8px;"><div class="sh-title">New Arrivals</div><div class="sh-link">See all</div></div>
+            <div class="nlist">
+              <div class="nitem">
+                <div class="nthumb c2"><div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:22px;">🌊</div></div>
+                <div class="ninfo">
+                  <div class="ntitle">The Deep Blue Oath</div>
+                  <div class="nauthor">by A. Chen · 28 chapters</div>
+                  <div class="ntags"><div class="ntag">Fantasy</div><div class="ntag">Adventure</div></div>
+                  <div class="nmeta"><span class="nstar">★ 4.9</span><span>·</span><span>142k reads</span></div>
+                </div>
+              </div>
+              <div class="nitem">
+                <div class="nthumb c6"><div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:22px;">🌙</div></div>
+                <div class="ninfo">
+                  <div class="ntitle">Midnight Frequencies</div>
+                  <div class="nauthor">by D. Okafor · 15 chapters</div>
+                  <div class="ntags"><div class="ntag">Mystery</div><div class="ntag">Romance</div></div>
+                  <div class="nmeta"><span class="nstar">★ 4.7</span><span>·</span><span>88k reads</span></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div class="tbar">
           <div class="titem"><div class="titem-icon">🏠</div>Home</div>
-          <div class="titem active"><div class="titem-icon">🔭</div>Explore</div>
+          <div class="titem active"><div class="titem-icon">🔍</div>Explore</div>
           <div class="titem"><div class="titem-icon">📚</div>Library</div>
           <div class="titem"><div class="titem-icon">👤</div>Profile</div>
         </div>
       </div>
     </div>
-    <div class="screen-note"><strong>Design intent:</strong> "Top" amber badge and read counts let Aarav make a decision in seconds. Filter chips work as fast scopes without a full modal sheet.</div>
+    <div class="screen-note"><strong>Design intent:</strong> Genre tiles use rich dark gradients + emoji for immediate scan-ability. No text-only list — visual genre tiles let Aarav feel the mood before committing.</div>
   </div>
 
-  <!-- S-06 NOVEL DETAIL -->
-  <div class="screen-card">
+  <!-- S-05 NOVEL DETAIL -->
+  <div class="screen-card reveal reveal-delay-1">
     <div class="screen-label">
-      <div class="screen-label-name">S-06 &nbsp;·&nbsp; Novel Details</div>
+      <div class="screen-label-name">S-05 &nbsp;·&nbsp; Novel Detail</div>
       <div class="screen-label-tag">Content</div>
     </div>
     <div class="phone">
@@ -1025,311 +787,285 @@ body{
         <div class="sbar"><span class="sbar-time">9:41</span><div class="sbar-icons"><span>●●●</span></div></div>
         <div class="pcontent">
           <div class="nd-hero">
-            <div class="nd-hero-bg c1">🌙</div>
+            <div class="nd-hero-bg">🌌</div>
             <div class="nd-overlay"></div>
-            <div class="nd-actions">
-              <div class="nd-action-btn">←</div>
-              <div class="nd-action-btn">♡</div>
-              <div class="nd-action-btn">⋮</div>
-            </div>
-            <div class="nd-cover c1"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:28px;">🌙</div></div>
+            <div class="nd-cover c1"><div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:30px;">🏰</div></div>
             <div class="nd-info">
-              <div class="nd-title">Moonlit Contract</div>
-              <div class="nd-author">by Sara J. Kim</div>
+              <div class="nd-title">Echoes of Aether</div>
+              <div class="nd-author">by Elara Voss</div>
               <div class="nd-status">● Ongoing</div>
             </div>
+            <div class="nd-actions">
+              <div class="nd-action-btn">🔖</div>
+              <div class="nd-action-btn">↗</div>
+            </div>
           </div>
-          <div class="stats-row">
-            <div class="stat"><div class="stat-val">2.3M</div><div class="stat-lbl">Reads</div></div>
-            <div class="stat"><div class="stat-val amber">★4.9</div><div class="stat-lbl">Rating</div></div>
-            <div class="stat"><div class="stat-val">142</div><div class="stat-lbl">Chapters</div></div>
-            <div class="stat"><div class="stat-val">48K</div><div class="stat-lbl">Fans</div></div>
+          <div class="pscroll">
+            <div class="stats-row">
+              <div class="stat"><div class="stat-val amber">4.9</div><div class="stat-lbl">Rating</div></div>
+              <div class="stat"><div class="stat-val">214k</div><div class="stat-lbl">Reads</div></div>
+              <div class="stat"><div class="stat-val">32</div><div class="stat-lbl">Chapters</div></div>
+              <div class="stat"><div class="stat-val">🔒 8</div><div class="stat-lbl">Premium</div></div>
+            </div>
+            <div class="btn btn-primary">▶ &nbsp; Start Reading</div>
+            <div class="btn btn-secondary">+ Add to Library</div>
+            <div class="ttabs" style="margin-top:8px;">
+              <div class="ttab on">Chapters</div>
+              <div class="ttab">Reviews</div>
+              <div class="ttab">About</div>
+            </div>
+            <div class="chapter-row"><div class="ch-num">1</div><div class="ch-title">The First Signal</div><div class="ch-badge">Free</div></div>
+            <div class="chapter-row"><div class="ch-num">2</div><div class="ch-title">Beneath the Iron Veil</div><div class="ch-badge">Free</div></div>
+            <div class="chapter-row"><div class="ch-num">3</div><div class="ch-title">Aether Rising</div><div class="ch-badge locked">🔒 Premium</div></div>
           </div>
-          <div class="chips"><div class="chip on">Fantasy</div><div class="chip">Romance</div><div class="chip">Magic</div><div class="chip">Ongoing</div></div>
-          <div style="padding:4px 14px 8px;font-size:11px;color:var(--muted);line-height:1.6;">A young mage enters a contract with the cold moon prince to save her kingdom. What begins as politics becomes something far more dangerous…</div>
-          <div class="btn btn-primary">Start Reading — Chapter 1</div>
-          <div class="btn btn-secondary">+ Add to Library</div>
-          <div class="divider"></div>
-          <div class="sh"><div class="sh-title">Chapters</div><div class="sh-link">View all 142</div></div>
-          <div class="chapter-row"><div class="ch-num">1</div><div class="ch-title">The Binding</div><div class="ch-badge">Free</div></div>
-          <div class="chapter-row"><div class="ch-num">2</div><div class="ch-title">Moonrise</div><div class="ch-badge">Free</div></div>
-          <div class="chapter-row"><div class="ch-num">3</div><div class="ch-title">The Prince's Eye</div><div class="ch-badge locked">🔒 Premium</div></div>
+        </div>
+        <div class="tbar">
+          <div class="titem active"><div class="titem-icon">🏠</div>Home</div>
+          <div class="titem"><div class="titem-icon">🔍</div>Explore</div>
+          <div class="titem"><div class="titem-icon">📚</div>Library</div>
+          <div class="titem"><div class="titem-icon">👤</div>Profile</div>
         </div>
       </div>
     </div>
-    <div class="screen-note"><strong>Design intent:</strong> Cinematic hero with dual-action CTAs. Free/Premium chapter labels set expectations before the paywall — honesty as UX.</div>
+    <div class="screen-note"><strong>Design intent:</strong> Immersive full-bleed hero for the novel. Stats row gives social proof at a glance. Premium lock is present but not punishing — it's just a transparent label.</div>
   </div>
 
-  <!-- S-07 READING SCREEN -->
-  <div class="screen-card">
+  <!-- S-06 READING -->
+  <div class="screen-card reveal reveal-delay-2">
     <div class="screen-label">
-      <div class="screen-label-name">S-07 &nbsp;·&nbsp; Reading Screen</div>
-      <div class="screen-label-tag">Core Experience</div>
-    </div>
-    <div class="phone">
-      <div class="phone-inner">
-        <div class="sbar" style="background:#0E0C0A;"><span class="sbar-time" style="color:#8A8070;">9:41</span><div class="sbar-icons"><span style="color:#8A8070;">●●●</span></div></div>
-        <div class="reading-wrap">
-          <div class="reading-header">
-            <div class="read-back">←</div>
-            <div class="read-info">
-              <div class="read-title">Moonlit Contract</div>
-              <div class="read-ch">Chapter 3 of 142</div>
-            </div>
-            <div class="read-settings">Aa</div>
-            <div class="read-settings">⋮</div>
-          </div>
-          <!-- THE SIGNATURE: amber bookmark thread -->
-          <div class="amber-thread"></div>
-          <div class="reading-body">
-            <div class="read-chaptitle">Chapter 3: The Prince's Eye</div>
-            <div class="read-line"></div>
-            <div class="read-line s"></div>
-            <div class="read-line"></div>
-            <div class="read-line xs"></div>
-            <div class="read-gap"></div>
-            <div class="read-line"></div>
-            <div class="read-line"></div>
-            <div class="read-line s"></div>
-            <div class="read-gap"></div>
-            <div class="read-line"></div>
-            <div class="read-line xs"></div>
-            <div class="read-line"></div>
-            <div class="read-gap"></div>
-            <div class="read-line s"></div>
-            <div class="read-line"></div>
-          </div>
-          <div class="reading-footer">
-            <div class="read-nav">← Prev</div>
-            <div class="read-actions">
-              <div class="read-act">💬 48</div>
-              <div class="read-act amber">♥ 2.1K</div>
-            </div>
-            <div class="read-nav">Next →</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="screen-note"><strong>Signature element:</strong> The amber thread — a 2px gradient line at 22% showing chapter progress. It reads like a bookmark ribbon running through the screen. Dark sepia palette reduces eye strain for Aarav's commute reading.</div>
-  </div>
-
-  <!-- S-08 LIBRARY -->
-  <div class="screen-card">
-    <div class="screen-label">
-      <div class="screen-label-name">S-08 &nbsp;·&nbsp; Library</div>
-      <div class="screen-label-tag">Personal</div>
+      <div class="screen-label-name">S-06 &nbsp;·&nbsp; Reading Screen</div>
+      <div class="screen-label-tag">Core UX</div>
     </div>
     <div class="phone">
       <div class="phone-inner">
         <div class="sbar"><span class="sbar-time">9:41</span><div class="sbar-icons"><span>●●●</span></div></div>
-        <div class="ntop"><div class="ntop-title">My Library</div><div class="ntop-action">⊞ Grid</div></div>
+        <div class="reading-wrap">
+          <div class="reading-header">
+            <div class="read-back">←</div>
+            <div class="read-info">
+              <div class="read-title">Echoes of Aether</div>
+              <div class="read-ch">Chapter 1 · The First Signal</div>
+            </div>
+            <div class="read-settings">⚙</div>
+          </div>
+          <div class="amber-thread"></div>
+          <div class="reading-body">
+            <div class="read-chaptitle">Chapter I — The First Signal</div>
+            <div class="read-line"></div>
+            <div class="read-line"></div>
+            <div class="read-line s"></div>
+            <div class="read-gap"></div>
+            <div class="read-line"></div>
+            <div class="read-line s"></div>
+            <div class="read-line"></div>
+            <div class="read-line xs"></div>
+            <div class="read-gap"></div>
+            <div class="read-line"></div>
+            <div class="read-line"></div>
+            <div class="read-line s"></div>
+          </div>
+          <div class="reading-footer">
+            <div class="read-nav">← Ch. 1</div>
+            <div class="read-actions">
+              <div class="read-act">🔖</div>
+              <div class="read-act amber">💬 12</div>
+              <div class="read-act">❤️</div>
+            </div>
+            <div class="read-nav">Ch. 2 →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-note"><strong>Design intent:</strong> Warm parchment-toned reading background (#0E0C0A) is easier on eyes than pure black. Amber progress thread gives a sense of placement. Bottom actions stay discoverable without interrupting reading.</div>
+  </div>
+
+  <!-- S-07 LIBRARY -->
+  <div class="screen-card reveal">
+    <div class="screen-label">
+      <div class="screen-label-name">S-07 &nbsp;·&nbsp; My Library</div>
+      <div class="screen-label-tag">Collection</div>
+    </div>
+    <div class="phone">
+      <div class="phone-inner">
+        <div class="sbar"><span class="sbar-time">9:41</span><div class="sbar-icons"><span>●●●</span></div></div>
+        <div class="ntop"><div class="ntop-title">My Library</div><div class="ntop-action">Filters</div></div>
         <div class="pcontent">
           <div class="ttabs">
             <div class="ttab on">Reading</div>
-            <div class="ttab">Saved</div>
-            <div class="ttab">Done</div>
-            <div class="ttab">History</div>
+            <div class="ttab">Completed</div>
+            <div class="ttab">Wishlist</div>
           </div>
-          <div class="lib-item">
-            <div class="lib-thumb c1"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;">🌙</div></div>
-            <div class="lib-info">
-              <div class="lib-title">Moonlit Contract <span class="lib-new">2 new</span></div>
-              <div class="lib-ch">Ch. 3 · Updated today</div>
-              <div class="prog-bar"><div class="prog-fill" style="width:22%"></div></div>
-              <div class="lib-pct">22% complete</div>
+          <div class="pscroll">
+            <div class="lib-item">
+              <div class="lib-thumb c1"><div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:20px;">🏰</div></div>
+              <div class="lib-info">
+                <div class="lib-title">The Iron Veil <span class="lib-new">+2 NEW</span></div>
+                <div class="lib-ch">Ch. 14 of 32 · 44% read</div>
+                <div class="prog-bar"><div class="prog-fill" style="width:44%;"></div></div>
+              </div>
+              <div class="lib-play">▶</div>
             </div>
-            <div class="lib-play">▶</div>
-          </div>
-          <div class="lib-item">
-            <div class="lib-thumb c3"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;">🔥</div></div>
-            <div class="lib-info">
-              <div class="lib-title">The Iron Throne Chronicles</div>
-              <div class="lib-ch">Ch. 34 · Updated 2 days ago</div>
-              <div class="prog-bar"><div class="prog-fill" style="width:68%"></div></div>
-              <div class="lib-pct">68% complete</div>
+            <div class="lib-item">
+              <div class="lib-thumb c2"><div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:20px;">🌊</div></div>
+              <div class="lib-info">
+                <div class="lib-title">The Deep Blue Oath</div>
+                <div class="lib-ch">Ch. 6 of 28 · 21% read</div>
+                <div class="prog-bar"><div class="prog-fill" style="width:21%;"></div></div>
+              </div>
+              <div class="lib-play">▶</div>
             </div>
-            <div class="lib-play">▶</div>
-          </div>
-          <div class="lib-item">
-            <div class="lib-thumb c4"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;">🌹</div></div>
-            <div class="lib-info">
-              <div class="lib-title">Crimson Petal</div>
-              <div class="lib-ch">Ch. 12 · Updated 5 days ago</div>
-              <div class="prog-bar"><div class="prog-fill" style="width:40%"></div></div>
-              <div class="lib-pct">40% complete</div>
+            <div class="lib-item">
+              <div class="lib-thumb c6"><div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:20px;">🌙</div></div>
+              <div class="lib-info">
+                <div class="lib-title">Midnight Frequencies</div>
+                <div class="lib-ch">Ch. 3 of 15 · 20% read</div>
+                <div class="prog-bar"><div class="prog-fill" style="width:20%;"></div></div>
+              </div>
+              <div class="lib-play">▶</div>
             </div>
-            <div class="lib-play">▶</div>
           </div>
-          <div class="lib-item">
-            <div class="lib-thumb c5"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;">⚡</div></div>
-            <div class="lib-info">
-              <div class="lib-title">Shadow Code</div>
-              <div class="lib-ch">Ch. 1 · Not started</div>
-              <div class="prog-bar"><div class="prog-fill" style="width:2%"></div></div>
-              <div class="lib-pct">0%</div>
-            </div>
-            <div class="lib-play">▶</div>
-          </div>
-          <div class="offline-row">📥 &nbsp; 2 novels saved for offline reading</div>
         </div>
         <div class="tbar">
           <div class="titem"><div class="titem-icon">🏠</div>Home</div>
-          <div class="titem"><div class="titem-icon">🔭</div>Explore</div>
+          <div class="titem"><div class="titem-icon">🔍</div>Explore</div>
           <div class="titem active"><div class="titem-icon">📚</div>Library</div>
           <div class="titem"><div class="titem-icon">👤</div>Profile</div>
         </div>
       </div>
     </div>
-    <div class="screen-note"><strong>Design intent:</strong> Amber "2 new" badge creates urgency. Amber progress bars make reading feel like a game — every visit shows visible progress. Addresses retention challenge directly.</div>
+    <div class="screen-note"><strong>Design intent:</strong> "+2 NEW" pill in amber creates excitement and urgency. Progress bars make it trivial to re-orient after a break. Compact play button reduces friction to resume reading.</div>
   </div>
 
-  <!-- S-09 READER PROFILE -->
-  <div class="screen-card">
+  <!-- S-08 READER PROFILE -->
+  <div class="screen-card reveal reveal-delay-1">
     <div class="screen-label">
-      <div class="screen-label-name">S-09 &nbsp;·&nbsp; Reader Profile</div>
-      <div class="screen-label-tag">Personal</div>
+      <div class="screen-label-name">S-08 &nbsp;·&nbsp; Reader Profile</div>
+      <div class="screen-label-tag">Identity</div>
     </div>
     <div class="phone">
       <div class="phone-inner">
         <div class="sbar"><span class="sbar-time">9:41</span><div class="sbar-icons"><span>●●●</span></div></div>
-        <div class="ntop"><div class="ntop-title">Profile</div><div class="ntop-action">Edit</div></div>
         <div class="pcontent">
           <div class="prof-hero">
             <div class="prof-avatar"><div class="prof-avatar-inner">😊</div></div>
             <div>
-              <div class="prof-name">Aarav Sharma</div>
-              <div class="prof-handle">@aarav_reads · Since Jan 2024</div>
+              <div class="prof-name">Aarav Mehta</div>
+              <div class="prof-handle">@readingaarav · Reader</div>
             </div>
-            <div class="prof-edit">Edit Profile</div>
+            <div class="prof-edit">Edit</div>
           </div>
-          <div class="stats-row">
-            <div class="stat"><div class="stat-val">47</div><div class="stat-lbl">Books</div></div>
-            <div class="stat"><div class="stat-val">312h</div><div class="stat-lbl">Reading Time</div></div>
-            <div class="stat"><div class="stat-val">18</div><div class="stat-lbl">Reviews</div></div>
-          </div>
-          <div class="sh"><div class="sh-title">Achievements</div><div class="sh-link">All badges</div></div>
-          <div class="badge-row">
-            <div class="badge"><div class="badge-icon">🏅</div><div class="badge-lbl">50 Books</div></div>
-            <div class="badge"><div class="badge-icon">⚡</div><div class="badge-lbl">Speed Reader</div></div>
-            <div class="badge"><div class="badge-icon">💬</div><div class="badge-lbl">Top Fan</div></div>
-            <div class="badge locked"><div class="badge-icon">🌙</div><div class="badge-lbl">Night Owl</div></div>
-            <div class="badge locked"><div class="badge-icon">🔥</div><div class="badge-lbl">30-Day Streak</div></div>
-          </div>
-          <div class="sh" style="margin-top:10px;"><div class="sh-title">Favourite Genres</div></div>
-          <div class="chips" style="padding-top:0;"><div class="chip on">Fantasy</div><div class="chip on">Romance</div><div class="chip">Thriller</div></div>
-          <div class="sh"><div class="sh-title">Recent Comments</div><div class="sh-link">All</div></div>
-          <div class="comment">
-            <div class="cm-head"><div class="cm-av">A</div><div class="cm-author">Aarav Sharma</div><div class="cm-time">2h ago</div></div>
-            <div class="cm-text">Can't believe that plot twist in Ch. 42! 😱 Please update soon!</div>
-            <div class="cm-likes">♥ 24 &nbsp;·&nbsp; Moonlit Contract · Ch. 42</div>
-          </div>
-          <div class="comment">
-            <div class="cm-head"><div class="cm-av">A</div><div class="cm-author">Aarav Sharma</div><div class="cm-time">3d ago</div></div>
-            <div class="cm-text">The world-building here is absolutely incredible.</div>
-            <div class="cm-likes">♥ 11 &nbsp;·&nbsp; Echoes of Aether · Ch. 28</div>
+          <div class="pscroll">
+            <div class="stats-row">
+              <div class="stat"><div class="stat-val amber">47</div><div class="stat-lbl">Books</div></div>
+              <div class="stat"><div class="stat-val">1.2k</div><div class="stat-lbl">Chapters</div></div>
+              <div class="stat"><div class="stat-val">🔥 14</div><div class="stat-lbl">Day Streak</div></div>
+            </div>
+            <div class="sh"><div class="sh-title">Achievements</div></div>
+            <div class="badge-row">
+              <div class="badge"><div class="badge-icon">📖</div><div class="badge-lbl">Bookworm</div></div>
+              <div class="badge"><div class="badge-icon">🔥</div><div class="badge-lbl">On Fire</div></div>
+              <div class="badge"><div class="badge-icon">⭐</div><div class="badge-lbl">Critic</div></div>
+              <div class="badge locked"><div class="badge-icon">🏆</div><div class="badge-lbl">Legend</div></div>
+              <div class="badge locked"><div class="badge-icon">🌙</div><div class="badge-lbl">Night Owl</div></div>
+            </div>
+            <div class="sh" style="margin-top:8px;"><div class="sh-title">Currently Following</div></div>
+            <div class="av-row">
+              <div class="av-item"><div class="av-ring"><div class="av-inner">✍️</div></div><div class="av-name">Elara V.</div></div>
+              <div class="av-item"><div class="av-ring"><div class="av-inner">📝</div></div><div class="av-name">D. Okafor</div></div>
+              <div class="av-item"><div class="av-ring"><div class="av-inner">🖋️</div></div><div class="av-name">A. Chen</div></div>
+              <div class="av-item"><div class="av-ring"><div class="av-inner">✒️</div></div><div class="av-name">S. Park</div></div>
+            </div>
           </div>
         </div>
         <div class="tbar">
           <div class="titem"><div class="titem-icon">🏠</div>Home</div>
-          <div class="titem"><div class="titem-icon">🔭</div>Explore</div>
+          <div class="titem"><div class="titem-icon">🔍</div>Explore</div>
           <div class="titem"><div class="titem-icon">📚</div>Library</div>
           <div class="titem active"><div class="titem-icon">👤</div>Profile</div>
         </div>
       </div>
     </div>
-    <div class="screen-note"><strong>Design intent:</strong> Locked/greyed badges create aspiration — Aarav can see exactly what to do next. Gradient avatar ring is a subtle status signal that rewards engagement.</div>
+    <div class="screen-note"><strong>Design intent:</strong> Reading streak in the stats row creates a "don't break the chain" motivator. Locked badges provide aspiration without friction — users can see what they can earn.</div>
   </div>
 
-  </div><!-- /screen-grid reader -->
+  </div><!-- /screen-grid -->
 </div><!-- /section reader -->
 
 <!-- ═══════ AUTHOR FLOW ═══════ -->
-<div class="section-block">
-  <div class="section-eyebrow">Flow 02</div>
-  <div class="section-title">Author Screens</div>
-  <div class="section-desc">Sarah's creator journey — from dashboard overview to publishing chapters and understanding her audience.</div>
-  <div class="flow-badge">✍️ Author Flow</div>
+<div class="section-block reveal">
+  <div class="section-header">
+    <div class="section-eyebrow">Flow 02</div>
+    <div class="section-title">Author Screens</div>
+    <div class="section-desc">Sarah's journey from idea to published novel — with tools designed to remove creative friction.</div>
+    <div class="flow-badge">✍️ Author Flow</div>
+  </div>
 
   <div class="screen-grid-wide">
 
-  <!-- A-01 AUTHOR DASHBOARD -->
-  <div class="screen-card">
+  <!-- S-09 AUTHOR DASHBOARD -->
+  <div class="screen-card reveal">
     <div class="screen-label">
-      <div class="screen-label-name">A-01 &nbsp;·&nbsp; Author Dashboard</div>
+      <div class="screen-label-name">S-09 &nbsp;·&nbsp; Author Dashboard</div>
       <div class="screen-label-tag">Overview</div>
     </div>
     <div class="phone">
       <div class="phone-inner">
         <div class="sbar"><span class="sbar-time">9:41</span><div class="sbar-icons"><span>●●●</span></div></div>
         <div class="ntop">
-          <div class="ntop-title">Creator Studio</div>
-          <div style="display:flex;gap:10px;align-items:center;">
-            <div style="position:relative;">
-              <div class="ntop-icon">🔔</div>
-              <div style="position:absolute;top:-2px;right:-2px;width:8px;height:8px;border-radius:50%;background:var(--amber);border:1.5px solid var(--ink);"></div>
-            </div>
-            <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--amber));display:flex;align-items:center;justify-content:center;font-size:14px;">✍️</div>
-          </div>
+          <div style="flex:1;"><div class="ntop-title">Dashboard</div><div class="ntop-sub">Sarah · Author</div></div>
+          <div class="ntop-action">+ New Novel</div>
         </div>
         <div class="pcontent">
-          <div style="padding:10px 14px 4px;font-size:13px;color:var(--parch-dim);">Good morning, Sarah ☀️</div>
-          <div style="padding:0 14px 10px;font-size:11px;color:var(--muted);">Chapter 35 is due <strong style="color:var(--amber);">Friday</strong> — 2 days away</div>
-          <div class="dash-grid">
-            <div class="dash-card">
-              <div class="dc-lbl">Total Reads</div>
-              <div class="dc-val">124K</div>
-              <div class="dc-delta">↑ 8% this week</div>
+          <div class="pscroll">
+            <div class="earn-hero">
+              <div class="earn-lbl">Total Earnings</div>
+              <div class="earn-val">₹ 14,820</div>
+              <div class="earn-delta">↑ +₹ 1,240 this month</div>
             </div>
-            <div class="dash-card">
-              <div class="dc-lbl">Revenue</div>
-              <div class="dc-val amber">₹12,840</div>
-              <div class="dc-delta">↑ 14% this month</div>
+            <div class="dash-grid" style="margin-top:10px;">
+              <div class="dash-card"><div class="dc-lbl">Total Readers</div><div class="dc-val">8,420</div><div class="dc-delta">↑ +340</div></div>
+              <div class="dash-card"><div class="dc-lbl">Avg. Chapter Rating</div><div class="dc-val amber">4.8</div><div class="dc-delta">Top 5%</div></div>
+              <div class="dash-card"><div class="dc-lbl">New Followers</div><div class="dc-val">142</div><div class="dc-delta">↑ +28</div></div>
+              <div class="dash-card"><div class="dc-lbl">Unanswered</div><div class="dc-val">12</div><div class="dc-delta warn">Respond →</div></div>
             </div>
-            <div class="dash-card">
-              <div class="dc-lbl">Followers</div>
-              <div class="dc-val">3,241</div>
-              <div class="dc-delta">↑ 42 new</div>
+            <div class="sh"><div class="sh-title">Weekly Reads</div></div>
+            <div class="chart-area">
+              <div class="bar" style="height:45%;"></div>
+              <div class="bar hi2" style="height:60%;"></div>
+              <div class="bar" style="height:50%;"></div>
+              <div class="bar hi2" style="height:75%;"></div>
+              <div class="bar hi" style="height:100%;"></div>
+              <div class="bar hi2" style="height:80%;"></div>
+              <div class="bar" style="height:65%;"></div>
             </div>
-            <div class="dash-card">
-              <div class="dc-lbl">Comments</div>
-              <div class="dc-val">89</div>
-              <div class="dc-delta warn">12 unanswered</div>
+            <div class="sh"><div class="sh-title">My Novels</div><div class="sh-link">All →</div></div>
+            <div class="author-novel-row">
+              <div class="an-thumb c1"><div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:18px;">🏰</div></div>
+              <div class="an-info">
+                <div class="an-title">The Iron Veil</div>
+                <div class="an-sub">32 chapters · <span style="color:#5BAD7A;">● Live</span> · 5.2k reads</div>
+              </div>
+              <div class="an-arrow">›</div>
+            </div>
+            <div class="author-novel-row">
+              <div class="an-thumb c7"><div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:18px;">🔮</div></div>
+              <div class="an-info">
+                <div class="an-title">Crystal Midnight</div>
+                <div class="an-sub">8 chapters · <span style="color:var(--amber);">Draft</span></div>
+              </div>
+              <div class="an-arrow">›</div>
             </div>
           </div>
-          <div class="sh" style="margin-top:8px;"><div class="sh-title">My Novels</div><div class="sh-link">Manage all</div></div>
-          <div class="author-novel-row">
-            <div class="an-thumb c1"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;">🌙</div></div>
-            <div class="an-info">
-              <div class="an-title">Echoes of Aether</div>
-              <div class="an-sub">34 chs · Ongoing · 89K reads · <span style="color:var(--amber);">★4.8</span></div>
-            </div>
-            <div class="an-arrow">›</div>
-          </div>
-          <div class="author-novel-row">
-            <div class="an-thumb c5"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;">⚡</div></div>
-            <div class="an-info">
-              <div class="an-title">The Ember Diaries</div>
-              <div class="an-sub">12 chs · Ongoing · 35K reads · <span style="color:var(--amber);">★4.5</span></div>
-            </div>
-            <div class="an-arrow">›</div>
-          </div>
-          <div class="btn btn-primary" style="margin-top:10px;">+ Create New Novel</div>
-        </div>
-        <div class="tbar">
-          <div class="titem active"><div class="titem-icon">📊</div>Home</div>
-          <div class="titem"><div class="titem-icon">📖</div>Novels</div>
-          <div class="titem"><div class="titem-icon">📈</div>Analytics</div>
-          <div class="titem"><div class="titem-icon">💰</div>Earnings</div>
         </div>
       </div>
     </div>
-    <div class="screen-note"><strong>Design intent:</strong> Deadline nudge in amber at the top of the screen — not an alert, just context. 2-col stat grid gives Sarah an instant health check without scrolling.</div>
+    <div class="screen-note"><strong>Design intent:</strong> Earnings hero uses a gradient of prestige (deep blue to indigo). "Unanswered: 12" with amber creates urgency without anxiety.</div>
   </div>
 
-  <!-- A-02 CREATE NOVEL -->
-  <div class="screen-card">
+  <!-- S-10 NOVEL MANAGEMENT -->
+  <div class="screen-card reveal reveal-delay-1">
     <div class="screen-label">
-      <div class="screen-label-name">A-02 &nbsp;·&nbsp; Create Novel</div>
+      <div class="screen-label-name">S-10 &nbsp;·&nbsp; Novel Management</div>
       <div class="screen-label-tag">Publishing</div>
     </div>
     <div class="phone">
@@ -1337,308 +1073,213 @@ body{
         <div class="sbar"><span class="sbar-time">9:41</span><div class="sbar-icons"><span>●●●</span></div></div>
         <div class="ntop">
           <div class="ntop-back">←</div>
+          <div class="ntop-title">The Iron Veil</div>
+          <div class="ntop-action">Edit</div>
+        </div>
+        <div class="pcontent">
+          <div class="pscroll">
+            <div class="stats-row">
+              <div class="stat"><div class="stat-val amber">5.2k</div><div class="stat-lbl">Reads</div></div>
+              <div class="stat"><div class="stat-val">4.8</div><div class="stat-lbl">Rating</div></div>
+              <div class="stat"><div class="stat-val">32</div><div class="stat-lbl">Chapters</div></div>
+              <div class="stat"><div class="stat-val">8</div><div class="stat-lbl">Premium</div></div>
+            </div>
+            <div class="line-chart">
+              <svg class="svg-chart" viewBox="0 0 200 60" preserveAspectRatio="none">
+                <polyline fill="rgba(232,168,56,0.1)" stroke="var(--amber)" stroke-width="1.5" points="0,50 30,40 60,45 90,30 120,35 150,20 170,10 200,5 200,60 0,60"/>
+              </svg>
+            </div>
+            <div class="sh"><div class="sh-title">Chapters</div><div class="sh-link">+ Add Chapter</div></div>
+            <div class="chapter-row"><div class="ch-num">1</div><div class="ch-title">The First Signal</div><div class="ch-badge">Live</div></div>
+            <div class="chapter-row"><div class="ch-num">2</div><div class="ch-title">Beneath the Iron Veil</div><div class="ch-badge">Live</div></div>
+            <div class="chapter-row"><div class="ch-num">3</div><div class="ch-title">Aether Rising</div><div class="ch-badge locked">🔒 Premium</div></div>
+            <div class="chapter-row"><div class="ch-num">—</div><div class="ch-title" style="color:var(--amber);">+ Write New Chapter</div><div></div></div>
+            <div class="sh"><div class="sh-title">Publish Settings</div></div>
+            <div class="fselect"><span>Visibility: Public</span><span>›</span></div>
+            <div class="fselect"><span>Schedule: Publish Now</span><span>›</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-note"><strong>Design intent:</strong> Line chart gives instant visual feedback on momentum. "Write New Chapter" is a ghost row at the bottom of the chapter list — always discoverable, never in the way.</div>
+  </div>
+
+  <!-- S-11 CHAPTER EDITOR -->
+  <div class="screen-card reveal reveal-delay-2">
+    <div class="screen-label">
+      <div class="screen-label-name">S-11 &nbsp;·&nbsp; Chapter Editor</div>
+      <div class="screen-label-tag">Authoring</div>
+    </div>
+    <div class="phone">
+      <div class="phone-inner">
+        <div class="sbar"><span class="sbar-time">9:41</span><div class="sbar-icons"><span>●●●</span></div></div>
+        <div class="ntop">
+          <div class="ntop-back">←</div>
+          <div style="flex:1;"><div class="ntop-title">Chapter Editor</div><div class="ntop-sub">Auto-saved 2m ago</div></div>
+          <div class="ntop-action">Publish</div>
+        </div>
+        <div class="pcontent" style="background:#0A0A0F;">
+          <div class="pscroll">
+            <div style="padding:12px 14px 0;font-size:10px;color:var(--muted);">CHAPTER TITLE</div>
+            <div class="fi" style="margin:6px 14px;color:var(--parch-dim);font-weight:600;">Aether Rising</div>
+            <div style="padding:4px 14px 0;font-size:10px;color:var(--muted);">CHAPTER BODY</div>
+            <div class="ftextarea" style="height:180px;display:flex;flex-direction:column;gap:8px;">
+              <div style="height:9px;background:var(--ash);border-radius:3px;width:100%;"></div>
+              <div style="height:9px;background:var(--ash);border-radius:3px;width:88%;"></div>
+              <div style="height:9px;background:var(--ash);border-radius:3px;width:100%;"></div>
+              <div style="height:9px;background:var(--ash);border-radius:3px;width:65%;"></div>
+              <div style="height:18px;"></div>
+              <div style="height:9px;background:var(--ash);border-radius:3px;width:100%;"></div>
+              <div style="height:9px;background:var(--ash);border-radius:3px;width:80%;"></div>
+            </div>
+            <div style="display:flex;padding:6px 14px;gap:16px;font-size:18px;color:var(--muted);border-top:1px solid var(--border);">
+              <span>B</span><span style="font-style:italic;">I</span><span>U</span><span>¶</span><span>🖼️</span>
+              <span style="margin-left:auto;color:var(--amber);font-size:14px;font-weight:600;">872 words</span>
+            </div>
+            <div class="btn btn-primary" style="margin-top:8px;">Publish Chapter</div>
+            <div class="btn btn-secondary">Schedule for Later</div>
+            <div class="sched-info">Next scheduled: Mon, 10 Jun · 8:00 AM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-note"><strong>Design intent:</strong> Auto-save label in subtitle removes "did I lose my work?" anxiety. Word count in amber is a non-intrusive motivator. Two-tap publish vs. scheduling gives Sarah full control.</div>
+  </div>
+
+  <!-- S-12 NEW NOVEL FORM -->
+  <div class="screen-card reveal">
+    <div class="screen-label">
+      <div class="screen-label-name">S-12 &nbsp;·&nbsp; Create Novel</div>
+      <div class="screen-label-tag">Publishing</div>
+    </div>
+    <div class="phone">
+      <div class="phone-inner">
+        <div class="sbar"><span class="sbar-time">9:41</span><div class="sbar-icons"><span>●●●</span></div></div>
+        <div class="ntop">
+          <div class="ntop-back">✕</div>
           <div class="ntop-title">New Novel</div>
           <div class="ntop-action">Save Draft</div>
         </div>
         <div class="pcontent">
           <div class="step-bar">
-            <div class="step on">1 · Details</div>
-            <div class="step">2 · Cover</div>
-            <div class="step">3 · Publish</div>
+            <div class="step done">Details</div>
+            <div class="step active">Genres</div>
+            <div class="step">Cover</div>
           </div>
-          <div class="fl">Novel Title <span style="color:var(--amber);">*</span></div>
-          <div class="fi" style="color:var(--parch-dim);">Echoes of Aether</div>
-          <div class="fl">Synopsis <span style="color:var(--amber);">*</span></div>
-          <div class="ftextarea">In a world where magic is outlawed, one girl holds the last ember…</div>
-          <div style="padding:0 14px;font-size:10px;color:var(--muted);margin-bottom:6px;">240 / 500 characters</div>
-          <div class="fl">Genre <span style="color:var(--amber);">*</span></div>
-          <div class="fselect"><span style="color:var(--parch-dim);">Fantasy</span><span style="color:var(--muted);">▼</span></div>
-          <div class="fl">Tags</div>
-          <div class="fi" style="color:var(--ash);">magic, chosen-one, adventure…</div>
-          <div class="fl">Content Rating <span style="color:var(--amber);">*</span></div>
-          <div class="ttabs" style="margin:0 14px 8px;">
-            <div class="ttab on">All Ages</div>
-            <div class="ttab">Teen +13</div>
-            <div class="ttab">Mature +18</div>
-          </div>
-          <div class="fl">Monetisation</div>
-          <div class="ttabs" style="margin:0 14px 10px;">
-            <div class="ttab">Free</div>
-            <div class="ttab on">Freemium</div>
-            <div class="ttab">Premium</div>
-          </div>
-          <div class="btn btn-primary">Next → Upload Cover</div>
-        </div>
-      </div>
-    </div>
-    <div class="screen-note"><strong>Design intent:</strong> 3-step stepper removes the overwhelm of a long form. Character counter is live. "Save Draft" always visible — eliminates the anxiety of losing work (UX Challenge 2).</div>
-  </div>
-
-  <!-- A-03 CHAPTER MANAGER -->
-  <div class="screen-card">
-    <div class="screen-label">
-      <div class="screen-label-name">A-03 &nbsp;·&nbsp; Chapter Manager</div>
-      <div class="screen-label-tag">Publishing</div>
-    </div>
-    <div class="phone">
-      <div class="phone-inner">
-        <div class="sbar"><span class="sbar-time">9:41</span><div class="sbar-icons"><span>●●●</span></div></div>
-        <div class="ntop">
-          <div class="ntop-back">←</div>
-          <div class="ntop-title">Echoes of Aether</div>
-          <div class="ntop-action">+ Add</div>
-        </div>
-        <div class="pcontent">
-          <div class="ttabs">
-            <div class="ttab on">Published</div>
-            <div class="ttab">Drafts <span style="color:var(--amber);margin-left:3px;">2</span></div>
-            <div class="ttab">Scheduled</div>
-          </div>
-          <!-- Chapter rows -->
-          <div style="display:flex;flex-direction:column;">
-            <div style="display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);gap:10px;">
-              <div style="width:28px;text-align:center;font-size:10px;color:var(--muted);">35</div>
-              <div style="flex:1;">
-                <div style="font-size:12px;color:var(--parch-dim);font-weight:600;">The Final Gate</div>
-                <div style="font-size:10px;color:var(--muted);margin-top:2px;">Draft · Last edited 2h ago</div>
-              </div>
-              <div style="font-size:9px;padding:3px 10px;border-radius:100px;background:rgba(232,168,56,0.15);color:var(--amber);border:1px solid rgba(232,168,56,0.25);">Draft</div>
+          <div class="pscroll">
+            <div class="fl">NOVEL TITLE *</div>
+            <div class="fi" style="color:var(--parch-dim);">Crystal Midnight</div>
+            <div class="fl">TAGLINE</div>
+            <div class="fi">A short description of your story…</div>
+            <div class="fl">GENRES (select up to 3)</div>
+            <div class="chips" style="flex-wrap:wrap;height:auto;padding-bottom:4px;">
+              <div class="chip on">Fantasy</div>
+              <div class="chip on">Romance</div>
+              <div class="chip">Sci-Fi</div>
+              <div class="chip">Thriller</div>
+              <div class="chip">Mystery</div>
+              <div class="chip">Horror</div>
             </div>
-            <div style="display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);gap:10px;">
-              <div style="width:28px;text-align:center;font-size:10px;color:var(--muted);">34</div>
-              <div style="flex:1;">
-                <div style="font-size:12px;color:var(--parch-dim);font-weight:600;">A Shattered Horizon</div>
-                <div style="font-size:10px;color:var(--muted);margin-top:2px;">Published · 3,420 reads · <span style="color:var(--amber);">★4.9</span></div>
-              </div>
-              <div style="font-size:9px;padding:3px 10px;border-radius:100px;background:rgba(91,173,122,0.15);color:#5BAD7A;border:1px solid rgba(91,173,122,0.25);">Live</div>
-            </div>
-            <div style="display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);gap:10px;">
-              <div style="width:28px;text-align:center;font-size:10px;color:var(--muted);">33</div>
-              <div style="flex:1;">
-                <div style="font-size:12px;color:var(--parch-dim);font-weight:600;">Winds of Change</div>
-                <div style="font-size:10px;color:var(--muted);margin-top:2px;">Published · 4,100 reads · <span style="color:var(--amber);">★4.7</span></div>
-              </div>
-              <div style="font-size:9px;padding:3px 10px;border-radius:100px;background:rgba(91,173,122,0.15);color:#5BAD7A;border:1px solid rgba(91,173,122,0.25);">Live</div>
-            </div>
-            <div style="display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);gap:10px;">
-              <div style="width:28px;text-align:center;font-size:10px;color:var(--muted);">32</div>
-              <div style="flex:1;">
-                <div style="font-size:12px;color:var(--parch-dim);font-weight:600;">The Unbound Oath</div>
-                <div style="font-size:10px;color:var(--muted);margin-top:2px;">Published · 5,810 reads · <span style="color:var(--amber);">★4.8</span></div>
-              </div>
-              <div style="font-size:9px;padding:3px 10px;border-radius:100px;background:rgba(91,173,122,0.15);color:#5BAD7A;border:1px solid rgba(91,173,122,0.25);">Live</div>
-            </div>
-            <div style="display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);gap:10px;">
-              <div style="width:28px;text-align:center;font-size:10px;color:var(--muted);">31</div>
-              <div style="flex:1;">
-                <div style="font-size:12px;color:var(--parch-dim);font-weight:600;">Storm Before the Calm</div>
-                <div style="font-size:10px;color:var(--muted);margin-top:2px;">Published · 6,220 reads · <span style="color:var(--amber);">★4.9</span></div>
-              </div>
-              <div style="font-size:9px;padding:3px 10px;border-radius:100px;background:rgba(91,173,122,0.15);color:#5BAD7A;border:1px solid rgba(91,173,122,0.25);">Live</div>
-            </div>
-          </div>
-          <div style="padding:10px 14px;font-size:10px;color:var(--muted);text-align:center;border-top:1px solid var(--border);">⠿ Hold to reorder chapters</div>
-        </div>
-      </div>
-    </div>
-    <div class="screen-note"><strong>Design intent:</strong> Status pills use green/amber colour coding — Live vs Draft readable at a glance. Per-chapter read counts reveal which story beats resonate, directly feeding Sarah's craft.</div>
-  </div>
-
-  <!-- A-04 UPLOAD CHAPTER -->
-  <div class="screen-card">
-    <div class="screen-label">
-      <div class="screen-label-name">A-04 &nbsp;·&nbsp; Upload Chapter</div>
-      <div class="screen-label-tag">Publishing</div>
-    </div>
-    <div class="phone">
-      <div class="phone-inner">
-        <div class="sbar"><span class="sbar-time">9:41</span><div class="sbar-icons"><span>●●●</span></div></div>
-        <div class="ntop">
-          <div class="ntop-back">←</div>
-          <div class="ntop-title">New Chapter</div>
-          <div style="font-size:10px;color:#5BAD7A;background:rgba(91,173,122,0.12);padding:4px 10px;border-radius:100px;border:1px solid rgba(91,173,122,0.25);">✓ Auto-saved</div>
-        </div>
-        <div class="pcontent">
-          <div class="fl">Chapter Number</div>
-          <div class="fi" style="color:var(--parch-dim);">35</div>
-          <div class="fl">Chapter Title</div>
-          <div class="fi" style="color:var(--parch-dim);">The Final Gate</div>
-          <div class="fl">Content</div>
-          <div class="upload-area">
-            <div class="upload-area-icon">📄</div>
-            <div>Upload .docx or .txt</div>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;padding:0 14px 8px;font-size:10px;color:var(--muted);"><div style="flex:1;height:1px;background:var(--border);"></div>or write here<div style="flex:1;height:1px;background:var(--border);"></div></div>
-          <div class="editor-toolbar">
-            <div class="et-btn" style="font-weight:700;">B</div>
-            <div class="et-btn" style="font-style:italic;">I</div>
-            <div class="et-btn">U</div>
-            <div class="et-btn">¶</div>
-            <div class="et-btn">" "</div>
-            <div class="et-btn">—</div>
-          </div>
-          <div class="ftextarea" style="height:80px;color:var(--ash);">The gate had stood for a thousand years, and in all that time, no one had ever asked it a question…</div>
-          <div style="padding:0 14px 8px;font-size:10px;color:var(--muted);">Word count: 142 &nbsp;·&nbsp; Est. read time: 1 min</div>
-          <div class="fl">Schedule Publish</div>
-          <div class="ttabs" style="margin:0 14px 4px;">
-            <div class="ttab on">Publish Now</div>
-            <div class="ttab">Pick Date &amp; Time</div>
-          </div>
-          <div class="fl">Access Level</div>
-          <div class="ttabs" style="margin:0 14px 10px;">
-            <div class="ttab on">Free</div>
-            <div class="ttab">Premium</div>
-          </div>
-          <div class="btn-pair">
-            <div class="btn btn-secondary">Save Draft</div>
-            <div class="btn btn-primary">Publish →</div>
+            <div class="fl">CONTENT RATING</div>
+            <div class="fselect"><span>Everyone (13+)</span><span>›</span></div>
+            <div class="fl">LANGUAGE</div>
+            <div class="fselect"><span>English</span><span>›</span></div>
+            <div class="btn btn-primary" style="margin-top:12px;">Next → Cover</div>
           </div>
         </div>
       </div>
     </div>
-    <div class="screen-note"><strong>Design intent:</strong> Dual input (upload or inline write) removes the single biggest publishing blocker. Word count + estimated read time gives Sarah pacing feedback in real time.</div>
+    <div class="screen-note"><strong>Design intent:</strong> 3-step progress bar removes "how much more?" anxiety. Chip multi-select for genres is faster than dropdowns. Save Draft in the header means Sarah never loses her work.</div>
   </div>
 
-  <!-- A-05 ANALYTICS -->
-  <div class="screen-card">
+  <!-- S-13 ANALYTICS -->
+  <div class="screen-card reveal reveal-delay-1">
     <div class="screen-label">
-      <div class="screen-label-name">A-05 &nbsp;·&nbsp; Analytics Dashboard</div>
+      <div class="screen-label-name">S-13 &nbsp;·&nbsp; Analytics</div>
       <div class="screen-label-tag">Insights</div>
     </div>
     <div class="phone">
       <div class="phone-inner">
         <div class="sbar"><span class="sbar-time">9:41</span><div class="sbar-icons"><span>●●●</span></div></div>
-        <div class="ntop">
-          <div class="ntop-title">Analytics</div>
-          <div class="ntop-action">7 days ▾</div>
-        </div>
+        <div class="ntop"><div class="ntop-back">←</div><div class="ntop-title">Analytics</div><div style="font-size:11px;color:var(--amber);">Last 30 days</div></div>
         <div class="pcontent">
-          <div class="ttabs">
-            <div class="ttab on">7 Days</div>
-            <div class="ttab">30 Days</div>
-            <div class="ttab">All Time</div>
+          <div class="pscroll">
+            <div class="dash-grid" style="margin-top:10px;">
+              <div class="dash-card"><div class="dc-lbl">Total Reads</div><div class="dc-val amber">8,420</div><div class="dc-delta">↑ +12%</div></div>
+              <div class="dash-card"><div class="dc-lbl">Retention</div><div class="dc-val">68%</div><div class="dc-delta">↑ +4%</div></div>
+            </div>
+            <div class="sh"><div class="sh-title">Read Trend</div></div>
+            <div class="line-chart" style="height:88px;">
+              <svg class="svg-chart" viewBox="0 0 200 80" preserveAspectRatio="none">
+                <polyline fill="rgba(232,168,56,0.08)" stroke="var(--amber)" stroke-width="1.5" points="0,70 20,60 40,65 60,50 80,55 100,40 120,35 140,25 160,18 180,12 200,5 200,80 0,80"/>
+              </svg>
+            </div>
+            <div class="sh"><div class="sh-title">Revenue</div></div>
+            <div class="wf-table">
+              <div class="tr head"><div class="td">Source</div><div class="td r">Amount</div></div>
+              <div class="tr"><div class="td">Premium Unlocks</div><div class="td r">₹ 9,200</div></div>
+              <div class="tr"><div class="td">Subscriptions</div><div class="td r">₹ 3,820</div></div>
+              <div class="tr"><div class="td">Tips</div><div class="td r">₹ 1,800</div></div>
+            </div>
+            <div class="sh"><div class="sh-title">Chapter Performance</div></div>
+            <div class="chart-area">
+              <div class="bar hi2" style="height:55%;"></div>
+              <div class="bar hi2" style="height:70%;"></div>
+              <div class="bar hi" style="height:100%;"></div>
+              <div class="bar hi2" style="height:85%;"></div>
+              <div class="bar" style="height:60%;"></div>
+              <div class="bar" style="height:45%;"></div>
+              <div class="bar" style="height:35%;"></div>
+            </div>
           </div>
-          <div class="stats-row">
-            <div class="stat"><div class="stat-val">12.4K</div><div class="stat-lbl">Reads</div></div>
-            <div class="stat"><div class="stat-val">4.2K</div><div class="stat-lbl">Unique</div></div>
-            <div class="stat"><div class="stat-val amber">68%</div><div class="stat-lbl">Retention</div></div>
-          </div>
-          <div class="sh"><div class="sh-title">Daily Reads</div></div>
-          <div class="line-chart">
-            <svg viewBox="0 0 260 60" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-              <defs>
-                <linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#E8A838" stop-opacity="0.3"/>
-                  <stop offset="100%" stop-color="#E8A838" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-              <path d="M10,50 L47,42 L84,46 L121,28 L158,32 L195,16 L232,20 L252,10" fill="none" stroke="#E8A838" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M10,50 L47,42 L84,46 L121,28 L158,32 L195,16 L232,20 L252,10 L252,58 L10,58 Z" fill="url(#lg)"/>
-              <circle cx="252" cy="10" r="3" fill="#E8A838"/>
-            </svg>
-          </div>
-          <div style="display:flex;justify-content:space-between;padding:2px 14px 8px;font-size:9px;color:var(--muted);">
-            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
-          </div>
-          <div class="sh"><div class="sh-title">Reads by Novel</div></div>
-          <div class="chart-area">
-            <div class="bar hi" style="height:90%;"></div>
-            <div class="bar hi2" style="height:48%;"></div>
-            <div class="bar" style="height:18%;"></div>
-          </div>
-          <div style="display:flex;justify-content:space-around;padding:4px 14px 8px;font-size:9px;color:var(--muted);">
-            <span>Echoes of Aether</span><span>Ember Diaries</span><span>Other</span>
-          </div>
-          <div class="sh"><div class="sh-title">Top Chapters</div></div>
-          <div class="wf-table">
-            <div class="tr head"><div class="td">Chapter</div><div class="td r">Reads</div><div class="td r">Rating</div></div>
-            <div class="tr"><div class="td">Ch. 31 — Storm</div><div class="td r">6,220</div><div class="td r">★4.9</div></div>
-            <div class="tr"><div class="td">Ch. 32 — Unbound</div><div class="td r">5,810</div><div class="td r">★4.8</div></div>
-            <div class="tr"><div class="td">Ch. 34 — Shattered</div><div class="td r">3,420</div><div class="td r">★4.9</div></div>
-          </div>
-        </div>
-        <div class="tbar">
-          <div class="titem"><div class="titem-icon">📊</div>Home</div>
-          <div class="titem"><div class="titem-icon">📖</div>Novels</div>
-          <div class="titem active"><div class="titem-icon">📈</div>Analytics</div>
-          <div class="titem"><div class="titem-icon">💰</div>Earnings</div>
         </div>
       </div>
     </div>
-    <div class="screen-note"><strong>Design intent:</strong> Amber SVG line chart with gradient fill — the same amber thread from the reading screen appears here as data. Retention % in amber makes it the most-watched KPI.</div>
+    <div class="screen-note"><strong>Design intent:</strong> Revenue breakdown table gives Sarah actionable data. The chapter performance bar chart immediately reveals which chapters cause drop-off, so she can adjust pacing.</div>
   </div>
 
-  <!-- A-06 EARNINGS -->
-  <div class="screen-card">
+  <!-- S-14 EARNINGS -->
+  <div class="screen-card reveal reveal-delay-2">
     <div class="screen-label">
-      <div class="screen-label-name">A-06 &nbsp;·&nbsp; Earnings Dashboard</div>
+      <div class="screen-label-name">S-14 &nbsp;·&nbsp; Earnings &amp; Payouts</div>
       <div class="screen-label-tag">Monetization</div>
     </div>
     <div class="phone">
       <div class="phone-inner">
         <div class="sbar"><span class="sbar-time">9:41</span><div class="sbar-icons"><span>●●●</span></div></div>
-        <div class="ntop">
-          <div class="ntop-title">Earnings</div>
-          <div class="ntop-action">June 2025</div>
-        </div>
+        <div class="ntop"><div class="ntop-back">←</div><div class="ntop-title">Earnings</div></div>
         <div class="pcontent">
           <div class="earn-hero">
-            <div class="earn-lbl">Total Earned This Month</div>
-            <div class="earn-val">₹12,840</div>
-            <div class="earn-delta">↑ 14% vs last month &nbsp;·&nbsp; Best month yet 🎉</div>
+            <div class="earn-lbl">Available Balance</div>
+            <div class="earn-val">₹ 14,820</div>
+            <div class="earn-delta">↑ +₹ 1,240 this month</div>
           </div>
-          <div class="sh"><div class="sh-title">Revenue Breakdown</div></div>
-          <div class="dash-grid">
-            <div class="dash-card">
-              <div class="dc-lbl">Premium Unlocks</div>
-              <div class="dc-val amber">₹8,200</div>
-              <div class="dc-delta">63% of total</div>
+          <div class="btn btn-primary" style="margin-top:8px;">Withdraw to Bank</div>
+          <div class="pscroll">
+            <div class="sh"><div class="sh-title">Transaction History</div></div>
+            <div class="wf-table">
+              <div class="tr head"><div class="td">Date</div><div class="td">Source</div><div class="td r">Amount</div></div>
+              <div class="tr"><div class="td">Jun 3</div><div class="td">Premium unlock</div><div class="td r">+₹ 480</div></div>
+              <div class="tr"><div class="td">Jun 2</div><div class="td">Subscription</div><div class="td r">+₹ 320</div></div>
+              <div class="tr"><div class="td">Jun 1</div><div class="td">Withdrawal</div><div class="td r" style="color:#e05555;">-₹ 5,000</div></div>
+              <div class="tr"><div class="td">May 31</div><div class="td">Tip</div><div class="td r">+₹ 200</div></div>
             </div>
-            <div class="dash-card">
-              <div class="dc-lbl">Tips &amp; Gifts</div>
-              <div class="dc-val amber">₹3,140</div>
-              <div class="dc-delta">24% of total</div>
-            </div>
-            <div class="dash-card">
-              <div class="dc-lbl">Subscriptions</div>
-              <div class="dc-val amber">₹1,500</div>
-              <div class="dc-delta">12% of total</div>
-            </div>
-            <div class="dash-card" style="border-color:rgba(232,168,56,0.3);">
-              <div class="dc-lbl">Pending Payout</div>
-              <div class="dc-val">₹4,320</div>
-              <div class="dc-delta warn">Pays out Jul 1</div>
+            <div class="sh"><div class="sh-title">Linked Account</div></div>
+            <div style="margin:0 14px;padding:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);font-size:12px;color:var(--parch-dim);">
+              🏦 &nbsp; HDFC Bank &nbsp;·&nbsp; ••••7821
+              <span style="float:right;color:var(--amber);">Change</span>
             </div>
           </div>
-          <div class="sh"><div class="sh-title">Monthly Trend</div></div>
-          <div class="chart-area">
-            <div class="bar" style="height:35%;"></div>
-            <div class="bar" style="height:48%;"></div>
-            <div class="bar" style="height:42%;"></div>
-            <div class="bar" style="height:60%;"></div>
-            <div class="bar hi2" style="height:75%;"></div>
-            <div class="bar hi" style="height:100%;"></div>
-          </div>
-          <div style="display:flex;justify-content:space-around;padding:4px 14px 8px;font-size:9px;color:var(--muted);">
-            <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
-          </div>
-          <div class="btn btn-primary">Request Payout →</div>
-        </div>
-        <div class="tbar">
-          <div class="titem"><div class="titem-icon">📊</div>Home</div>
-          <div class="titem"><div class="titem-icon">📖</div>Novels</div>
-          <div class="titem"><div class="titem-icon">📈</div>Analytics</div>
-          <div class="titem active"><div class="titem-icon">💰</div>Earnings</div>
         </div>
       </div>
     </div>
-    <div class="screen-note"><strong>Design intent:</strong> Revenue split into 3 named streams demystifies the creator economy. "Best month yet 🎉" micro-copy celebrates wins — keeps Sarah motivated to keep publishing.</div>
+    <div class="screen-note"><strong>Design intent:</strong> Balance in large Fraunces serif makes the number feel significant. Red withdrawal vs. green income gives instant readability in the transaction log.</div>
   </div>
 
-  <!-- A-07 READER FEEDBACK -->
-  <div class="screen-card">
+  <!-- S-15 READER FEEDBACK -->
+  <div class="screen-card reveal">
     <div class="screen-label">
-      <div class="screen-label-name">A-07 &nbsp;·&nbsp; Reader Feedback</div>
+      <div class="screen-label-name">S-15 &nbsp;·&nbsp; Reader Feedback</div>
       <div class="screen-label-tag">Community</div>
     </div>
     <div class="phone">
@@ -1646,66 +1287,40 @@ body{
         <div class="sbar"><span class="sbar-time">9:41</span><div class="sbar-icons"><span>●●●</span></div></div>
         <div class="ntop">
           <div class="ntop-back">←</div>
-          <div class="ntop-title">Feedback</div>
-          <div class="ntop-action">Filter ▾</div>
+          <div class="ntop-title">Reader Feedback</div>
+          <div style="font-size:10px;padding:3px 10px;border-radius:100px;background:rgba(232,168,56,0.15);color:var(--amber);border:1px solid rgba(232,168,56,0.3);">12 unanswered</div>
         </div>
         <div class="pcontent">
           <div class="ttabs">
-            <div class="ttab on">Comments <span style="color:var(--amber);margin-left:3px;">89</span></div>
-            <div class="ttab">Reviews</div>
-            <div class="ttab">DMs</div>
+            <div class="ttab on">All</div>
+            <div class="ttab">Unanswered</div>
+            <div class="ttab">Replied</div>
           </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 14px;font-size:11px;">
-            <div style="color:var(--muted);">89 comments</div>
-            <div style="color:var(--amber);font-weight:600;background:rgba(232,168,56,0.1);padding:3px 10px;border-radius:100px;border:1px solid rgba(232,168,56,0.2);">12 unanswered</div>
-          </div>
-          <div class="fb-item">
-            <div class="fb-head">
-              <span>@aarav_reads &nbsp;·&nbsp; Ch. 34 &nbsp;·&nbsp; 2h ago</span>
-              <div class="notif" style="width:7px;height:7px;border-radius:50%;background:var(--amber);flex-shrink:0;"></div>
+          <div class="pscroll">
+            <div class="fb-item">
+              <div class="fb-head">
+                <span>@bookworm_aarav &nbsp;·&nbsp; Ch. 14</span>
+                <span style="color:var(--amber);font-size:11px;">★★★★★</span>
+              </div>
+              <div class="fb-body">This chapter had me in tears! When will Ch. 15 be out?</div>
+              <div style="margin-top:6px;"><div class="btn btn-primary" style="height:30px;margin:0;font-size:11px;border-radius:100px;">Reply</div></div>
             </div>
-            <div class="fb-body">That cliffhanger!! I literally gasped 😱 Please update soon Sarah!</div>
-            <div class="fb-actions">
-              <div class="fb-reply">Reply</div>
-              <div class="fb-like">♥ 14</div>
+            <div class="fb-item">
+              <div class="fb-head">
+                <span>@fantasyfan99 &nbsp;·&nbsp; Ch. 12</span>
+                <span style="color:var(--amber);font-size:11px;">★★★★★</span>
+              </div>
+              <div class="fb-body">Best fantasy on this platform. The characters feel so real — I cried at Ch. 28.</div>
+              <div style="margin-top:6px;display:flex;align-items:center;gap:8px;font-size:11px;color:#5BAD7A;">✓ Replied</div>
             </div>
-          </div>
-          <div class="fb-item">
-            <div class="fb-head">
-              <span>@moonreader &nbsp;·&nbsp; Ch. 34 &nbsp;·&nbsp; 3h ago</span>
-              <div class="notif" style="width:7px;height:7px;border-radius:50%;background:var(--amber);flex-shrink:0;"></div>
+            <div class="fb-item">
+              <div class="fb-head">
+                <span>@readallday &nbsp;·&nbsp; Echoes of Aether</span>
+                <span style="color:var(--amber);font-size:11px;">★★★★☆</span>
+              </div>
+              <div class="fb-body">Incredible writing. A little slow in the middle chapters but totally worth it.</div>
+              <div style="margin-top:6px;"><div class="btn btn-primary" style="height:30px;margin:0;font-size:11px;border-radius:100px;">Reply</div></div>
             </div>
-            <div class="fb-body">The world-building is just on another level. You're so talented!</div>
-            <div class="fb-actions">
-              <div class="fb-reply">Reply</div>
-              <div class="fb-like">♥ 8</div>
-            </div>
-          </div>
-          <div class="fb-item" style="opacity:0.65;">
-            <div class="fb-head">
-              <span>@novelfan22 &nbsp;·&nbsp; Ch. 33 &nbsp;·&nbsp; 1d ago</span>
-            </div>
-            <div class="fb-body">Ch. 33 felt slightly rushed — but still absolutely love this series!</div>
-            <div class="fb-actions">
-              <div class="fb-done">✓ Replied</div>
-              <div class="fb-like">♥ 5</div>
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="sh"><div class="sh-title">Latest Reviews</div></div>
-          <div class="fb-item">
-            <div class="fb-head">
-              <span>@sakura_b &nbsp;·&nbsp; Echoes of Aether</span>
-              <span style="color:var(--amber);font-size:11px;">★★★★★</span>
-            </div>
-            <div class="fb-body">Best fantasy on this platform. The characters feel so real — I cried at Ch. 28.</div>
-          </div>
-          <div class="fb-item">
-            <div class="fb-head">
-              <span>@readallday &nbsp;·&nbsp; Echoes of Aether</span>
-              <span style="color:var(--amber);font-size:11px;">★★★★☆</span>
-            </div>
-            <div class="fb-body">Incredible writing. A little slow in the middle chapters but totally worth it.</div>
           </div>
         </div>
       </div>
@@ -1716,36 +1331,35 @@ body{
   </div><!-- /screen-grid-wide -->
 </div><!-- /section author -->
 
-<!-- ═══════ DESIGN SYSTEM REFERENCE ═══════ -->
-<div class="section-block">
-  <div class="section-eyebrow">Design System</div>
-  <div class="section-title">Tokens &amp; Components</div>
-  <div class="section-desc">The visual language powering every screen — colour, type, and key components.</div>
+<!-- ═══════ DESIGN SYSTEM ═══════ -->
+<div class="section-block reveal">
+  <div class="section-header">
+    <div class="section-eyebrow">Design System</div>
+    <div class="section-title">Tokens &amp; Components</div>
+    <div class="section-desc">The visual language powering every screen — colour, type, and key components.</div>
+  </div>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-bottom:40px;">
-
-    <!-- Colour Palette -->
-    <div style="background:var(--ink-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:24px;">
-      <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:16px;">Colour Palette</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:6px;background:#0D0D12;border:1px solid var(--border);"></div><div><div style="font-size:11px;color:var(--parchment);font-weight:600;">Deep Ink</div><div style="font-size:10px;color:var(--muted);">#0D0D12 · Background</div></div></div>
-        <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:6px;background:#E8A838;"></div><div><div style="font-size:11px;color:var(--parchment);font-weight:600;">Amber</div><div style="font-size:10px;color:var(--muted);">#E8A838 · Primary CTA</div></div></div>
-        <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:6px;background:#F5F0E8;"></div><div><div style="font-size:11px;color:var(--parchment);font-weight:600;">Parchment</div><div style="font-size:10px;color:var(--muted);">#F5F0E8 · Primary Text</div></div></div>
-        <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:6px;background:#7B6FA0;"></div><div><div style="font-size:11px;color:var(--parchment);font-weight:600;">Violet</div><div style="font-size:10px;color:var(--muted);">#7B6FA0 · Genre Tags</div></div></div>
-        <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:6px;background:#5BAD7A;"></div><div><div style="font-size:11px;color:var(--parchment);font-weight:600;">Sage</div><div style="font-size:10px;color:var(--muted);">#5BAD7A · Success / Live</div></div></div>
-        <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:6px;background:#181820;border:1px solid var(--border);"></div><div><div style="font-size:11px;color:var(--parchment);font-weight:600;">Surface</div><div style="font-size:10px;color:var(--muted);">#181820 · Cards</div></div></div>
+  <div class="ds-grid">
+    <div class="ds-card">
+      <div class="ds-eyebrow">Colour Palette</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:6px;background:#0D0D12;border:1px solid var(--border);flex-shrink:0;"></div><div><div style="font-size:11px;color:var(--parchment);font-weight:600;">Deep Ink</div><div style="font-size:10px;color:var(--muted);">#0D0D12 · Background</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:6px;background:#E8A838;flex-shrink:0;"></div><div><div style="font-size:11px;color:var(--parchment);font-weight:600;">Amber</div><div style="font-size:10px;color:var(--muted);">#E8A838 · Primary CTA</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:6px;background:#F5F0E8;flex-shrink:0;"></div><div><div style="font-size:11px;color:var(--parchment);font-weight:600;">Parchment</div><div style="font-size:10px;color:var(--muted);">#F5F0E8 · Primary Text</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:6px;background:#7B6FA0;flex-shrink:0;"></div><div><div style="font-size:11px;color:var(--parchment);font-weight:600;">Violet</div><div style="font-size:10px;color:var(--muted);">#7B6FA0 · Genre Tags</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:6px;background:#5BAD7A;flex-shrink:0;"></div><div><div style="font-size:11px;color:var(--parchment);font-weight:600;">Sage</div><div style="font-size:10px;color:var(--muted);">#5BAD7A · Success / Live</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:6px;background:#181820;border:1px solid var(--border);flex-shrink:0;"></div><div><div style="font-size:11px;color:var(--parchment);font-weight:600;">Surface</div><div style="font-size:10px;color:var(--muted);">#181820 · Cards</div></div></div>
       </div>
     </div>
 
-    <!-- Typography -->
-    <div style="background:var(--ink-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:24px;">
-      <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:16px;">Typography</div>
-      <div style="margin-bottom:16px;">
+    <div class="ds-card">
+      <div class="ds-eyebrow">Typography</div>
+      <div style="margin-bottom:18px;">
         <div style="font-size:9px;color:var(--muted);margin-bottom:4px;">DISPLAY — FRAUNCES</div>
         <div style="font-family:'Fraunces',serif;font-size:28px;color:var(--parchment);line-height:1.1;">NovelNest</div>
         <div style="font-family:'Fraunces',serif;font-size:18px;color:var(--parch-dim);font-style:italic;">A story begins…</div>
       </div>
-      <div style="margin-bottom:16px;">
+      <div>
         <div style="font-size:9px;color:var(--muted);margin-bottom:4px;">BODY — INTER</div>
         <div style="font-size:14px;color:var(--parchment);font-weight:600;">Heading / 14 SemiBold</div>
         <div style="font-size:12px;color:var(--parch-dim);">Body text / 12 Regular</div>
@@ -1754,28 +1368,23 @@ body{
       </div>
     </div>
 
-    <!-- Components -->
-    <div style="background:var(--ink-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:24px;">
-      <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:16px;">Key Components</div>
-      <!-- Primary Button -->
-      <div style="margin-bottom:12px;">
+    <div class="ds-card">
+      <div class="ds-eyebrow">Key Components</div>
+      <div style="margin-bottom:14px;">
         <div style="font-size:9px;color:var(--muted);margin-bottom:6px;">PRIMARY BUTTON</div>
         <div style="height:40px;background:var(--amber);border-radius:100px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--ink);">Start Reading →</div>
       </div>
-      <!-- Secondary Button -->
-      <div style="margin-bottom:12px;">
+      <div style="margin-bottom:14px;">
         <div style="font-size:9px;color:var(--muted);margin-bottom:6px;">SECONDARY BUTTON</div>
         <div style="height:40px;border:1px solid var(--border);border-radius:100px;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--parchment);">+ Add to Library</div>
       </div>
-      <!-- Chip -->
-      <div style="margin-bottom:12px;">
+      <div style="margin-bottom:14px;">
         <div style="font-size:9px;color:var(--muted);margin-bottom:6px;">CHIPS</div>
         <div style="display:flex;gap:6px;">
           <div style="padding:5px 14px;border-radius:100px;background:var(--amber);color:var(--ink);font-size:11px;font-weight:700;">Fantasy</div>
           <div style="padding:5px 14px;border-radius:100px;background:var(--surface);border:1px solid var(--border);color:var(--muted);font-size:11px;">Romance</div>
         </div>
       </div>
-      <!-- Status pills -->
       <div>
         <div style="font-size:9px;color:var(--muted);margin-bottom:6px;">STATUS PILLS</div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;">
@@ -1788,25 +1397,33 @@ body{
     </div>
   </div>
 
-  <!-- UX Challenges Solved -->
-  <div style="background:var(--ink-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:28px;">
-    <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:20px;">UX Challenges Addressed</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-      <div style="display:flex;gap:12px;">
-        <div style="width:32px;height:32px;border-radius:50%;background:var(--amber);color:var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">1</div>
-        <div><div style="font-size:12px;font-weight:600;color:var(--parchment);margin-bottom:4px;">Content Discovery</div><div style="font-size:11px;color:var(--muted);line-height:1.5;">Genre tiles + hero banner + chip filters let Aarav find a story in under 3 taps.</div></div>
+  <div class="ux-grid">
+    <div class="ux-item reveal">
+      <div class="ux-num">1</div>
+      <div>
+        <div class="ux-title">Content Discovery</div>
+        <div class="ux-desc">Genre tiles + hero banner + chip filters let Aarav find a story in under 3 taps.</div>
       </div>
-      <div style="display:flex;gap:12px;">
-        <div style="width:32px;height:32px;border-radius:50%;background:var(--amber);color:var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">2</div>
-        <div><div style="font-size:12px;font-weight:600;color:var(--parchment);margin-bottom:4px;">Publishing Friction</div><div style="font-size:11px;color:var(--muted);line-height:1.5;">3-step novel form + dual input for chapters + auto-save removes all key blockers for Sarah.</div></div>
+    </div>
+    <div class="ux-item reveal reveal-delay-1">
+      <div class="ux-num">2</div>
+      <div>
+        <div class="ux-title">Publishing Friction</div>
+        <div class="ux-desc">3-step novel form + dual input for chapters + auto-save removes all key blockers for Sarah.</div>
       </div>
-      <div style="display:flex;gap:12px;">
-        <div style="width:32px;height:32px;border-radius:50%;background:var(--amber);color:var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">3</div>
-        <div><div style="font-size:12px;font-weight:600;color:var(--parchment);margin-bottom:4px;">Reader Retention</div><div style="font-size:11px;color:var(--muted);line-height:1.5;">Progress bars, "2 new chapters" badges, achievements, and reading streaks drive Aarav back daily.</div></div>
+    </div>
+    <div class="ux-item reveal reveal-delay-2">
+      <div class="ux-num">3</div>
+      <div>
+        <div class="ux-title">Reader Retention</div>
+        <div class="ux-desc">Progress bars, "2 new chapters" badges, achievements, and reading streaks drive Aarav back daily.</div>
       </div>
-      <div style="display:flex;gap:12px;">
-        <div style="width:32px;height:32px;border-radius:50%;background:var(--amber);color:var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">4</div>
-        <div><div style="font-size:12px;font-weight:600;color:var(--parchment);margin-bottom:4px;">Reader–Author Interaction</div><div style="font-size:11px;color:var(--muted);line-height:1.5;">Feedback screen with reply CTA + "unanswered" count creates a meaningful loop between creators and fans.</div></div>
+    </div>
+    <div class="ux-item reveal reveal-delay-3">
+      <div class="ux-num">4</div>
+      <div>
+        <div class="ux-title">Reader–Author Interaction</div>
+        <div class="ux-desc">Feedback screen with reply CTA + "unanswered" count creates a meaningful loop between creators and fans.</div>
       </div>
     </div>
   </div>
@@ -1815,11 +1432,34 @@ body{
 <!-- ═══════ FOOTER ═══════ -->
 <div class="footer">
   <div>
-    <div class="footer-brand" style="font-family:'Fraunces',serif;">NovelNest</div>
+    <div class="footer-brand">NovelNest</div>
     <div class="footer-sub">Hi-Fi Wireframes &nbsp;·&nbsp; Reader &amp; Author Flows &nbsp;·&nbsp; 16 Screens</div>
   </div>
   <div class="footer-meta">UI/UX Case Study by Aditya Nair<br>May 2026 &nbsp;·&nbsp; Dark Mode First</div>
 </div>
 
+</div><!-- /page -->
+
+<script>
+// Scroll-reveal using IntersectionObserver
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(el => observer.observe(el));
+
+// Smart back button
+document.getElementById('back-btn').addEventListener('click', function(e) {
+  if (document.referrer && (document.referrer.includes('index.html') || document.referrer.includes(window.location.hostname))) {
+    e.preventDefault();
+    history.back();
+  }
+});
+</script>
 </body>
 </html>
