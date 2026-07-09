@@ -3,274 +3,764 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cozy Cafe Self-Order — UI Showcase | Aditya Nair</title>
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
-<meta name="description" content="Cozy Cafe Self-Order - A scan-to-order mobile experience designed for dine-in cafes by Aditya Nair. Full UI showcase and flow.">
+<title>Cozy Cafe Self-Order — UI Showcase · Aditya Nair</title>
+<meta name="description" content="Cozy Cafe Self-Order — A scan-to-order mobile experience designed for dine-in cafes by Aditya Nair. Full UI showcase and flow.">
 <meta name="keywords" content="UI Showcase, Mobile App Design, QR Ordering, Product Design, Cafe App, Aditya Nair">
 <meta name="author" content="Aditya Nair">
 <meta property="og:title" content="Cozy Cafe Self-Order — UI Showcase | Aditya Nair">
-<meta property="og:description" content="Cozy Cafe Self-Order - A scan-to-order mobile experience designed for dine-in cafes by Aditya Nair. Full UI showcase and flow.">
+<meta property="og:description" content="A scan-to-order mobile experience designed for dine-in cafes.">
 <meta property="og:type" content="article">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
-  *{box-sizing:border-box;margin:0;padding:0;}
+/* ══════════════════════════════════════════════
+   DESIGN TOKENS
+══════════════════════════════════════════════ */
+:root {
+  --forest:        #1c3328;
+  --forest-mid:    #24422f;
+  --forest-light:  #2e5a3c;
+  --forest-faint:  #e8f0eb;
+  --cream:         #f4f0e6;
+  --cream-dark:    #e5e0d0;
+  --cream-mid:     #d0c9b5;
+  --white:         #ffffff;
+  --terra:         #e8692a;
+  --terra-dark:    #c4541c;
+  --terra-soft:    #f5dece;
+  --terra-bg:      #fdf3ec;
+  --ink:           #1c2420;
+  --ink-mid:       #3a4a42;
+  --ink-muted:     #6a7a70;
+  --ink-faint:     #9aaa9e;
+  --border:        #ddd8c8;
+  --transition:    0.3s cubic-bezier(0.4,0,0.2,1);
+}
 
-  :root{
-    --forest:#1c3328;
-    --forest-mid:#24422f;
-    --forest-light:#2e5a3c;
-    --forest-faint:#e8f0eb;
-    --cream:#f4f0e6;
-    --cream-dark:#e8e3d5;
-    --cream-mid:#d4cdb8;
-    --terra:#e8692a;
-    --terra-dark:#c4541c;
-    --terra-soft:#f5dece;
-    --ink:#1c2420;
-    --ink-mid:#3a4a42;
-    --ink-muted:#6a7a70;
-    --ink-faint:#9aaa9e;
-  }
+/* ══════════════════════════════════════════════
+   RESET & BASE
+══════════════════════════════════════════════ */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; font-size:16px; }
+body {
+  font-family:'DM Sans',sans-serif;
+  background:var(--cream);
+  color:var(--ink);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
 
-  .bh{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);padding-bottom:80px;}
+/* ══════════════════════════════════════════════
+   STICKY NAV
+══════════════════════════════════════════════ */
+.case-nav {
+  position:fixed; top:16px; left:50%; transform:translateX(-50%);
+  z-index:1000; width:calc(100% - 48px); max-width:960px;
+  background:rgba(28,51,40,0.82);
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:100px; padding:0 8px; height:52px;
+  display:flex; align-items:center; justify-content:space-between;
+  box-shadow:0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.case-nav-back {
+  display:flex; align-items:center; gap:8px;
+  text-decoration:none; padding:6px 14px; border-radius:100px;
+  background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1);
+  color:rgba(255,255,255,0.7); font-size:13px; font-weight:500;
+  transition:var(--transition);
+}
+.case-nav-back:hover { background:rgba(255,255,255,0.14); color:#fff; }
+.case-nav-back svg { width:14px; height:14px; }
+.case-nav-brand {
+  font-family:'Playfair Display',serif;
+  font-style:italic; font-size:15px; font-weight:600;
+  color:var(--terra); letter-spacing:-0.3px;
+}
+.case-nav-tag {
+  font-size:11px; color:rgba(255,255,255,0.4);
+  padding:4px 12px; border-radius:100px;
+  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08);
+  white-space:nowrap;
+}
 
-  .hero{background:linear-gradient(135deg, var(--forest) 0%, var(--forest-light) 100%);padding:60px 48px 52px;position:relative;overflow:hidden;}
-  .hero-inner{max-width:860px;margin:0 auto;position:relative;z-index:1;}
-  .hero-stripe{position:absolute;top:0;right:0;width:220px;height:100%;background:var(--forest-mid);opacity:.5;}
+/* ══════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════ */
+.hero {
+  background:linear-gradient(135deg, var(--forest) 0%, var(--forest-light) 60%, #3a6e4a 100%);
+  padding:116px 24px 72px;
+  position:relative; overflow:hidden;
+}
+.hero::before {
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 60% 80% at 90% 50%, rgba(46,90,60,0.6) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 40% at 10% 80%, rgba(232,105,42,0.08) 0%, transparent 50%);
+  pointer-events:none;
+}
+.hero-inner {
+  max-width:960px; margin:0 auto;
+  position:relative; z-index:1;
+}
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:10px; letter-spacing:0.16em; text-transform:uppercase;
+  color:var(--terra-soft); margin-bottom:28px;
+  border:0.5px solid rgba(232,105,42,0.3); padding:5px 14px; border-radius:100px;
+}
+.hero-dot { width:5px; height:5px; background:var(--terra); border-radius:50%; flex-shrink:0; }
+.hero h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(44px,7vw,76px);
+  font-weight:400; line-height:1.05;
+  color:var(--cream); margin-bottom:6px; letter-spacing:-0.02em;
+}
+.hero h1 em { font-style:italic; color:var(--terra); }
+.hero-sub {
+  font-size:12px; color:rgba(232,234,226,0.45);
+  letter-spacing:0.14em; text-transform:uppercase;
+  margin-bottom:40px;
+}
+.hero-meta {
+  display:flex; gap:0;
+  border-top:0.5px solid rgba(255,255,255,0.1);
+  padding-top:28px; flex-wrap:wrap;
+}
+.hero-meta-item {
+  padding-right:32px; margin-right:32px;
+  border-right:0.5px solid rgba(255,255,255,0.1);
+}
+.hero-meta-item:last-child { border-right:none; padding-right:0; margin-right:0; }
+.hero-meta-item label {
+  font-size:10px; letter-spacing:0.14em; text-transform:uppercase;
+  color:rgba(232,234,226,0.35); display:block; margin-bottom:4px;
+}
+.hero-meta-item span { font-size:13px; color:rgba(244,240,230,0.7); }
+.hero-meta-item span.accent { color:var(--terra); }
+.hero-pills {
+  display:flex; gap:8px; flex-wrap:wrap; margin-top:20px;
+}
+.hero-pill {
+  font-size:10px; letter-spacing:0.1em; text-transform:uppercase;
+  color:rgba(232,234,226,0.45); border:0.5px solid rgba(255,255,255,0.15);
+  padding:4px 12px; border-radius:100px;
+  transition:var(--transition);
+}
+.hero-pill:hover { background:rgba(255,255,255,0.08); color:rgba(232,234,226,0.7); }
 
-  .tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--terra-soft);border:0.5px solid rgba(232,105,42,0.35);padding:4px 12px;border-radius:2px;margin-bottom:32px;}
-  .tag-dot{width:5px;height:5px;background:var(--terra);border-radius:50%;flex-shrink:0;}
+/* ══════════════════════════════════════════════
+   PAGE WRAPPER
+══════════════════════════════════════════════ */
+.page { max-width:960px; margin:0 auto; padding:0 24px; }
 
-  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(42px,6vw,70px);font-weight:400;line-height:1.06;color:var(--cream);margin-bottom:6px;}
-  .hero-title em{font-style:italic;color:var(--terra);}
-  .hero-sub{font-size:12px;color:rgba(232,234,226,0.45);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:40px;}
+/* ══════════════════════════════════════════════
+   BRIEF CARD
+══════════════════════════════════════════════ */
+.brief-card {
+  background:var(--forest); border-radius:16px;
+  padding:40px 44px; margin:56px 0 0;
+  position:relative; overflow:hidden;
+}
+.brief-card::before {
+  content:''; position:absolute; top:-40px; right:-40px;
+  width:180px; height:180px; border-radius:50%;
+  background:rgba(232,105,42,0.06); pointer-events:none;
+}
+.brief-card h2 {
+  font-family:'Playfair Display',serif;
+  font-size:22px; font-weight:400; color:var(--cream); margin-bottom:14px;
+}
+.brief-card p {
+  font-size:14px; line-height:1.85;
+  color:rgba(232,234,226,0.6); max-width:640px;
+}
+.brief-card p strong { color:var(--terra); font-weight:500; }
 
-  .meta-row{display:flex;gap:40px;border-top:0.5px solid rgba(255,255,255,0.1);padding-top:24px;}
-  .meta-item label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(232,234,226,0.35);display:block;margin-bottom:4px;}
-  .meta-item span{font-size:13px;color:rgba(244,240,230,0.7);}
-  .meta-item span.accent{color:var(--terra);}
+/* ══════════════════════════════════════════════
+   DIVIDER
+══════════════════════════════════════════════ */
+.divider { height:0.5px; background:var(--cream-dark); margin:64px 0; }
 
-  .section{max-width:860px;margin:0 auto;padding:0 48px;}
+/* ══════════════════════════════════════════════
+   SECTION HEADERS
+══════════════════════════════════════════════ */
+.section-eyebrow {
+  font-size:10px; letter-spacing:0.16em; text-transform:uppercase;
+  color:var(--terra); font-weight:500; margin-bottom:6px;
+  display:flex; align-items:center; gap:8px;
+}
+.section-eyebrow::before {
+  content:''; display:inline-block; width:16px; height:0.5px;
+  background:var(--terra);
+}
+.section-heading {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(22px,3.5vw,30px);
+  font-weight:400; color:var(--forest); margin-bottom:4px; letter-spacing:-0.01em;
+}
+.section-sub {
+  font-size:11px; color:var(--ink-faint);
+  letter-spacing:0.14em; text-transform:uppercase; margin-bottom:36px;
+}
 
-  .brief-block{background:var(--forest);border-radius:4px;padding:36px 40px;margin:52px 0 0;}
-  .brief-block h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;color:var(--cream);margin-bottom:16px;}
-  .brief-block p{font-size:14px;line-height:1.85;color:rgba(232,234,226,0.6);max-width:620px;}
-  .brief-block p strong{color:var(--terra);font-weight:500;}
+/* ══════════════════════════════════════════════
+   FLOW SCREENS — NUMBERED CARDS
+══════════════════════════════════════════════ */
+.flow-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:24px; margin-bottom:8px;
+}
+.flow-card {
+  display:flex; flex-direction:column;
+  background:var(--white); border-radius:14px;
+  border:1px solid var(--border);
+  overflow:hidden;
+  transition:box-shadow var(--transition), transform var(--transition);
+}
+.flow-card:hover { box-shadow:0 8px 32px rgba(28,51,40,0.12); transform:translateY(-3px); }
+.flow-card-img {
+  background:var(--cream-dark);
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+}
+.flow-card-img img {
+  width:100%; display:block;
+  transition:transform var(--transition);
+}
+.flow-card:hover .flow-card-img img { transform:scale(1.02); }
+.flow-card-meta {
+  padding:20px 22px;
+  display:flex; align-items:flex-start; gap:14px;
+}
+.flow-num {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:30px; height:30px; border-radius:8px;
+  background:var(--terra); color:#fff;
+  font-size:12px; font-weight:600; flex-shrink:0;
+  letter-spacing:0.02em;
+}
+.flow-card-text { flex:1; }
+.flow-card-label {
+  font-size:10px; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--ink-faint); margin-bottom:3px;
+}
+.flow-card-title { font-size:14px; font-weight:600; color:var(--forest); }
+.flow-card-desc { font-size:12px; color:var(--ink-muted); line-height:1.65; margin-top:4px; }
 
-  .divider{height:0.5px;background:var(--cream-dark);margin:56px 0;}
+/* ══════════════════════════════════════════════
+   FEATURES GRID
+══════════════════════════════════════════════ */
+.feature-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:14px; margin-top:8px;
+}
+.feature-card {
+  background:var(--white); border:1px solid var(--border);
+  border-radius:14px; padding:24px 22px;
+  transition:box-shadow var(--transition), transform var(--transition);
+}
+.feature-card:hover { box-shadow:0 6px 24px rgba(28,51,40,0.09); transform:translateY(-2px); }
+.fc-num {
+  font-family:'Playfair Display',serif;
+  font-size:28px; color:var(--cream-dark);
+  font-weight:400; line-height:1; margin-bottom:14px;
+}
+.fc-icon { font-size:22px; margin-bottom:12px; display:block; }
+.fc-title { font-size:13px; font-weight:600; color:var(--forest); margin-bottom:7px; }
+.fc-desc { font-size:12px; color:var(--ink-muted); line-height:1.75; }
+.fc-tag {
+  display:inline-block; margin-top:10px;
+  font-size:9px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
+  padding:2px 10px; border-radius:100px;
+  background:var(--terra-bg); color:var(--terra);
+  border:0.5px solid rgba(232,105,42,0.25);
+}
 
-  .section-heading{font-family:'Playfair Display',serif;font-size:28px;font-weight:400;color:var(--forest);margin-bottom:4px;}
-  .section-sub{font-size:11px;color:var(--ink-faint);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:32px;}
+/* ══════════════════════════════════════════════
+   ALL SCREENS GALLERY
+══════════════════════════════════════════════ */
+.gallery-strip {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:16px; margin-top:8px;
+}
+.gallery-item { display:flex; flex-direction:column; gap:8px; }
+.gallery-label {
+  font-size:10px; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--ink-faint); font-weight:500;
+}
+.gallery-img-wrap {
+  background:var(--cream-dark); border-radius:10px;
+  border:1px solid var(--border); overflow:hidden;
+  transition:box-shadow var(--transition), transform var(--transition);
+}
+.gallery-img-wrap:hover { box-shadow:0 8px 24px rgba(28,51,40,0.14); transform:translateY(-3px); }
+.gallery-img-wrap img {
+  width:100%; display:block; cursor:zoom-in;
+  transition:transform var(--transition);
+}
+.gallery-img-wrap:hover img { transform:scale(1.02); }
 
-  .screen-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:10px;}
+/* ══════════════════════════════════════════════
+   DESIGN LANGUAGE
+══════════════════════════════════════════════ */
+.ds-card {
+  background:var(--white); border:1px solid var(--border);
+  border-radius:16px; padding:36px 40px; margin-top:8px;
+}
+.palette-row {
+  display:grid; grid-template-columns:repeat(5,1fr);
+  gap:16px; margin-bottom:36px;
+}
+.swatch-item { display:flex; flex-direction:column; gap:8px; }
+.swatch {
+  height:80px; border-radius:10px;
+  border:1px solid rgba(0,0,0,0.06);
+}
+.swatch-name { font-size:11px; font-weight:500; color:var(--ink); line-height:1.3; }
+.swatch-hex { font-size:10px; color:var(--ink-faint); font-weight:400; }
+.type-divider { height:0.5px; background:var(--cream-dark); margin-bottom:28px; }
+.type-row { display:flex; flex-direction:column; gap:20px; }
+.type-item { display:flex; flex-direction:column; gap:4px; }
+.type-sample { line-height:1.1; }
+.type-caption { font-size:11px; color:var(--ink-faint); }
 
-  .img-placeholder{background:var(--cream-dark);border:0.5px solid var(--cream-mid);border-radius:6px;aspect-ratio:9/16;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;position:relative;overflow:hidden;}
-  .img-placeholder::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 18px,rgba(28,51,40,0.04) 18px,rgba(28,51,40,0.04) 19px);}
-  .ph-icon{position:relative;z-index:1;width:34px;height:34px;border:0.5px solid var(--cream-mid);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink-faint);}
-  .ph-text{position:relative;z-index:1;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-faint);text-align:center;padding:0 16px;}
+/* ══════════════════════════════════════════════
+   AUTHOR & BACK CTA
+══════════════════════════════════════════════ */
+.author-row {
+  display:flex; align-items:center; gap:14px;
+  padding-top:24px; border-top:0.5px solid var(--cream-dark);
+  margin-top:56px;
+}
+.author-avatar {
+  width:40px; height:40px; border-radius:50%;
+  background:var(--forest); display:flex;
+  align-items:center; justify-content:center;
+  font-size:13px; font-weight:600; color:var(--cream);
+  flex-shrink:0;
+}
+.author-name { font-size:13px; color:var(--forest); font-weight:500; }
+.author-role { font-size:11px; color:var(--terra); margin-top:1px; }
 
-  .screens-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:28px 0;}
-  .screens-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:28px 0;}
-  .screens-row-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;margin:28px 0;}
+.back-cta {
+  text-align:center; padding:64px 0 80px;
+}
+.back-cta-btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:14px 28px; background:var(--forest); color:var(--cream);
+  text-decoration:none; border-radius:10px;
+  font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500;
+  box-shadow:0 4px 16px rgba(28,51,40,0.25);
+  transition:background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.back-cta-btn:hover {
+  background:var(--forest-light); transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(28,51,40,0.3);
+}
+.back-cta-btn svg { width:16px; height:16px; }
 
-  .full-placeholder{background:var(--cream-dark);border:0.5px solid var(--cream-mid);border-radius:6px;height:380px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden;margin:28px 0;}
-  .full-placeholder::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 18px,rgba(28,51,40,0.04) 18px,rgba(28,51,40,0.04) 19px);}
-  .full-placeholder .ph-icon,.full-placeholder .ph-text{position:relative;z-index:1;}
-  .full-placeholder .ph-icon{width:38px;height:38px;border:0.5px solid var(--cream-mid);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink-faint);}
-  .full-placeholder .ph-text{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-faint);}
+/* ══════════════════════════════════════════════
+   LIGHTBOX
+══════════════════════════════════════════════ */
+.lightbox {
+  display:none; position:fixed; inset:0;
+  background:rgba(20,28,24,0.93); z-index:2000;
+  align-items:center; justify-content:center; padding:32px;
+  backdrop-filter:blur(10px);
+}
+.lightbox.open { display:flex; }
+.lightbox img {
+  max-width:90vw; max-height:90vh;
+  border-radius:12px; box-shadow:0 24px 80px rgba(0,0,0,0.5);
+  object-fit:contain;
+}
+.lightbox-close {
+  position:fixed; top:20px; right:28px;
+  color:rgba(255,255,255,0.5); font-size:32px;
+  cursor:pointer; line-height:1; transition:color 0.15s;
+}
+.lightbox-close:hover { color:#fff; }
+.lightbox-caption {
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+  font-size:11px; color:rgba(255,255,255,0.35);
+  text-transform:uppercase; letter-spacing:0.12em; white-space:nowrap;
+}
 
-  .feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:28px 0;}
-  .feature-card{background:#fff;border:0.5px solid var(--cream-dark);border-radius:4px;padding:24px 26px;}
-  .fc-num{font-family:'Playfair Display',serif;font-size:30px;color:var(--cream-dark);font-weight:400;line-height:1;margin-bottom:12px;}
-  .fc-title{font-size:13px;font-weight:500;color:var(--forest);margin-bottom:7px;letter-spacing:0.02em;}
-  .fc-desc{font-size:12px;color:var(--ink-muted);line-height:1.75;}
+/* ══════════════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════════════ */
+.reveal { opacity:0; transform:translateY(22px); transition:opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-delay-1 { transition-delay:0.1s; }
+.reveal-delay-2 { transition-delay:0.2s; }
+.reveal-delay-3 { transition-delay:0.3s; }
+.reveal-delay-4 { transition-delay:0.4s; }
 
-  .pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px;}
-  .pill{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(232,234,226,0.45);border:0.5px solid rgba(255,255,255,0.15);padding:4px 10px;border-radius:2px;}
+/* ══════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════ */
+@media (max-width:768px) {
+  .case-nav { width:calc(100% - 32px); top:12px; height:48px; }
+  .case-nav-tag { display:none; }
 
-  .author-row{display:flex;align-items:center;gap:14px;margin-top:52px;padding-top:24px;border-top:0.5px solid var(--cream-dark);}
-  .author-avatar{width:38px;height:38px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--cream);}
-  .author-name{font-size:13px;color:var(--forest);font-weight:500;}
-  .author-handle{font-size:11px;color:var(--terra);}
+  .hero { padding:96px 20px 56px; }
+  .hero-meta { gap:20px; }
+  .hero-meta-item { border-right:none; padding-right:0; margin-right:0; }
 
-  .flow-label{display:inline-block;background:var(--terra);color:#fff;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:2px;margin-bottom:10px;}
+  .page { padding:0 16px; }
+  .brief-card { padding:28px 24px; margin-top:40px; }
+
+  .flow-grid { grid-template-columns:1fr; gap:16px; }
+  .feature-grid { grid-template-columns:1fr 1fr; gap:12px; }
+  .gallery-strip { grid-template-columns:repeat(2,1fr); gap:12px; }
+
+  .palette-row { grid-template-columns:repeat(3,1fr); gap:12px; }
+  .ds-card { padding:24px 20px; }
+
+  .divider { margin:48px 0; }
+  .back-cta { padding:48px 0 64px; }
+}
+
+@media (max-width:480px) {
+  .hero h1 { font-size:40px; }
+  .feature-grid { grid-template-columns:1fr; }
+  .palette-row { grid-template-columns:repeat(2,1fr); }
+  .gallery-strip { grid-template-columns:1fr 1fr; }
+  .hero-pills { gap:6px; }
+}
+
+@media (min-width:769px) and (max-width:960px) {
+  .page { padding:0 32px; }
+  .hero { padding:116px 32px 72px; }
+  .feature-grid { grid-template-columns:1fr 1fr; }
+}
 </style>
+</head>
+<body>
 
-<div class="bh">
-
-  <div class="hero">
-    <div class="hero-stripe"></div>
-    <div class="hero-inner">
-      <div class="tag"><span class="tag-dot"></span>UI Showcase · February 2026</div>
-      <h1 class="hero-title">Cozy <em>Cafe</em><br>Self-Order</h1>
-      <p class="hero-sub">Table QR · Mobile Experience · End-to-End Flow</p>
-      <div class="meta-row">
-        <div class="meta-item"><label>Designer</label><span>Aditya Nair</span></div>
-        <div class="meta-item"><label>Platform</label><span>iOS · Android</span></div>
-        <div class="meta-item"><label>Category</label><span>Food &amp; Beverage</span></div>
-      </div>
-      <div class="pill-row">
-        <span class="pill">UI Design</span>
-        <span class="pill">QR Ordering</span>
-        <span class="pill">Cafes</span>
-        <span class="pill">Mobile</span>
-        <span class="pill">Product Design</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-
-    <div class="brief-block">
-      <h2>The idea</h2>
-      <p>Cozy Cafe is a <strong>scan-to-order experience</strong> designed for dine-in cafes. Customers scan a QR code on the table, browse the menu, add items, and place their order — no app download, no waving for a waiter, no friction. The kitchen gets the order instantly, and guests track their items in real time right from the table.</p>
-    </div>
-
-
-
-    <div class="divider"></div>
-
-    <h2 class="section-heading">The flow</h2>
-    <p class="section-sub">Scan · Browse · Order · Track</p>
-
-    <div class="screens-row">
-      <div>
-        <div class="flow-label">01</div>
-        <p class="screen-label">Menu view</p>
-        <img loading="lazy" src="Cafe_Menu_Project/Main Screen.png" alt="Menu View" style="width:100%; border-radius:6px; border:0.5px solid var(--cream-mid); display:block;">
-      </div>
-      <div>
-        <div class="flow-label">02</div>
-        <p class="screen-label">Adding items</p>
-        <img loading="lazy" src="Cafe_Menu_Project/Main Screen 2.png" alt="Adding Items" style="width:100%; border-radius:6px; border:0.5px solid var(--cream-mid); display:block;">
-      </div>
-    </div>
-
-    <div class="screens-row">
-      <div>
-        <div class="flow-label">03</div>
-        <p class="screen-label">Cart review</p>
-        <img loading="lazy" src="Cafe_Menu_Project/Cart View.png" alt="Cart Review" style="width:100%; border-radius:6px; border:0.5px solid var(--cream-mid); display:block;">
-      </div>
-      <div>
-        <div class="flow-label">04</div>
-        <p class="screen-label">Order tracking</p>
-        <img loading="lazy" src="Cafe_Menu_Project/Order View.png" alt="Order Tracking" style="width:100%; border-radius:6px; border:0.5px solid var(--cream-mid); display:block;">
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <h2 class="section-heading">Key features</h2>
-    <p class="section-sub">Designed around the guest experience</p>
-
-    <div class="feature-grid">
-      <div class="feature-card">
-        <div class="fc-num">01</div>
-        <div class="fc-title">QR-first access</div>
-        <div class="fc-desc">No app download. Guests scan the table QR and the menu loads instantly in the browser.</div>
-      </div>
-      <div class="feature-card">
-        <div class="fc-num">02</div>
-        <div class="fc-title">Live order tracking</div>
-        <div class="fc-desc">Each item shows a real-time status — Preparing, Ready, or Served — so guests always know what's coming.</div>
-      </div>
-      <div class="feature-card">
-        <div class="fc-num">03</div>
-        <div class="fc-title">Category browsing</div>
-        <div class="fc-desc">Coffee, Snacks, Bakery and more. Items are tagged as Best Seller, Popular, New, or Classic.</div>
-      </div>
-      <div class="feature-card">
-        <div class="fc-num">04</div>
-        <div class="fc-title">Cart &amp; bill summary</div>
-        <div class="fc-desc">Promo code support, GST breakdown, and a clear total before the order is confirmed.</div>
-      </div>
-      <div class="feature-card">
-        <div class="fc-num">05</div>
-        <div class="fc-title">Finalise &amp; call waiter</div>
-        <div class="fc-desc">Once done, guests tap to lock the bill and summon the waiter to their table.</div>
-      </div>
-      <div class="feature-card">
-        <div class="fc-num">06</div>
-        <div class="fc-title">Session-based ordering</div>
-        <div class="fc-desc">Tied to a table number and session, guests can keep adding items anytime during their visit.</div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <h2 class="section-heading">All screens</h2>
-    <p class="section-sub">Full spread</p>
-
-    <div class="screens-row-4">
-      <div>
-        <p class="screen-label">Menu</p>
-        <img loading="lazy" src="Cafe_Menu_Project/Main Screen.png" alt="Menu" style="width:100%; border-radius:6px; border:0.5px solid var(--cream-mid); display:block;">
-      </div>
-      <div>
-        <p class="screen-label">Detail</p>
-        <img loading="lazy" src="Cafe_Menu_Project/Main Screen 2.png" alt="Detail" style="width:100%; border-radius:6px; border:0.5px solid var(--cream-mid); display:block;">
-      </div>
-      <div>
-        <p class="screen-label">Cart</p>
-        <img loading="lazy" src="Cafe_Menu_Project/Cart View.png" alt="Cart" style="width:100%; border-radius:6px; border:0.5px solid var(--cream-mid); display:block;">
-      </div>
-      <div>
-        <p class="screen-label">Order</p>
-        <img loading="lazy" src="Cafe_Menu_Project/Order View.png" alt="Order" style="width:100%; border-radius:6px; border:0.5px solid var(--cream-mid); display:block;">
-      </div>
-    </div>
-
-    <p class="screen-label" style="margin-top:40px">Color palette &amp; typography</p>
-    <div style="background: var(--white); padding: 32px; border-radius: 8px; border: 0.5px solid var(--cream-mid); margin: 16px 0 28px;">
-      <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;">
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          <div style="height: 80px; background: var(--forest); border-radius: 6px;"></div>
-          <div style="font-size: 11px; font-weight: 500; color: var(--ink);">Forest<br><span style="color: var(--ink-faint); font-weight: 400;">#1C3328</span></div>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          <div style="height: 80px; background: var(--forest-light); border-radius: 6px;"></div>
-          <div style="font-size: 11px; font-weight: 500; color: var(--ink);">Forest Light<br><span style="color: var(--ink-faint); font-weight: 400;">#2E5A3C</span></div>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          <div style="height: 80px; background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 6px;"></div>
-          <div style="font-size: 11px; font-weight: 500; color: var(--ink);">Cream<br><span style="color: var(--ink-faint); font-weight: 400;">#F4F0E6</span></div>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          <div style="height: 80px; background: var(--terra); border-radius: 6px;"></div>
-          <div style="font-size: 11px; font-weight: 500; color: var(--ink);">Terra<br><span style="color: var(--ink-faint); font-weight: 400;">#E8692A</span></div>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          <div style="height: 80px; background: var(--ink); border-radius: 6px;"></div>
-          <div style="font-size: 11px; font-weight: 500; color: var(--ink);">Ink<br><span style="color: var(--ink-faint); font-weight: 400;">#1C2420</span></div>
-        </div>
-      </div>
-      
-      <div style="margin-top: 32px; border-top: 0.5px solid var(--cream-dark); padding-top: 32px;">
-        <h3 style="font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 400; color: var(--forest); margin-bottom: 8px;">Playfair Display</h3>
-        <p style="font-size: 13px; color: var(--ink-muted); max-width: 600px; line-height: 1.6;">Playfair Display is used for elegant, editorial-style headings that evoke a premium cafe feel.</p>
-        
-        <h3 style="font-family: 'DM Sans', sans-serif; font-size: 24px; font-weight: 500; color: var(--forest); margin-top: 24px; margin-bottom: 8px;">DM Sans</h3>
-        <p style="font-size: 13px; color: var(--ink-muted); max-width: 600px; line-height: 1.6;">DM Sans provides clean, modern legibility for the interface, buttons, and small details.</p>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="author-row">
-      <div class="author-avatar">AN</div>
-      <div>
-        <div class="author-name">Aditya Nair</div>
-      </div>
-    </div>
-
-    <div style="margin-top: 64px; text-align: center;">
-      <a href="index.html" style="display: inline-block; padding: 14px 28px; background: var(--forest); color: #fff; text-decoration: none; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; transition: transform 0.2s;">← Back to Home</a>
-    </div>
-
-  </div>
-  </div>
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">×</span>
+  <img loading="lazy" id="lightbox-img" src="" alt="">
+  <div class="lightbox-caption" id="lightbox-caption"></div>
 </div>
+
+<!-- ═══════ STICKY NAV ═══════ -->
+<nav class="case-nav">
+  <a href="index.html#projects" class="case-nav-back" id="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+    Back
+  </a>
+  <div class="case-nav-brand">Cozy Cafe</div>
+  <div class="case-nav-tag">UI Showcase</div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow"><span class="hero-dot"></span>UI Showcase · February 2026</div>
+    <h1>Cozy <em>Cafe</em><br>Self-Order</h1>
+    <p class="hero-sub">Table QR &nbsp;·&nbsp; Mobile Experience &nbsp;·&nbsp; End-to-End Flow</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <label>Designer</label>
+        <span>Aditya Nair</span>
+      </div>
+      <div class="hero-meta-item">
+        <label>Platform</label>
+        <span>iOS · Android</span>
+      </div>
+      <div class="hero-meta-item">
+        <label>Category</label>
+        <span>Food &amp; Beverage</span>
+      </div>
+      <div class="hero-meta-item">
+        <label>Screens</label>
+        <span class="accent">4 Screens</span>
+      </div>
+    </div>
+    <div class="hero-pills">
+      <span class="hero-pill">UI Design</span>
+      <span class="hero-pill">QR Ordering</span>
+      <span class="hero-pill">Cafes</span>
+      <span class="hero-pill">Mobile</span>
+      <span class="hero-pill">Product Design</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PAGE CONTENT ═══════ -->
+<div class="page">
+
+  <!-- BRIEF -->
+  <div class="brief-card reveal">
+    <h2>The idea</h2>
+    <p>Cozy Cafe is a <strong>scan-to-order experience</strong> designed for dine-in cafes. Customers scan a QR code on the table, browse the menu, add items, and place their order — no app download, no waving for a waiter, no friction. The kitchen gets the order instantly, and guests track their items in real time right from the table.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- FLOW -->
+  <div class="section-eyebrow reveal">User Flow</div>
+  <h2 class="section-heading reveal">The flow</h2>
+  <p class="section-sub reveal">Scan · Browse · Order · Track</p>
+
+  <div class="flow-grid">
+    <div class="flow-card reveal">
+      <div class="flow-card-img">
+        <img loading="lazy" src="Cafe_Menu_Project/Main Screen.png" alt="Menu View" onclick="openLightbox(this,'Menu View')">
+      </div>
+      <div class="flow-card-meta">
+        <div class="flow-num">01</div>
+        <div class="flow-card-text">
+          <div class="flow-card-label">Step One</div>
+          <div class="flow-card-title">Menu view</div>
+          <div class="flow-card-desc">After scanning the table QR, guests land on a warm, category-driven menu. No login required.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-card reveal reveal-delay-1">
+      <div class="flow-card-img">
+        <img loading="lazy" src="Cafe_Menu_Project/Main Screen 2.png" alt="Adding Items" onclick="openLightbox(this,'Adding Items')">
+      </div>
+      <div class="flow-card-meta">
+        <div class="flow-num">02</div>
+        <div class="flow-card-text">
+          <div class="flow-card-label">Step Two</div>
+          <div class="flow-card-title">Adding items</div>
+          <div class="flow-card-desc">Guests browse, tap, and customise — adding items to cart with a single tap, no confusion.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-card reveal reveal-delay-2">
+      <div class="flow-card-img">
+        <img loading="lazy" src="Cafe_Menu_Project/Cart View.png" alt="Cart Review" onclick="openLightbox(this,'Cart Review')">
+      </div>
+      <div class="flow-card-meta">
+        <div class="flow-num">03</div>
+        <div class="flow-card-text">
+          <div class="flow-card-label">Step Three</div>
+          <div class="flow-card-title">Cart review</div>
+          <div class="flow-card-desc">Full bill summary with promo codes, GST breakdown, and a clear total before confirming.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-card reveal reveal-delay-3">
+      <div class="flow-card-img">
+        <img loading="lazy" src="Cafe_Menu_Project/Order View.png" alt="Order Tracking" onclick="openLightbox(this,'Order Tracking')">
+      </div>
+      <div class="flow-card-meta">
+        <div class="flow-num">04</div>
+        <div class="flow-card-text">
+          <div class="flow-card-label">Step Four</div>
+          <div class="flow-card-title">Order tracking</div>
+          <div class="flow-card-desc">Each item shows live status — Preparing, Ready, Served. Guests always know what's coming.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- FEATURES -->
+  <div class="section-eyebrow reveal">Design Decisions</div>
+  <h2 class="section-heading reveal">Key features</h2>
+  <p class="section-sub reveal">Designed around the guest experience</p>
+
+  <div class="feature-grid">
+    <div class="feature-card reveal">
+      <span class="fc-icon">📱</span>
+      <div class="fc-title">QR-first access</div>
+      <div class="fc-desc">No app download. Guests scan the table QR and the menu loads instantly in the browser — zero barrier to entry.</div>
+      <span class="fc-tag">Zero friction</span>
+    </div>
+    <div class="feature-card reveal reveal-delay-1">
+      <span class="fc-icon">🔴</span>
+      <div class="fc-title">Live order tracking</div>
+      <div class="fc-desc">Each item shows a real-time status — Preparing, Ready, or Served — so guests always know what's coming.</div>
+      <span class="fc-tag">Real-time</span>
+    </div>
+    <div class="feature-card reveal reveal-delay-2">
+      <span class="fc-icon">☕</span>
+      <div class="fc-title">Category browsing</div>
+      <div class="fc-desc">Coffee, Snacks, Bakery and more. Items are tagged as Best Seller, Popular, New, or Classic.</div>
+      <span class="fc-tag">Discovery</span>
+    </div>
+    <div class="feature-card reveal">
+      <span class="fc-icon">🛒</span>
+      <div class="fc-title">Cart &amp; bill summary</div>
+      <div class="fc-desc">Promo code support, GST breakdown, and a clear total before the order is confirmed.</div>
+      <span class="fc-tag">Transparency</span>
+    </div>
+    <div class="feature-card reveal reveal-delay-1">
+      <span class="fc-icon">🤝</span>
+      <div class="fc-title">Finalise &amp; call waiter</div>
+      <div class="fc-desc">Once done, guests tap to lock the bill and summon the waiter to their table — no awkward eye contact required.</div>
+      <span class="fc-tag">Convenience</span>
+    </div>
+    <div class="feature-card reveal reveal-delay-2">
+      <span class="fc-icon">🔖</span>
+      <div class="fc-title">Session-based ordering</div>
+      <div class="fc-desc">Tied to a table number and session, guests can keep adding items anytime during their visit.</div>
+      <span class="fc-tag">Flexibility</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ALL SCREENS -->
+  <div class="section-eyebrow reveal">Complete Spread</div>
+  <h2 class="section-heading reveal">All screens</h2>
+  <p class="section-sub reveal">Click any screen to view full size</p>
+
+  <div class="gallery-strip">
+    <div class="gallery-item reveal">
+      <div class="gallery-label">Menu</div>
+      <div class="gallery-img-wrap">
+        <img loading="lazy" src="Cafe_Menu_Project/Main Screen.png" alt="Menu" onclick="openLightbox(this,'Menu View')">
+      </div>
+    </div>
+    <div class="gallery-item reveal reveal-delay-1">
+      <div class="gallery-label">Adding items</div>
+      <div class="gallery-img-wrap">
+        <img loading="lazy" src="Cafe_Menu_Project/Main Screen 2.png" alt="Adding Items" onclick="openLightbox(this,'Adding Items')">
+      </div>
+    </div>
+    <div class="gallery-item reveal reveal-delay-2">
+      <div class="gallery-label">Cart</div>
+      <div class="gallery-img-wrap">
+        <img loading="lazy" src="Cafe_Menu_Project/Cart View.png" alt="Cart" onclick="openLightbox(this,'Cart Review')">
+      </div>
+    </div>
+    <div class="gallery-item reveal reveal-delay-3">
+      <div class="gallery-label">Order tracking</div>
+      <div class="gallery-img-wrap">
+        <img loading="lazy" src="Cafe_Menu_Project/Order View.png" alt="Order Tracking" onclick="openLightbox(this,'Order Tracking')">
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DESIGN LANGUAGE -->
+  <div class="section-eyebrow reveal">Design System</div>
+  <h2 class="section-heading reveal">Colour, type, space</h2>
+  <p class="section-sub reveal">A warm, organic visual language built for hospitality</p>
+
+  <div class="ds-card reveal">
+    <!-- Palette -->
+    <div class="palette-row">
+      <div class="swatch-item">
+        <div class="swatch" style="background:#1c3328;"></div>
+        <div class="swatch-name">Forest</div>
+        <div class="swatch-hex">#1C3328</div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch" style="background:#2e5a3c;"></div>
+        <div class="swatch-name">Forest Light</div>
+        <div class="swatch-hex">#2E5A3C</div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch" style="background:#f4f0e6; border:1px solid #ddd8c8;"></div>
+        <div class="swatch-name">Cream</div>
+        <div class="swatch-hex">#F4F0E6</div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch" style="background:#e8692a;"></div>
+        <div class="swatch-name">Terra</div>
+        <div class="swatch-hex">#E8692A</div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch" style="background:#1c2420;"></div>
+        <div class="swatch-name">Ink</div>
+        <div class="swatch-hex">#1C2420</div>
+      </div>
+    </div>
+
+    <!-- Typography -->
+    <div class="type-divider"></div>
+    <div class="type-row">
+      <div class="type-item">
+        <div class="type-sample" style="font-family:'Playfair Display',serif;font-size:32px;font-weight:400;color:#1c3328;">Playfair Display</div>
+        <div class="type-caption">Display &amp; editorial headings — evokes premium cafe ambiance</div>
+      </div>
+      <div class="type-item">
+        <div class="type-sample" style="font-family:'DM Sans',sans-serif;font-size:22px;font-weight:500;color:#1c3328;">DM Sans</div>
+        <div class="type-caption">Interface body — clean, legible, friendly at any size</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- AUTHOR -->
+  <div class="author-row reveal">
+    <div class="author-avatar">AN</div>
+    <div>
+      <div class="author-name">Aditya Nair</div>
+      <div class="author-role">UI/UX Designer</div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<!-- BACK CTA -->
+<div class="back-cta">
+  <a href="index.html#projects" class="back-cta-btn" id="back-cta-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+    Back to Portfolio
+  </a>
+</div>
+
+<script>
+// ── Lightbox
+function openLightbox(imgEl, caption) {
+  document.getElementById('lightbox-img').src = imgEl.src;
+  document.getElementById('lightbox-caption').textContent = caption || '';
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeLightbox();
+});
+
+// ── Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.07, rootMargin: '0px 0px -36px 0px' });
+reveals.forEach(el => observer.observe(el));
+
+// ── Smart back button
+function smartBack(e) {
+  if (document.referrer && (document.referrer.includes('index.html') || document.referrer.includes(window.location.hostname))) {
+    e.preventDefault();
+    history.back();
+  }
+}
+document.getElementById('back-btn').addEventListener('click', smartBack);
+document.getElementById('back-cta-btn').addEventListener('click', smartBack);
+</script>
+
 </body>
 </html>
