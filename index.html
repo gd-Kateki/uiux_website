@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -138,6 +138,7 @@
             <a href="https://www.linkedin.com/in/adityanair0402/" target="_blank" class="about-link">LinkedIn &nearr;</a>
             <a href="mailto:aditya.gamedesigner0402@gmail.com" class="about-link copy-email-btn">Email</a>
             <a href="experience.html" class="about-link">Experience Details &rarr;</a>
+            <a href="https://gd-kateki.github.io/Personal-Website/" target="_blank" class="about-link" style="color: var(--accent-hover); font-weight:600;">Game Design &nearr;</a>
           </div>
         </div>
 
@@ -545,8 +546,32 @@
       }, 2500);
     }
 
+    // ── Game Design Portfolio Prompt ──
+    const gdPrompt = document.getElementById('gdPortfolioPrompt');
+    const gdCloseBtn = document.getElementById('gdPortfolioClose');
+    
+    if (gdPrompt && gdCloseBtn && !localStorage.getItem('gd-prompt-dismissed')) {
+      setTimeout(() => {
+        gdPrompt.classList.add('show');
+      }, 1500);
+      
+      gdCloseBtn.addEventListener('click', () => {
+        gdPrompt.classList.remove('show');
+        localStorage.setItem('gd-prompt-dismissed', 'true');
+      });
+    }
+
   })();
   </script>
+
+  <!-- Game Design Portfolio Prompt -->
+  <div id="gdPortfolioPrompt" class="gd-portfolio-prompt">
+    <a href="https://gd-kateki.github.io/Personal-Website/" target="_blank" class="gd-portfolio-link">
+      <span class="gd-portfolio-icon">👾</span>
+      <span>Looking for my Game Design Portfolio? &rarr;</span>
+    </a>
+    <button id="gdPortfolioClose" class="gd-portfolio-close" aria-label="Dismiss prompt">&times;</button>
+  </div>
 
 </body>
 </html>

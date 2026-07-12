@@ -356,8 +356,32 @@
       }, 2500);
     }
 
+    // ── Game Design Portfolio Prompt ──
+    const gdPrompt = document.getElementById('gdPortfolioPrompt');
+    const gdCloseBtn = document.getElementById('gdPortfolioClose');
+
+    if (gdPrompt && gdCloseBtn && !localStorage.getItem('gd-prompt-dismissed')) {
+      setTimeout(() => {
+        gdPrompt.classList.add('show');
+      }, 1500);
+
+      gdCloseBtn.addEventListener('click', () => {
+        gdPrompt.classList.remove('show');
+        localStorage.setItem('gd-prompt-dismissed', 'true');
+      });
+    }
+
   })();
   </script>
+
+  <!-- Game Design Portfolio Prompt -->
+  <div id="gdPortfolioPrompt" class="gd-portfolio-prompt">
+    <a href="https://gd-kateki.github.io/Personal-Website/" target="_blank" class="gd-portfolio-link">
+      <span class="gd-portfolio-icon">👾</span>
+      <span>Looking for my Game Design Portfolio? &rarr;</span>
+    </a>
+    <button id="gdPortfolioClose" class="gd-portfolio-close" aria-label="Dismiss prompt">&times;</button>
+  </div>
 
 </body>
 </html>
